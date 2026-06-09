@@ -10,7 +10,11 @@ export default tseslint.config(
   {
     languageOptions: {
       ecmaVersion: 2023,
-      sourceType: "module"
+      sourceType: "module",
+      globals: {
+        console: "readonly",
+        process: "readonly"
+      }
     },
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

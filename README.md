@@ -23,6 +23,12 @@ npm run build
 npm run demo
 ```
 
+Full local verification:
+
+```bash
+npm run verify
+```
+
 With the OpenAI API enabled:
 
 ```bash
@@ -75,13 +81,18 @@ npm run dev
 
 Open the printed local URL to review the Security Review Workbench UI.
 
-![Security Review Workbench](docs/images/security-review-workbench.png)
+![Security Review Workbench demo](docs/images/security-review-workbench.gif)
+
+Static preview: [security-review-workbench.png](docs/images/security-review-workbench.png)
 
 ## Security review evidence
 
 - [Codex Security scan report](docs/codex-security/report.md)
 - [Codex Security HTML report](docs/codex-security/report.html)
 - [Focused fix report](docs/codex-security/fix-report.md)
+- [Usage log](docs/usage-log.md)
+- [Improvement history](docs/improvement-history.md)
+- [v0.1.0 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.0)
 
 ## Application materials
 
