@@ -8,8 +8,6 @@ import {
   IconChevronDown,
   IconChevronRight,
   IconCircleCheck,
-  IconCircleX,
-  IconCode,
   IconCopy,
   IconDatabase,
   IconFileCode,
@@ -17,7 +15,6 @@ import {
   IconGitPullRequest,
   IconHome,
   IconInfoCircle,
-  IconLayoutDashboard,
   IconLockCheck,
   IconMenu2,
   IconRefresh,
@@ -124,23 +121,23 @@ const diffLines = [
   ["42", " ", "func exportHandler(w http.ResponseWriter, r *http.Request) {"],
   ["43", " ", "  user := r.Context().Value(ctxUser).(User)"],
   ["44", " ", "  if user == nil {"],
-  ["45", " ", "    http.Error(w, \"unauthorized\", http.StatusUnauthorized)"],
+  ["45", " ", '    http.Error(w, "unauthorized", http.StatusUnauthorized)'],
   ["46", " ", "    return"],
-  ["47", "+", "  exportPath := r.URL.Query().Get(\"path\")"],
-  ["48", "+", "  if exportPath == \"\" {"],
-  ["49", "+", "    http.Error(w, \"missing path\", http.StatusBadRequest)"],
+  ["47", "+", '  exportPath := r.URL.Query().Get("path")'],
+  ["48", "+", '  if exportPath == "" {'],
+  ["49", "+", '    http.Error(w, "missing path", http.StatusBadRequest)'],
   ["50", "+", "    return"],
   ["51", " ", "  }"],
   ["52", "-", "  file, err := os.Create(exportPath)"],
   ["53", "-", "  if err != nil {"],
-  ["54", "-", "    http.Error(w, \"cannot create file\", http.StatusInternalServerError)"],
+  ["54", "-", '    http.Error(w, "cannot create file", http.StatusInternalServerError)'],
   ["55", "-", "    return"],
   ["56", "-", "  }"],
-  ["57", "+", "  baseDir := os.Getenv(\"EXPORT_BASE_DIR\")"],
+  ["57", "+", '  baseDir := os.Getenv("EXPORT_BASE_DIR")'],
   ["58", "+", "  safePath := filepath.Join(baseDir, exportPath)"],
   ["59", "+", "  file, err := os.Create(safePath)"],
   ["60", "+", "  if err != nil {"],
-  ["61", "+", "    http.Error(w, \"cannot create file\", http.StatusInternalServerError)"],
+  ["61", "+", '    http.Error(w, "cannot create file", http.StatusInternalServerError)'],
   ["62", "+", "    return"],
   ["63", "+", "  }"],
   ["64", " ", "  defer file.Close()"],
@@ -163,7 +160,11 @@ function App() {
   );
 
   function saveDecision() {
-    setToast(dryRun ? "Dry-run saved locally. No GitHub comment was posted." : "Decision queued for maintainer review before posting.");
+    setToast(
+      dryRun
+        ? "Dry-run saved locally. No GitHub comment was posted."
+        : "Decision queued for maintainer review before posting."
+    );
     window.setTimeout(() => setToast(""), 3200);
   }
 
@@ -171,9 +172,13 @@ function App() {
     <div className="app-shell">
       <aside className="sidebar" aria-label="Main navigation">
         <div className="brand-row">
-          <div className="brand-mark"><IconShieldCheck size={18} /></div>
+          <div className="brand-mark">
+            <IconShieldCheck size={18} />
+          </div>
           <strong>MaintainerOps AI</strong>
-          <button className="icon-button" aria-label="Collapse navigation"><IconMenu2 size={18} /></button>
+          <button className="icon-button" aria-label="Collapse navigation">
+            <IconMenu2 size={18} />
+          </button>
         </div>
 
         <section className="nav-section">
@@ -201,7 +206,11 @@ function App() {
               <button className={`repo-item ${repo.active ? "active" : ""}`} key={repo.name}>
                 <IconBrandGithub size={17} />
                 <span>{repo.name}</span>
-                <small><span>{repo.alerts}</span><span>{repo.prs}</span><span>{repo.warnings}</span></small>
+                <small>
+                  <span>{repo.alerts}</span>
+                  <span>{repo.prs}</span>
+                  <span>{repo.warnings}</span>
+                </small>
                 <IconChevronRight size={15} />
               </button>
             ))}
@@ -240,11 +249,21 @@ function App() {
             </label>
             <label className="range-label">
               <span>Confidence threshold</span>
-              <input type="range" min="20" max="95" value={threshold} onChange={(event) => setThreshold(Number(event.target.value))} />
+              <input
+                type="range"
+                min="20"
+                max="95"
+                value={threshold}
+                onChange={(event) => setThreshold(Number(event.target.value))}
+              />
               <b>{(threshold / 100).toFixed(2)}</b>
             </label>
-            <button className="tag-button"><IconTag size={16} /> Labels <b>3</b></button>
-            <button className="icon-button" aria-label="Refresh"><IconRefresh size={18} /></button>
+            <button className="tag-button">
+              <IconTag size={16} /> Labels <b>3</b>
+            </button>
+            <button className="icon-button" aria-label="Refresh">
+              <IconRefresh size={18} />
+            </button>
           </div>
         </header>
 
@@ -253,28 +272,45 @@ function App() {
             <span className="status-pill open">Open</span>
           </div>
           <div className="pr-title-block">
-            <h1>PR #4821 <span>feat: add S3 export and audit logging</span></h1>
-            <p>acme/api-gateway <IconGitPullRequest size={14} /> feature/s3-export to main</p>
+            <h1>
+              PR #4821 <span>feat: add S3 export and audit logging</span>
+            </h1>
+            <p>
+              acme/api-gateway <IconGitPullRequest size={14} /> feature/s3-export to main
+            </p>
           </div>
-          <div className="change-metrics"><span className="add">+324</span><span className="del">-112</span></div>
+          <div className="change-metrics">
+            <span className="add">+324</span>
+            <span className="del">-112</span>
+          </div>
           <Metric label="Files changed" value="18" />
           <Metric label="Checks" value="3 / 5" />
           <Metric label="AI Risk Score" value="High" tone="danger" />
-          <div className="maintainer-chip"><div className="avatar">MK</div><span>Maya Kapoor</span><IconChevronDown size={16} /></div>
+          <div className="maintainer-chip">
+            <div className="avatar">MK</div>
+            <span>Maya Kapoor</span>
+            <IconChevronDown size={16} />
+          </div>
         </section>
 
         <div className="content-grid">
           <section className="files-panel">
             <div className="tabs compact">
-              <button className="active">Files changed <b>18</b></button>
-              <button>Risk hotspots <b>7</b></button>
+              <button className="active">
+                Files changed <b>18</b>
+              </button>
+              <button>
+                Risk hotspots <b>7</b>
+              </button>
             </div>
             <div className="file-filter">
               <label className="search-box">
                 <IconSearch size={16} />
                 <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Filter files" />
               </label>
-              <button className="icon-button" aria-label="Filter files"><IconFilter size={17} /></button>
+              <button className="icon-button" aria-label="Filter files">
+                <IconFilter size={17} />
+              </button>
             </div>
             <div className="file-list">
               {visibleFiles.map((file) => (
@@ -291,18 +327,27 @@ function App() {
 
           <section className="diff-panel">
             <div className="diff-toolbar">
-              <div><strong>src/handlers/export.go</strong><SeverityIcon severity="high" /><span className="severity-badge high">High</span></div>
+              <div>
+                <strong>src/handlers/export.go</strong>
+                <SeverityIcon severity="high" />
+                <span className="severity-badge high">High</span>
+              </div>
               <div className="diff-actions">
                 <span className="add">+78</span>
                 <span className="del">-12</span>
                 <button>Side-by-side</button>
                 <button>Unified</button>
-                <button className="icon-button" aria-label="Copy diff"><IconCopy size={17} /></button>
+                <button className="icon-button" aria-label="Copy diff">
+                  <IconCopy size={17} />
+                </button>
               </div>
             </div>
             <div className="code-view" aria-label="Code diff">
               {diffLines.map(([line, marker, code]) => (
-                <div className={`code-line ${marker === "+" ? "added" : marker === "-" ? "removed" : ""}`} key={`${line}-${code}`}>
+                <div
+                  className={`code-line ${marker === "+" ? "added" : marker === "-" ? "removed" : ""}`}
+                  key={`${line}-${code}`}
+                >
                   <span className="line-no">{line}</span>
                   <span className="marker">{marker}</span>
                   <code>{code}</code>
@@ -314,25 +359,43 @@ function App() {
           <aside className="assessment-panel">
             <div className="tabs">
               {["AI Assessment", "Metadata"].map((tab) => (
-                <button className={assessmentTab === tab ? "active" : ""} onClick={() => setAssessmentTab(tab)} key={tab}>{tab}</button>
+                <button
+                  className={assessmentTab === tab ? "active" : ""}
+                  onClick={() => setAssessmentTab(tab)}
+                  key={tab}
+                >
+                  {tab}
+                </button>
               ))}
             </div>
             {assessmentTab === "AI Assessment" ? (
               <>
                 <section className="assessment-section">
-                  <h2>Summary <span className="severity-badge high">High risk</span></h2>
-                  <p>Path query controls disk writes. A token is read from env config, and traversal tests are missing.</p>
+                  <h2>
+                    Summary <span className="severity-badge high">High risk</span>
+                  </h2>
+                  <p>
+                    Path query controls disk writes. A token is read from env config, and traversal tests are missing.
+                  </p>
                 </section>
 
                 <section className="assessment-section">
-                  <h2>Findings <b>{findings.length}</b></h2>
+                  <h2>
+                    Findings <b>{findings.length}</b>
+                  </h2>
                   <div className="finding-list">
                     {findings.map((finding) => (
-                      <button className="finding-row" onClick={() => setExpanded(expanded === finding.title ? "" : finding.title)} key={finding.title}>
+                      <button
+                        className="finding-row"
+                        onClick={() => setExpanded(expanded === finding.title ? "" : finding.title)}
+                        key={finding.title}
+                      >
                         <SeverityIcon severity={finding.severity} />
                         <span>
                           <strong>{finding.title}</strong>
-                          <small>{finding.severity} {finding.score.toFixed(2)} {finding.source}</small>
+                          <small>
+                            {finding.severity} {finding.score.toFixed(2)} {finding.source}
+                          </small>
                           {expanded === finding.title && <em>{finding.detail}</em>}
                         </span>
                         <b>{finding.status}</b>
@@ -345,17 +408,27 @@ function App() {
                 <section className="assessment-section">
                   <h2>Recommended Actions</h2>
                   <ul className="action-list">
-                    <li><IconCircleCheck size={15} /> Sanitize path; keep writes inside base dir.</li>
-                    <li><IconCircleCheck size={15} /> Reject user-controlled absolute paths.</li>
-                    <li><IconCircleCheck size={15} /> Rotate S3 token; use scoped secrets.</li>
-                    <li><IconCircleCheck size={15} /> Add path validation tests.</li>
+                    <li>
+                      <IconCircleCheck size={15} /> Sanitize path; keep writes inside base dir.
+                    </li>
+                    <li>
+                      <IconCircleCheck size={15} /> Reject user-controlled absolute paths.
+                    </li>
+                    <li>
+                      <IconCircleCheck size={15} /> Rotate S3 token; use scoped secrets.
+                    </li>
+                    <li>
+                      <IconCircleCheck size={15} /> Add path validation tests.
+                    </li>
                   </ul>
                 </section>
 
                 <section className="confidence-row">
                   <strong>AI Confidence</strong>
                   <span>0.76</span>
-                  <div><i style={{ width: "76%" }} /></div>
+                  <div>
+                    <i style={{ width: "76%" }} />
+                  </div>
                 </section>
 
                 <DecisionBox decision={decision} setDecision={setDecision} saveDecision={saveDecision} />
@@ -364,10 +437,14 @@ function App() {
               <section className="assessment-section metadata">
                 <h2>Metadata</h2>
                 <dl>
-                  <dt>Authorization</dt><dd>Maintainer-confirmed</dd>
-                  <dt>Mode</dt><dd>{dryRun ? "Dry-run" : "Confirm before posting"}</dd>
-                  <dt>Policy</dt><dd>Human-in-the-loop, no auto-merge</dd>
-                  <dt>Audit ID</dt><dd>moai-2026-06-09-4821</dd>
+                  <dt>Authorization</dt>
+                  <dd>Maintainer-confirmed</dd>
+                  <dt>Mode</dt>
+                  <dd>{dryRun ? "Dry-run" : "Confirm before posting"}</dd>
+                  <dt>Policy</dt>
+                  <dd>Human-in-the-loop, no auto-merge</dd>
+                  <dt>Audit ID</dt>
+                  <dd>moai-2026-06-09-4821</dd>
                 </dl>
               </section>
             )}
@@ -377,23 +454,41 @@ function App() {
             <div className="tabs">
               {["Security Alerts", "Dependency Alerts", "CI Checks", "Policy Checks", "Timeline"].map((tab) => (
                 <button className={activeTab === tab ? "active" : ""} onClick={() => setActiveTab(tab)} key={tab}>
-                  {tab} {tab !== "Timeline" && <b>{tab === "Security Alerts" ? 8 : tab === "Dependency Alerts" ? 3 : tab === "CI Checks" ? 5 : 2}</b>}
+                  {tab}{" "}
+                  {tab !== "Timeline" && (
+                    <b>
+                      {tab === "Security Alerts" ? 8 : tab === "Dependency Alerts" ? 3 : tab === "CI Checks" ? 5 : 2}
+                    </b>
+                  )}
                 </button>
               ))}
             </div>
             <table>
               <thead>
-                <tr><th>Time</th><th>Type</th><th>Severity</th><th>Title</th><th>Source</th><th>Status</th></tr>
+                <tr>
+                  <th>Time</th>
+                  <th>Type</th>
+                  <th>Severity</th>
+                  <th>Title</th>
+                  <th>Source</th>
+                  <th>Status</th>
+                </tr>
               </thead>
               <tbody>
                 {alerts.map(([time, type, severity, title, source, status]) => (
                   <tr key={`${time}-${title}`}>
                     <td>{time}</td>
-                    <td>{typeIcon(type)} {type}</td>
-                    <td><span className={`severity-badge ${severity.toLowerCase()}`}>{severity}</span></td>
+                    <td>
+                      {typeIcon(type)} {type}
+                    </td>
+                    <td>
+                      <span className={`severity-badge ${severity.toLowerCase()}`}>{severity}</span>
+                    </td>
                     <td>{title}</td>
                     <td>{source}</td>
-                    <td><span className={`status-pill ${status.toLowerCase()}`}>{status}</span></td>
+                    <td>
+                      <span className={`status-pill ${status.toLowerCase()}`}>{status}</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -401,7 +496,11 @@ function App() {
           </section>
         </div>
       </main>
-      {toast && <div className="toast" role="status">{toast}</div>}
+      {toast && (
+        <div className="toast" role="status">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

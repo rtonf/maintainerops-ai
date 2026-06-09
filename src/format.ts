@@ -28,7 +28,9 @@ export function formatAssessment(
     ``,
     `## Suggested labels`,
     ``,
-    safeAssessment.labels.length > 0 ? safeAssessment.labels.map((label) => `- \`${safeInline(label)}\``).join("\n") : "- none",
+    safeAssessment.labels.length > 0
+      ? safeAssessment.labels.map((label) => `- \`${safeInline(label)}\``).join("\n")
+      : "- none",
     ``,
     `## Review checklist`,
     ``,
@@ -49,7 +51,9 @@ export function formatAssessment(
     `## Evidence`,
     ``,
     safeAssessment.evidence.length > 0
-      ? safeAssessment.evidence.map((entry) => `- **${entry.source}:** ${safeInline(entry.reference)} - ${safeInline(entry.note)}`).join("\n")
+      ? safeAssessment.evidence
+          .map((entry) => `- **${entry.source}:** ${safeInline(entry.reference)} - ${safeInline(entry.note)}`)
+          .join("\n")
       : "- none"
   ].join("\n");
 }

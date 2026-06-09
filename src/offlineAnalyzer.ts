@@ -40,7 +40,9 @@ export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
   const hasReleaseSignal = releaseTerms.some((term) => searchable.includes(term));
   const hasTests = touchedFiles.some((file) => testTerms.some((term) => file.path.toLowerCase().includes(term)));
   const sourceFiles = touchedFiles.filter((file) => !testTerms.some((term) => file.path.toLowerCase().includes(term)));
-  const largeChange = touchedFiles.length > 12 || sourceFiles.reduce((sum, file) => sum + (file.additions ?? 0) + (file.deletions ?? 0), 0) > 500;
+  const largeChange =
+    touchedFiles.length > 12 ||
+    sourceFiles.reduce((sum, file) => sum + (file.additions ?? 0) + (file.deletions ?? 0), 0) > 500;
 
   const riskLevel: RiskLevel = hasSecuritySignal ? (largeChange ? "critical" : "high") : largeChange ? "medium" : "low";
   const labels = new Set<string>();
@@ -58,7 +60,11 @@ export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
 
   if (item.kind === "pull_request") {
     checklist.push("Review changed files for behavior, compatibility, and test coverage.");
-    checklist.push(hasTests ? "Verify the added or updated tests cover the changed behavior." : "Ask for tests or explain why tests are not needed.");
+    checklist.push(
+      hasTests
+        ? "Verify the added or updated tests cover the changed behavior."
+        : "Ask for tests or explain why tests are not needed."
+    );
   }
 
   if (item.kind === "issue") {
@@ -70,7 +76,9 @@ export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
   }
 
   const securityNotes = hasSecuritySignal
-    ? ["Security-sensitive terms were detected. Validate auth boundaries, secret handling, and attacker-controlled inputs before taking action."]
+    ? [
+        "Security-sensitive terms were detected. Validate auth boundaries, secret handling, and attacker-controlled inputs before taking action."
+      ]
     : ["No obvious security-sensitive terms were detected by offline heuristics."];
 
   const releaseNotes = hasReleaseSignal
@@ -93,7 +101,12 @@ export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
   };
 }
 
-function buildSummary(item: MaintainerWorkItem, hasSecuritySignal: boolean, hasTests: boolean, largeChange: boolean): string {
+function buildSummary(
+  item: MaintainerWorkItem,
+  hasSecuritySignal: boolean,
+  hasTests: boolean,
+  largeChange: boolean
+): string {
   const parts = [`${item.kind.replace("_", " ")} "${item.title}" needs maintainer review.`];
   if (hasSecuritySignal) parts.push("It touches security-sensitive language or paths.");
   if (largeChange) parts.push("The change is large enough to deserve extra review time.");
@@ -101,7 +114,12 @@ function buildSummary(item: MaintainerWorkItem, hasSecuritySignal: boolean, hasT
   return parts.join(" ");
 }
 
-function recommendedAction(item: MaintainerWorkItem, hasSecuritySignal: boolean, hasTests: boolean, largeChange: boolean): MaintainerAssessment["recommendedAction"] {
+function recommendedAction(
+  item: MaintainerWorkItem,
+  hasSecuritySignal: boolean,
+  hasTests: boolean,
+  largeChange: boolean
+): MaintainerAssessment["recommendedAction"] {
   if (hasSecuritySignal) return "needs_security_review";
   if (item.kind === "issue") return "needs_more_info";
   if (!hasTests || largeChange) return "needs_human_review";
@@ -124,13 +142,22 @@ function buildCommentDraft(item: MaintainerWorkItem, hasSecuritySignal: boolean,
   return `Thanks for the PR. Before maintainer approval, please ${requests.join(" and ")}.`;
 }
 
-function buildEvidence(item: MaintainerWorkItem, hasSecuritySignal: boolean, hasTests: boolean, largeChange: boolean): MaintainerAssessment["evidence"] {
+function buildEvidence(
+  item: MaintainerWorkItem,
+  hasSecuritySignal: boolean,
+  hasTests: boolean,
+  largeChange: boolean
+): MaintainerAssessment["evidence"] {
   const evidence: MaintainerAssessment["evidence"] = [
     { source: "title", reference: item.title, note: "Used as the primary maintainer-facing context." }
   ];
 
   if (hasSecuritySignal) {
-    evidence.push({ source: "metadata", reference: "security term scan", note: "Security-sensitive terms were present in title, body, diff, comments, or file paths." });
+    evidence.push({
+      source: "metadata",
+      reference: "security term scan",
+      note: "Security-sensitive terms were present in title, body, diff, comments, or file paths."
+    });
   }
 
   if (item.kind === "pull_request") {
@@ -142,7 +169,11 @@ function buildEvidence(item: MaintainerWorkItem, hasSecuritySignal: boolean, has
   }
 
   if (largeChange) {
-    evidence.push({ source: "metadata", reference: "change size", note: "The offline analyzer classified this as a large change." });
+    evidence.push({
+      source: "metadata",
+      reference: "change size",
+      note: "The offline analyzer classified this as a large change."
+    });
   }
 
   return evidence;

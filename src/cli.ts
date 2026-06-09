@@ -90,7 +90,9 @@ export function parseArgs(argv: string[]): CliArgs {
   }
 
   if (args.repo && !args.authorized) {
-    throw new Error("Analyzing live GitHub repositories requires --authorized or MAINTAINEROPS_AUTHORIZED=true. Only analyze repositories you own, maintain, or have permission to review.");
+    throw new Error(
+      "Analyzing live GitHub repositories requires --authorized or MAINTAINEROPS_AUTHORIZED=true. Only analyze repositories you own, maintain, or have permission to review."
+    );
   }
 
   return args;

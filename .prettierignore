@@ -1,11 +1,8 @@
 node_modules/
 dist/
 dist-web/
-.env
-.env.*
 coverage/
 test-results/
 playwright-report/
-*.log
-security-scans/
-artifacts/
+docs/codex-security/
+package-lock.json

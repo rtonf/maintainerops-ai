@@ -49,9 +49,7 @@ export async function fetchPullRequestWorkItem(repo: string, pullNumber: number)
     url: pr.html_url,
     labels: normalizeLabels(pr.labels),
     files: files.map(toChangedFile),
-    diff: files
-      .map((file) => `diff -- ${file.filename}\n${file.patch ?? "[patch unavailable]"}`)
-      .join("\n\n")
+    diff: files.map((file) => `diff -- ${file.filename}\n${file.patch ?? "[patch unavailable]"}`).join("\n\n")
   };
 }
 
@@ -77,10 +75,12 @@ async function githubJson<T>(path: string): Promise<T> {
 
 function normalizeLabels(labels: GitHubIssue["labels"]): string[] {
   return (
-    labels?.map((label) => {
-      if (typeof label === "string") return label;
-      return label.name ?? "";
-    }).filter(Boolean) ?? []
+    labels
+      ?.map((label) => {
+        if (typeof label === "string") return label;
+        return label.name ?? "";
+      })
+      .filter(Boolean) ?? []
   );
 }
 

@@ -34,7 +34,10 @@ describe("formatAssessment", () => {
 
   it("neutralizes GitHub Actions workflow commands in markdown output", () => {
     const output = formatAssessment(item, assessment, "markdown");
-    assert.equal(output.split("\n").some((line) => line.startsWith("::")), false);
+    assert.equal(
+      output.split("\n").some((line) => line.startsWith("::")),
+      false
+    );
     assert.match(output, /\\::warning/);
     assert.match(output, /\\::add-mask/);
     assert.equal(output.includes("plain-secret-value"), false);
