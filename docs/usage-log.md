@@ -11,6 +11,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-09 | Published public GitHub repository and prepared application evidence.                             | `https://github.com/rtonf/maintainerops-ai`                                                                         |
 | 2026-06-09 | Created public triage example issues.                                                             | Issues #1, #2, and #3                                                                                               |
 | 2026-06-09 | Published initial GitHub Release.                                                                 | `v0.1.0`                                                                                                            |
+| 2026-06-09 | Published npm package.                                                                            | `maintainerops-ai@0.1.0` on npm                                                                                     |
 
 ## Current metrics
 
@@ -21,7 +22,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Codex Security reportable findings fixed: 4
 - Public GitHub issues created for workflow examples: 3
 - GitHub releases: 1
-- npm package status: name available, publish pending npm authentication
+- npm package status: published at `https://www.npmjs.com/package/maintainerops-ai`
 
 ## Next evidence to collect
 

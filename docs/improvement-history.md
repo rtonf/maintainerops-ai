@@ -16,4 +16,5 @@
 - Added `npm run verify` with type checking, lint, formatting, unit tests, UI smoke tests, evals, and audit.
 - Created public triage example issues for dependency advisory ingestion, release readiness, and prompt-injection-safe comment drafting.
 - Published GitHub Release `v0.1.0`.
-- Prepared npm package metadata; npm publish remains pending account authentication.
+- Published npm package `maintainerops-ai`.
+- Prepared `0.1.1` patch release to remove an accidental local npm authentication helper dependency from the package manifest.

@@ -17,6 +17,15 @@ MaintainerOps AI uses the OpenAI API to reduce the reading and drafting load whi
 
 ## Quick start
 
+Install from npm:
+
+```bash
+npm install -g maintainerops-ai
+maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
+```
+
+Run from source:
+
 ```bash
 npm install
 npm run build
@@ -93,6 +102,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [v0.1.0 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.0)
+- [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials
 
