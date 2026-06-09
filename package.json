@@ -1,0 +1,48 @@
+{
+  "name": "maintainerops-ai",
+  "version": "0.1.0",
+  "description": "AI-assisted OSS maintainer workflows for PR review, issue triage, security triage, and release notes.",
+  "type": "module",
+  "bin": {
+    "maintainerops": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "npm run build:cli && npm run build:web",
+    "build:cli": "tsc -p tsconfig.json",
+    "build:web": "vite build",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test dist/**/*.test.js",
+    "test:src": "npm run build && npm test",
+    "demo": "npm run build:cli && node dist/cli.js analyze --fixture examples/fixtures/pull_request.json --format markdown",
+    "dev": "vite --host 127.0.0.1",
+    "preview": "vite preview --host 127.0.0.1",
+    "eval": "npm run build:cli && node dist/eval/run-eval.js"
+  },
+  "keywords": [
+    "oss",
+    "maintainers",
+    "github",
+    "openai",
+    "codex",
+    "triage",
+    "security"
+  ],
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "dependencies": {
+    "@tabler/icons-react": "^3.44.0",
+    "openai": "^6.10.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.16"
+  }
+}

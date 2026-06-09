@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-web/
+.env
+.env.*
+coverage/
+*.log
+security-scans/
+artifacts/

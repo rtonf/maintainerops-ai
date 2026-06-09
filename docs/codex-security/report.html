@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>project 1a Codex Security Scan</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #fff;
+      --bg-elev: #fafafa;
+      --bg-muted: #f5f5f7;
+      --fg: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --code: #f3f4f6;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0f14;
+        --bg-elev: #0f141b;
+        --bg-muted: #121923;
+        --fg: #e5e7eb;
+        --muted: #9ca3af;
+        --border: #243040;
+        --accent: #60a5fa;
+        --code: #111827;
+        --shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 15px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    body.sidebar-collapsed .layout { grid-template-columns: 44px minmax(0, 1fr); }
+
+    .sidebar {
+      min-height: 100vh;
+      border-right: 1px solid var(--border);
+      background: var(--bg-muted);
+    }
+
+    .toc-inner {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 10px 8px;
+    }
+
+    .nav-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+    }
+
+    .nav-toggle {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--fg);
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+    }
+
+    .nav-toggle:hover { box-shadow: var(--shadow); }
+    .nav-meta { color: var(--muted); font-size: 12px; margin: 0 0 12px; padding: 0 4px; }
+
+    body.sidebar-collapsed .toc-inner {
+      display: flex;
+      align-items: center;
+      padding: 8px 6px;
+    }
+
+    body.sidebar-collapsed .nav-title span,
+    body.sidebar-collapsed .nav-meta,
+    body.sidebar-collapsed .toc { display: none; }
+
+    main { max-width: 1040px; padding: 32px 44px 80px; }
+    h1, h2, h3 { line-height: 1.2; margin-top: 1.7em; }
+    h1:first-child { margin-top: 0; }
+    h2 { border-top: 1px solid var(--border); padding-top: 1em; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { background: var(--code); border-radius: 4px; padding: 0.1em 0.3em; }
+    pre { background: var(--code); border: 1px solid var(--border); border-radius: 8px; overflow: auto; padding: 16px; }
+    pre code { background: transparent; padding: 0; }
+    table { border-collapse: collapse; width: 100%; margin: 18px 0; }
+    th, td { border: 1px solid var(--border); padding: 8px 10px; vertical-align: top; }
+    th { text-align: left; background: var(--code); }
+
+    main h3[id^="0-"] + table,
+    main h3[id^="1-"] + table,
+    main h3[id^="2-"] + table,
+    main h3[id^="3-"] + table,
+    main h3[id^="4-"] + table,
+    main h3[id^="5-"] + table,
+    main h3[id^="6-"] + table,
+    main h3[id^="7-"] + table,
+    main h3[id^="8-"] + table,
+    main h3[id^="9-"] + table {
+      margin: 10px 0 24px;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      background: var(--bg-elev);
+      box-shadow: var(--shadow);
+    }
+
+    main h3[id^="0-"] + table th,
+    main h3[id^="1-"] + table th,
+    main h3[id^="2-"] + table th,
+    main h3[id^="3-"] + table th,
+    main h3[id^="4-"] + table th,
+    main h3[id^="5-"] + table th,
+    main h3[id^="6-"] + table th,
+    main h3[id^="7-"] + table th,
+    main h3[id^="8-"] + table th,
+    main h3[id^="9-"] + table th { display: none; }
+
+    main h3[id^="0-"] + table td:first-child,
+    main h3[id^="1-"] + table td:first-child,
+    main h3[id^="2-"] + table td:first-child,
+    main h3[id^="3-"] + table td:first-child,
+    main h3[id^="4-"] + table td:first-child,
+    main h3[id^="5-"] + table td:first-child,
+    main h3[id^="6-"] + table td:first-child,
+    main h3[id^="7-"] + table td:first-child,
+    main h3[id^="8-"] + table td:first-child,
+    main h3[id^="9-"] + table td:first-child {
+      width: 170px;
+      color: var(--muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    main h3[id^="0-"] + table td,
+    main h3[id^="1-"] + table td,
+    main h3[id^="2-"] + table td,
+    main h3[id^="3-"] + table td,
+    main h3[id^="4-"] + table td,
+    main h3[id^="5-"] + table td,
+    main h3[id^="6-"] + table td,
+    main h3[id^="7-"] + table td,
+    main h3[id^="8-"] + table td,
+    main h3[id^="9-"] + table td { border-left: 0; border-right: 0; }
+
+    .toc { list-style: none; padding: 0; margin: 0; }
+    .toc a {
+      display: block;
+      border-radius: 6px;
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.3;
+      padding: 4px 6px;
+      position: relative;
+      transition: background 160ms ease, color 160ms ease, padding-left 160ms ease;
+    }
+
+    .toc a:hover { background: var(--bg-elev); text-decoration: none; }
+    .toc-item { list-style: none; margin: 1px 0; }
+    .toc-item.depth-1 > a { font-weight: 700; }
+    .toc-item.depth-2 { padding-left: 14px; }
+    .toc-item.depth-3 { padding-left: 28px; }
+
+    .toc-item.active > a {
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      font-weight: 700;
+      padding-left: 10px;
+    }
+
+    .toc-item.active > a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .layout { display: block; }
+      .sidebar { min-height: 0; border-right: 0; border-bottom: 1px solid var(--border); }
+      .toc-inner { position: static; height: auto; max-height: 45vh; }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" aria-label="Table of contents">
+      <div class="toc-inner">
+        <div class="nav-title">
+          <span>Outline</span>
+          <button id="navToggle" class="nav-toggle" aria-pressed="false" aria-label="Collapse sidebar" title="Collapse sidebar">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path id="navToggleIcon" d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="nav-meta">project 1a Codex Security Scan</div>
+        <ul class="toc">
+          <li class="toc-item depth-1"><a href="#security-review-maintainerops-ai">Security Review: MaintainerOps AI</a></li>
+<li class="toc-item depth-2"><a href="#scope">Scope</a></li>
+<li class="toc-item depth-3"><a href="#scan-summary">Scan Summary</a></li>
+<li class="toc-item depth-2"><a href="#threat-model">Threat Model</a></li>
+<li class="toc-item depth-3"><a href="#threat-model-maintainerops-ai">Threat Model: MaintainerOps AI</a></li>
+<li class="toc-item depth-2"><a href="#overview">Overview</a></li>
+<li class="toc-item depth-2"><a href="#threat-model-trust-boundaries-and-assumptions">Threat Model, Trust Boundaries, and Assumptions</a></li>
+<li class="toc-item depth-2"><a href="#attack-surface-mitigations-and-attacker-stories">Attack Surface, Mitigations, and Attacker Stories</a></li>
+<li class="toc-item depth-2"><a href="#severity-calibration-critical-high-medium-low">Severity Calibration (Critical, High, Medium, Low)</a></li>
+<li class="toc-item depth-2"><a href="#findings">Findings</a></li>
+<li class="toc-item depth-3"><a href="#confidence-scale">Confidence Scale</a></li>
+<li class="toc-item depth-3"><a href="#1-pull-request-workflow-executes-pr-controlled-built-code-with-openai-api-key">[1] Pull request workflow executes PR-controlled built code with OPENAI_API_KEY</a></li>
+<li class="toc-item depth-3"><a href="#2-structured-secrets-bypass-redaction-before-openai-model-submission">[2] Structured secrets bypass redaction before OpenAI model submission</a></li>
+<li class="toc-item depth-3"><a href="#3-model-controlled-markdown-can-emit-github-actions-workflow-commands">[3] Model-controlled Markdown can emit GitHub Actions workflow commands</a></li>
+<li class="toc-item depth-3"><a href="#4-json-report-output-discloses-raw-analyzed-content-to-stdout-and-ci-logs">[4] JSON report output discloses raw analyzed content to stdout and CI logs</a></li>
+<li class="toc-item depth-2"><a href="#reviewed-surfaces">Reviewed Surfaces</a></li>
+<li class="toc-item depth-2"><a href="#open-questions-and-follow-up">Open Questions And Follow Up</a></li>
+        </ul>
+      </div>
+    </aside>
+    <main>
+      <h1 id="security-review-maintainerops-ai">Security Review: MaintainerOps AI</h1>
+
+<h2 id="scope">Scope</h2>
+
+<ul><li>Target: C:\Users\mario\Documents\project　1a</li><li>Scan mode: Codex Security repository-wide scan.</li><li>Scan id: worktree_20260608T231306Z.</li><li>In-scope code: CLI, GitHub Action wrapper/workflow, OpenAI prompt/response path, GitHub API ingestion, formatter/report output, local React/Vite dashboard, tests, build metadata, and generated rows closed through source review.</li><li>Threat model: generated during Phase 1 and saved under rtifacts/01_context/threat_model.md; this is scan-generated context, not an external input.</li><li>Validation: discovery, validation, attack-path analysis, candidate-ledger audit, report format validation, and HTML rendering were run from local scan artifacts.</li><li>Exclusions: generated dist-web files were closed as not applicable after reviewing canonical source; no live OpenAI request, live GitHub Actions runner execution, or real credential disclosure was performed.</li></ul>
+
+<h3 id="scan-summary">Scan Summary</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Reportable findings</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Severity mix</td>
+<td>high: 1, medium: 2, low: 1</td>
+</tr>
+<tr>
+<td>Confidence mix</td>
+<td>high: 2, medium-high: 2</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>25 / 25 worklist rows closed; 12 high-impact family rows closed</td>
+</tr>
+<tr>
+<td>Candidate ledger status</td>
+<td>MOAI-001 through MOAI-004 each have discovery, validation, and attack-path receipts; suppressed CAND rows also have closure receipts</td>
+</tr>
+<tr>
+<td>Validation mode</td>
+<td>Static source/config tracing plus bounded local runtime reproductions with synthetic canaries and artifact-local OpenAI stubs</td>
+</tr>
+<tr>
+<td>Markdown report</td>
+<td>C:\tmp\codex-security-scans\project　1a\worktree_20260608T231306Z\report.md</td>
+</tr>
+<tr>
+<td>HTML report</td>
+<td>C:\tmp\codex-security-scans\project　1a\worktree_20260608T231306Z\report.html</td>
+</tr>
+<tr>
+<td>Reviewed surfaces</td>
+<td>C:\tmp\codex-security-scans\project　1a\worktree_20260608T231306Z\artifacts\03_coverage\reviewed_surfaces.md</td>
+</tr>
+</tbody></table>
+
+<h2 id="threat-model">Threat Model</h2>
+
+<h3 id="threat-model-maintainerops-ai">Threat Model: MaintainerOps AI</h3>
+
+<h2 id="overview">Overview</h2>
+
+<p>MaintainerOps AI is a Node.js/TypeScript tool for public open-source maintainers. It has three practical surfaces:</p>
+
+<ul><li>A CLI (<code>src/cli.ts</code>) that analyzes local fixtures or authorized GitHub issues and pull requests.</li><li>A GitHub Action wrapper (<code>src/action.ts</code>, <code>action.yml</code>, <code>.github/workflows/maintainerops.yml</code>) that runs in repository CI with read-only GitHub permissions.</li><li>A local React/Vite dashboard prototype (<code>web/main.tsx</code>, <code>web/styles.css</code>) that presents AI-assisted maintainer review state and decision controls.</li></ul>
+
+<p>The repository&#x27;s most security-relevant code paths are those that ingest untrusted issue, pull request, diff, fixture, and GitHub API content, redact sensitive values, send prompts to the OpenAI API, and render or serialize model recommendations. The tool is intentionally human-in-the-loop and documents that it must not merge pull requests, close issues, publish releases, disclose security issues, or scan repositories without authorization.</p>
+
+<h2 id="threat-model-trust-boundaries-and-assumptions">Threat Model, Trust Boundaries, and Assumptions</h2>
+
+<p>Primary assets and privileges:</p>
+
+<ul><li><code>OPENAI_API_KEY</code>, <code>GITHUB_TOKEN</code>, and GitHub Actions <code>GITHUB_TOKEN</code> values available via environment variables.</li><li>Maintainer-visible issue and pull request contents, including diffs, comments, labels, and CI/security summaries.</li><li>Model outputs that may influence maintainer decisions, labels, release notes, or comments.</li><li>Auditability and integrity of generated review packets.</li><li>The authorization boundary around live GitHub repository analysis.</li></ul>
+
+<p>Trust boundaries:</p>
+
+<ul><li>Local user/developer boundary: CLI arguments, fixture paths, and environment variables are controlled by the operator. The tool assumes the operator can read local files they explicitly pass as fixtures.</li><li>GitHub boundary: issue bodies, PR descriptions, labels, file paths, patches, and comments are attacker-controlled or contributor-controlled content returned from the GitHub API. They must be treated as data, not instructions.</li><li>Model boundary: OpenAI model output is untrusted advice. It must remain structured, validated, and human-reviewed before any GitHub side effect.</li><li>CI boundary: GitHub Actions runs with repository-provided environment and tokens. The workflow is configured for read-only repository scopes; any future write permissions would materially increase severity.</li><li>Browser/UI boundary: the React dashboard currently renders static/mock data from source code. If future versions render live GitHub/model content, XSS and unsafe HTML insertion become primary concerns.</li></ul>
+
+<p>Attacker-controlled inputs:</p>
+
+<ul><li>Issue and pull request titles, bodies, labels, comments, file names, and patch text fetched from GitHub.</li><li>Local fixture JSON files when a user analyzes untrusted files.</li><li>Model responses returned by the OpenAI API.</li><li>Query strings or UI text if future web routes or live data import are added.</li></ul>
+
+<p>Operator-controlled inputs:</p>
+
+<ul><li>CLI flags, repository names, issue/PR numbers, <code>--authorized</code>, model selection, and API tokens.</li><li>Environment variables such as <code>OPENAI_API_KEY</code>, <code>OPENAI_MODEL</code>, <code>GITHUB_TOKEN</code>, and <code>MAINTAINEROPS_AUTHORIZED</code>.</li></ul>
+
+<p>Developer-controlled inputs:</p>
+
+<ul><li>Prompt templates, JSON Schema, offline heuristics, docs, workflows, and the static UI source.</li></ul>
+
+<p>Security assumptions:</p>
+
+<ul><li>Live GitHub analysis is only allowed for repositories the operator owns, maintains, or has permission to review. <code>src/cli.ts</code> enforces explicit <code>--authorized</code> or <code>MAINTAINEROPS_AUTHORIZED=true</code> for live GitHub access.</li><li>The GitHub Action runs inside the target repository and uses read-only permissions by default.</li><li>No current code path posts comments, changes labels, closes issues, merges pull requests, publishes releases, or persists model decisions to external services.</li><li>The dashboard is a local prototype and does not currently expose a backend service or authentication surface.</li></ul>
+
+<h2 id="attack-surface-mitigations-and-attacker-stories">Attack Surface, Mitigations, and Attacker Stories</h2>
+
+<p>Attack surfaces:</p>
+
+<ul><li><code>src/github.ts</code>: builds GitHub API paths from operator-provided <code>repo</code> and numeric issue/PR IDs, attaches <code>GITHUB_TOKEN</code> when available, and throws error responses that may include GitHub response bodies.</li><li><code>src/prompt.ts</code> and <code>src/redaction.ts</code>: serialize maintainer work items, redact common secret patterns, truncate large payloads, and send content to the OpenAI API.</li><li><code>src/openaiAssessment.ts</code>: calls the OpenAI Responses API and parses structured JSON output.</li><li><code>src/schema.ts</code>: validates only coarse response shape after model output is parsed.</li><li><code>src/fixture.ts</code>: reads local JSON fixtures chosen by the operator.</li><li><code>src/cli.ts</code> and <code>src/action.ts</code>: parse authorization and input flags and route live GitHub or fixture analysis.</li><li><code>web/main.tsx</code>: renders dashboard state and simulates maintainer controls. Future live data rendering would expand this surface.</li><li>GitHub workflow and action metadata: permissions, environment variables, and build commands affect CI exposure.</li></ul>
+
+<p>Existing mitigations:</p>
+
+<ul><li>Live GitHub analysis requires explicit authorization in <code>src/cli.ts</code>.</li><li>GitHub Action permissions are read-only in <code>.github/workflows/maintainerops.yml</code>.</li><li>The tool is dry-run/human-in-the-loop by design and has no external write operation today.</li><li><code>redactSecrets</code> masks common token, JWT, private-key, <code>.env</code>, and bearer-token patterns before model calls.</li><li><code>truncateForModel</code> limits prompt size.</li><li>Structured output schema constrains the intended model response shape.</li><li>Tests cover argument parsing and redaction behavior.</li><li>Documentation warns against unauthorized scanning and automatic external actions.</li></ul>
+
+<p>Realistic attacker stories:</p>
+
+<ul><li>A malicious contributor embeds prompt-injection text in a PR description or diff attempting to override the system prompt or hide a finding. Impact is mitigated by human review and structured parsing, but high-quality evidence separation remains important.</li><li>A PR or issue includes secrets or high-entropy tokens. Redaction may catch common forms, but incomplete redaction could leak sensitive content to a model provider if maintainers analyze untrusted private data.</li><li>A future GitHub write feature could post model-generated content without sufficient confirmation, causing spam, disclosure, or inaccurate maintainer action.</li><li>A future live dashboard could render untrusted GitHub/model markdown or HTML unsafely and introduce XSS.</li><li>A maintainer could set <code>MAINTAINEROPS_AUTHORIZED=true</code> globally and accidentally analyze a repo they are not allowed to review. Documentation and explicit gating reduce but do not eliminate operator error.</li></ul>
+
+<p>Out-of-scope or lower realism attacker stories:</p>
+
+<ul><li>Remote code execution through the current dashboard is low realism because it is a static local Vite/React app with no backend and no dynamic HTML insertion.</li><li>Server-side request forgery is low realism in current code because GitHub API calls use a fixed <code>https://api.github.com</code> origin and OpenAI calls use the SDK.</li><li>Authentication bypass against the app is out of scope in the current prototype because there is no deployed authenticated service.</li></ul>
+
+<h2 id="severity-calibration-critical-high-medium-low">Severity Calibration (Critical, High, Medium, Low)</h2>
+
+<p>Critical:</p>
+
+<ul><li>A future feature that automatically merges pull requests, closes issues, posts security disclosures, or publishes releases based on model output without explicit maintainer approval.</li><li>Exfiltration of <code>GITHUB_TOKEN</code>, <code>OPENAI_API_KEY</code>, or repository secrets to attacker-controlled services.</li><li>Unsafe execution of attacker-controlled issue/PR content as shell commands or JavaScript in CI.</li></ul>
+
+<p>High:</p>
+
+<ul><li>Incomplete secret redaction causing private credentials or security reports to be sent to the model provider from private or sensitive repositories.</li><li>Prompt-injection or model-output handling that reliably suppresses high-risk findings and causes maintainers to take unsafe actions.</li><li>Adding GitHub write scopes to the Action without confirmation and audit controls.</li><li>Rendering untrusted markdown/HTML from GitHub or model responses in a deployed dashboard with script execution.</li></ul>
+
+<p>Medium:</p>
+
+<ul><li>Authorization bypass in CLI argument parsing allowing live GitHub analysis without <code>--authorized</code>.</li><li>Excessively verbose GitHub API errors exposing sensitive response content in logs.</li><li>Weak schema validation allowing malformed model output to be consumed by downstream automation.</li><li>Denial of service through very large fixtures or PR diffs beyond the current truncation expectations.</li></ul>
+
+<p>Low:</p>
+
+<ul><li>Misclassification by offline heuristics that causes noisy labels but no external side effect.</li><li>UI-only display bugs in the static dashboard prototype.</li><li>Documentation ambiguity that could confuse maintainers but does not by itself cause a security boundary bypass.</li></ul>
+
+
+<h2 id="findings">Findings</h2>
+
+<table>
+<thead><tr>
+<th>#</th>
+<th>Title</th>
+<th>Severity</th>
+<th>Confidence</th>
+<th>Candidate</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-pull-request-workflow-executes-pr-controlled-built-code-with-openai-api-key">Pull request workflow executes PR-controlled built code with OPENAI_API_KEY</a></td>
+<td>High</td>
+<td>High</td>
+<td>MOAI-003</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-structured-secrets-bypass-redaction-before-openai-model-submission">Structured secrets bypass redaction before OpenAI model submission</a></td>
+<td>Medium</td>
+<td>medium-high</td>
+<td>MOAI-001</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-model-controlled-markdown-can-emit-github-actions-workflow-commands">Model-controlled Markdown can emit GitHub Actions workflow commands</a></td>
+<td>Medium</td>
+<td>medium-high</td>
+<td>MOAI-004</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-json-report-output-discloses-raw-analyzed-content-to-stdout-and-ci-logs">JSON report output discloses raw analyzed content to stdout and CI logs</a></td>
+<td>Low</td>
+<td>High</td>
+<td>MOAI-002</td>
+</tr>
+</tbody></table>
+
+<h3 id="confidence-scale">Confidence Scale</h3>
+
+<table>
+<thead><tr>
+<th>Label</th>
+<th>Meaning</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>high</td>
+<td>direct source, configuration, or runtime evidence supports the finding, with no material unresolved reachability or exploitability blocker.</td>
+</tr>
+<tr>
+<td>medium</td>
+<td>source evidence supports a plausible issue, but runtime behavior, deployment configuration, role reachability, type constraints, or exploit reliability still need proof.</td>
+</tr>
+<tr>
+<td>low</td>
+<td>weak or incomplete evidence; include only when the user explicitly wants follow-up candidates in the final report.</td>
+</tr>
+</tbody></table>
+
+<h3 id="1-pull-request-workflow-executes-pr-controlled-built-code-with-openai-api-key">[1] Pull request workflow executes PR-controlled built code with OPENAI_API_KEY</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>Workflow configuration directly shows pull_request checkout, build, and later execution of built PR-controlled dist/cli.js with OPENAI_API_KEY; real-world reachability is constrained mainly by GitHub fork-secret withholding and repository settings.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>CI secret exposure through untrusted pull-request-controlled code execution</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-798 Use of Hard-coded Credentials / CWE-200 Exposure of Sensitive Information, applied here as CI secret exposure</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td>.github/workflows/maintainerops.yml:4-5, .github/workflows/maintainerops.yml:18, .github/workflows/maintainerops.yml:22-29, package.json:10-12, 	sconfig.json:12-17</td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+<p>The workflow runs on pull requests, checks out the PR workspace, builds repository code, then executes </p>
+<p>ode dist/cli.js with OPENAI_API_KEY in the same step environment. A malicious same-repository PR author, compromised collaborator, or other PR actor in a context where secrets are exposed can modify the built CLI and read the key before benign authorization logic runs.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>Validation used code/config tracing. .github/workflows/maintainerops.yml:4-5 defines the pull_request trigger, line 18 checks out repository contents, lines 22-23 run </p>
+<p>pm ci and </p>
+<p>pm run build, and lines 24-29 execute </p>
+<p>ode dist/cli.js with OPENAI_API_KEY. package.json:10-12 and 	sconfig.json:12-17 show TypeScript source compiles into dist. No live GitHub Actions run was needed to prove the source-to-sink configuration.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p>Pull request contents -&gt; ctions/checkout@v4 workspace -&gt; </p>
+<p>pm run build -&gt; PR-controlled dist/cli.js -&gt; </p>
+<p>ode dist/cli.js in Analyze pull request step -&gt; process environment containing OPENAI_API_KEY.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>The relevant attacker is not every fork contributor, because GitHub normally withholds repository secrets from external fork PRs. The path remains reachable for same-repository PRs, compromised collaborator accounts, permissive organization settings, or any PR workflow context where repository secrets are available. This crosses from PR-controlled code into maintainer-owned CI secrets; read-only GitHub permissions limit secondary GitHub impact but do not protect the OpenAI key.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Severity is high. The impact is direct exposure of a primary API credential, and the likelihood is high in secret-exposed PR contexts because the workflow itself supplies the trigger, build, and secret-bearing execution path. Critical is not supported because the repository evidence does not show arbitrary unauthenticated fork access to secrets, persistence, repository write compromise, or mass exploitation. Evidence that repository settings strictly prevent all untrusted same-repository PRs from receiving secrets would lower likelihood; evidence that this workflow is reused across many repositories with secrets exposed would raise operational urgency.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Run secret-bearing analysis only from trusted code. Check out a trusted base ref or pinned action for the OpenAI call, split untrusted PR metadata collection from the secret-bearing model request, require maintainer approval before injecting OPENAI_API_KEY, and run PR-controlled code only in no-secret/offline mode. Add a workflow regression test or policy check that fails if pull_request jobs both build PR code and expose repository secrets.</p>
+
+<h3 id="2-structured-secrets-bypass-redaction-before-openai-model-submission">[2] Structured secrets bypass redaction before OpenAI model submission</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>medium-high</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>Static tracing and an artifact-local OpenAI stub prove structured secrets reach</td>
+</tr>
+</tbody></table>
+<p>esponses.create; reportability depends on OpenAI-enabled use with sensitive or private analyzed content. |</p>
+<table>
+<tbody>
+<tr>
+<td>Category</td>
+<td>Sensitive information exposure through incomplete secret redaction before third-party model submission</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-200 Exposure of Sensitive Information; CWE-522 Insufficiently Protected Credentials</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td>src/redaction.ts:1-8, src/redaction.ts:11-13, src/prompt.ts:4-25, src/openaiAssessment.ts:6-19, src/analyze.ts:28-33, src/github.ts:24-55</td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+
+<p>edactSecrets catches several common token forms but misses JSON/colon key-value secrets and AWS-style credential values. uildAssessmentPrompt stringifies the full work item, applies this incomplete sanitizer, and nalyzeWithOpenAI sends the prompt to the OpenAI Responses API when OPENAI_API_KEY is set.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>Validation compiled the original TypeScript into an artifact directory and used a local stub of the OpenAI SDK to capture the request passed to </p>
+<p>esponses.create without making a network call. The harness showed ws_access_key_id: AKIA... and JSON colon form pi_key values survived redaction, survived prompt construction, and appeared in the captured OpenAI request object. Equals-form pi_key=... was redacted, confirming the sanitizer was exercised.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p>GitHub issue/PR body, patch, or operator-selected fixture -&gt; MaintainerWorkItem from src/github.ts or src/fixture.ts -&gt; uildAssessmentPrompt in src/prompt.ts -&gt; 	runcateForModel -&gt; </p>
+<p>edactSecrets in src/redaction.ts -&gt; client.responses.create user content in src/openaiAssessment.ts.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>Remote contributors can control issue and pull request content that maintainers or workflows analyze. The sink requires OpenAI-enabled mode and a secret-bearing input that is not already public or attacker-owned. Authorization gates protect live repository analysis scope, but they do not protect secrets after an authorized workflow decides to analyze content.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Severity is medium by the policy matrix: impact is high because private credentials or security-sensitive reports may cross to a third-party model provider, while likelihood is medium because OpenAI-enabled mode and meaningful secret-bearing input are required. The issue is not critical because the scan did not prove direct attacker-controlled exfiltration, account takeover, or code execution. Evidence that the tool is routinely used on private security reports would raise priority; evidence that all analyzed inputs are public and non-sensitive would lower impact.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Extend redaction to structured JSON/YAML/colon forms, quoted object properties, AWS access key IDs, AWS secret access keys, and common cloud credential names. Add tests that assert uildAssessmentPrompt removes those forms before model submission. Consider a default-deny sensitive field allowlist for model prompts and a second redaction pass immediately before any external provider call.</p>
+
+<h3 id="3-model-controlled-markdown-can-emit-github-actions-workflow-commands">[3] Model-controlled Markdown can emit GitHub Actions workflow commands</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>medium-high</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>Source and local formatter/CLI reproductions prove model-controlled strings can reach stdout at line start; exploit reliability through model influence and live runner behavior remains partly deployment-dependent.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Improper output neutralization for GitHub Actions workflow-command channel</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-117 Improper Output Neutralization for Logs</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td>src/openaiAssessment.ts:8-36, src/schema.ts:19-63, src/schema.ts:83-108, src/format.ts:21-43, src/format.ts:23, src/format.ts:43, src/cli.ts:22-28, src/action.ts:10-25, ction.yml:20-22</td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+<p>Model output is parsed into structured assessment fields, but string fields such as summary and commentDraft are not neutralized before Markdown output. The Markdown formatter places those fields on standalone lines and the CLI writes them directly to stdout, which GitHub Actions also treats as its workflow-command channel.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>Validation traced </p>
+<p>esponse.output_text through ssertAssessment, </p>
+<p>ormatAssessment, and process.stdout.write. Local artifacts showed real formatter output containing line-start ::warning and ::add-mask commands from model-shaped assessment fields, and the validation cited GitHub Actions workflow-command documentation for stdout command parsing. No live GitHub-hosted runner or OpenAI API call was performed.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p>Contributor-controlled issue/PR content -&gt; GitHub work item -&gt; prompt -&gt; model response JSON -&gt; MaintainerAssessment.summary / commentDraft -&gt; </p>
+<p>ormatAssessment Markdown lines -&gt; CLI stdout -&gt; GitHub Actions workflow-command parser.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>A remote issue or PR contributor can influence model output through content that the product intentionally feeds into the model. The final command string is model-mediated rather than deterministic attacker input, so reliability is not as strong as direct injection. The path is still realistic for GitHub Action use because Markdown is the default output and neither schema validation nor formatter output escapes line-start ::.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Severity is medium. The impact is CI log/control-channel integrity: misleading annotations, masking attacker-chosen strings, grouping, or parser interference that can impair maintainer auditability. The repository evidence does not prove code execution, token theft, repository mutation, release compromise, or account takeover, so high is not supported. A live runner proof showing command effects that hide security-relevant logs would increase confidence; forcing file/job-summary output instead of stdout would lower likelihood.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Neutralize untrusted Markdown before writing to GitHub Actions stdout. Escape or prefix every untrusted line that starts with ::, wrap report output with a unique ::stop-commands::{token} / ::{token}:: pair, force safe JSON or file output for action runs, or write Markdown to $GITHUB_STEP_SUMMARY or an artifact instead of raw stdout. Add formatter tests for summary, commentDraft, list fields, labels, and evidence notes containing workflow-command syntax.</p>
+
+<h3 id="4-json-report-output-discloses-raw-analyzed-content-to-stdout-and-ci-logs">[4] JSON report output discloses raw analyzed content to stdout and CI logs</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>CLI and Action reproductions prove JSON output serializes raw work-item canaries to stdout; default Markdown and unknown log ACLs constrain severity.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Information disclosure through unsafe report serialization</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-200 Exposure of Sensitive Information</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td>src/format.ts:8-9, src/cli.ts:22-28, src/action.ts:8-20, ction.yml:17-18, src/github.ts:24-55</td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+<p>When --format json or INPUT_FORMAT=json is selected, </p>
+<p>ormatAssessment serializes { item, assessment } directly. That includes the full raw MaintainerWorkItem, such as issue bodies, PR bodies, file patches, assembled diffs, and fixture fields, and </p>
+<p>unCli writes it to stdout.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>Validation used synthetic canaries in a fixture and ran both CLI JSON output and Action-style JSON invocation. The JSON stdout captures contained all canaries from body, patch, diff, and comments. The Markdown capture for the same fixture did not include those canaries, narrowing the issue to explicit JSON mode. Static tracing confirmed src/action.ts forwards INPUT_FORMAT and src/format.ts:8-9 serializes the raw item.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p>GitHub issue/PR body or fixture content -&gt; MaintainerWorkItem -&gt; </p>
+<p>ormatAssessment(..., &quot;json&quot;) -&gt; JSON.stringify({ item, assessment }, null, 2) -&gt; process.stdout.write -&gt; local terminal, CI logs, redirected files, or action logs.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>Remote contributors can control live issue/PR content, but the vulnerable JSON path is non-default. The bundled workflow hardcodes Markdown and Action metadata defaults to Markdown. The impact depends on a caller choosing JSON output and on logs being visible to users who could not otherwise see the analyzed content.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Severity is low by the policy matrix: impact is medium because raw analyzed content can contain sensitive maintainer-visible text, and likelihood is medium because JSON is documented and reachable but non-default. The finding is not medium or high without evidence that JSON mode is commonly used with broadly readable logs or that high-value non-public secrets are routinely present. Evidence of private-repo CI logs visible to lower-privileged users would raise severity; removing JSON raw-item serialization would close it.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Do not serialize raw work items in report JSON by default. Emit an allowlisted assessment-only object, redact item before JSON output, or add an explicit --include-raw-item flag with warnings. Add CLI and Action tests asserting JSON output does not include body, patch, diff, comments, or known secret/canary values unless explicitly requested.</p>
+
+<h2 id="reviewed-surfaces">Reviewed Surfaces</h2>
+
+<table>
+<thead><tr>
+<th>Surface</th>
+<th>Risk Area</th>
+<th>Outcome</th>
+<th>Notes</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>GitHub PR/issue/diff content to OpenAI prompt and reports</td>
+<td>Sensitive credential disclosure / redaction bypass</td>
+<td>Reported</td>
+<td>Produced MOAI-001 and MOAI-002.</td>
+</tr>
+<tr>
+<td>Live GitHub repository analysis authorization</td>
+<td>Authorization / policy boundary</td>
+<td>Rejected</td>
+<td>CLI authorization gate exists; workflow omission is availability, not bypass.</td>
+</tr>
+<tr>
+<td>GitHub API client</td>
+<td>SSRF / arbitrary request</td>
+<td>Rejected</td>
+<td>Fixed GitHub API origin and numeric issue/PR parsing.</td>
+</tr>
+<tr>
+<td>Model response to CLI/GitHub Action stdout</td>
+<td>Model-output trust / workflow-command injection</td>
+<td>Reported</td>
+<td>Produced MOAI-004.</td>
+</tr>
+<tr>
+<td>Local fixture path</td>
+<td>Arbitrary local file read</td>
+<td>Rejected</td>
+<td>Operator-selected local path only.</td>
+</tr>
+<tr>
+<td>React dashboard rendering</td>
+<td>XSS / unsafe HTML insertion</td>
+<td>Rejected</td>
+<td>Static React mock data; no unsafe HTML insertion or backend.</td>
+</tr>
+<tr>
+<td>CI / GitHub Action execution with secrets</td>
+<td>Token exposure / workflow trust boundary</td>
+<td>Reported</td>
+<td>Produced MOAI-003.</td>
+</tr>
+<tr>
+<td>Generated web bundle</td>
+<td>Generated artifact review</td>
+<td>Not applicable</td>
+<td>Source files reviewed as canonical surfaces.</td>
+</tr>
+<tr>
+<td>Mutable third-party Action tags</td>
+<td>CI supply-chain hardening</td>
+<td>Rejected</td>
+<td>Hardening concern, not project-specific vulnerability.</td>
+</tr>
+<tr>
+<td>Workflow authorization wiring</td>
+<td>Availability / automation blind spot</td>
+<td>Rejected</td>
+<td>Direct workflow may fail without authorization but does not bypass a security boundary.</td>
+</tr>
+<tr>
+<td>Eval/security triage quality</td>
+<td>Test quality / false negative risk</td>
+<td>Rejected</td>
+<td>Quality debt without runtime source/sink.</td>
+</tr>
+<tr>
+<td>Prompt injection advisory integrity</td>
+<td>Prompt injection / untrusted advice</td>
+<td>Rejected</td>
+<td>Human-in-the-loop advisory influence alone has no external side effect; concrete stdout impact is MOAI-004.</td>
+</tr>
+</tbody></table>
+
+<h2 id="open-questions-and-follow-up">Open Questions And Follow Up</h2>
+
+<ul><li>Fix MOAI-003 first by redesigning .github/workflows/maintainerops.yml so pull-request code is never executed in a step containing OPENAI_API_KEY.</li><li>Fix MOAI-001 by expanding redaction tests in src/redaction.test.ts for JSON/colon secrets, AWS credentials, and nested object forms, then assert the prompt sink no longer receives them.</li><li>Fix MOAI-004 by adding a formatter-level neutralization helper for GitHub Actions stdout and testing all model-controlled Markdown fields.</li><li>Decide whether JSON output should ever include raw item data; if yes, make it an explicit unsafe/debug mode rather than the normal Action JSON output.</li></ul>
+    </main>
+  </div>
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const icon = document.getElementById('navToggleIcon');
+    const collapsedKey = 'codex-security-report:sidebar-collapsed';
+
+    function setCollapsed(collapsed) {
+      document.body.classList.toggle('sidebar-collapsed', collapsed);
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', collapsed ? 'true' : 'false');
+        toggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+        toggle.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      }
+      if (icon) icon.setAttribute('d', collapsed ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6');
+      try { localStorage.setItem(collapsedKey, collapsed ? '1' : '0'); } catch {}
+    }
+
+    try { setCollapsed(localStorage.getItem(collapsedKey) === '1'); } catch {}
+    if (toggle) toggle.addEventListener('click', () => setCollapsed(!document.body.classList.contains('sidebar-collapsed')));
+
+    const tocLinks = Array.from(document.querySelectorAll('.toc a'));
+    const sections = tocLinks.map((link) => {
+      const id = decodeURIComponent(link.getAttribute('href').slice(1));
+      return [link, document.getElementById(id)];
+    }).filter((pair) => pair[1]);
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (!visible) return;
+      tocLinks.forEach((link) => link.parentElement.classList.remove('active'));
+      const active = tocLinks.find((link) => link.getAttribute('href') === '#' + visible.target.id);
+      if (active) active.parentElement.classList.add('active');
+    }, { rootMargin: '-10% 0px -75% 0px', threshold: [0, 1] });
+
+    sections.forEach(([, section]) => observer.observe(section));
+  </script>
+</body>
+</html>

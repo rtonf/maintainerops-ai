@@ -1,0 +1,33 @@
+[
+  {
+    "name": "security-sensitive pull request without tests",
+    "expectedLabels": ["security-review", "tests-needed"],
+    "item": {
+      "kind": "pull_request",
+      "repository": "example/repo",
+      "number": 1,
+      "title": "Fix token permission bypass",
+      "body": "Updates authorization checks.",
+      "files": [
+        {
+          "path": "src/auth/session.ts",
+          "status": "modified",
+          "additions": 20,
+          "deletions": 5
+        }
+      ]
+    }
+  },
+  {
+    "name": "ordinary issue",
+    "expectedLabels": ["needs-triage"],
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "example/repo",
+      "number": 2,
+      "title": "Documentation typo in install guide",
+      "body": "The Windows command has a typo."
+    }
+  }
+]

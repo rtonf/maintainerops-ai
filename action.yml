@@ -1,0 +1,22 @@
+name: MaintainerOps AI
+description: Generate maintainer review packets for GitHub issues and pull requests.
+author: MaintainerOps AI contributors
+inputs:
+  mode:
+    description: "Analysis mode: pull_request, issue, or fixture"
+    required: true
+  repo:
+    description: "Repository in owner/name format"
+    required: false
+  number:
+    description: "Issue or pull request number"
+    required: false
+  fixture:
+    description: "Path to local fixture JSON"
+    required: false
+  format:
+    description: "Output format: markdown or json"
+    default: markdown
+runs:
+  using: node20
+  main: dist/action.js
