@@ -26,6 +26,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-11 | Added npm package publication checks to the verification gate.                                    | `npm run pack:check`, `npm pack --dry-run`, `publint`                                                               |
 | 2026-06-11 | Prepared `v0.1.2` release materials for the full rescan fixes.                                    | `docs/releases/v0.1.2.md`, package version `0.1.2`                                                                  |
 | 2026-06-11 | Added another real public repository review packet and eval case.                                 | `docs/review-packets/daily-hub-diary-app-pr-2.md`, `examples/evals/golden.json`                                     |
+| 2026-06-11 | Verified the `v0.1.2` evidence branch with a fresh pull-request-triggered workflow run.           | PR #7, `https://github.com/rtonf/maintainerops-ai/actions/runs/27289450690`                                         |
 
 ## Current metrics
 
