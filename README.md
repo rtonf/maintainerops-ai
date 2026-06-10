@@ -9,6 +9,15 @@ OSS ecosystems rely on a small number of maintainers making high-quality decisio
 
 The project is intentionally human-in-the-loop. It does not merge pull requests, close issues, publish releases, or run security scans against repositories you do not own or administer.
 
+## Current evidence snapshot
+
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), prepared for `v0.1.2`.
+- GitHub releases: `v0.1.0`, `v0.1.1`, with `v0.1.2` release notes prepared.
+- Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
+- Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs.
+- Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for external maintainer feedback, and real repository review packets published.
+- Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
+
 ## Why this exists
 
 Open-source maintenance work is repetitive and high-stakes:

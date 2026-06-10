@@ -24,16 +24,18 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-10 | Opened an external feedback issue and verified the issue-triggered workflow.                      | Issue #6, `https://github.com/rtonf/maintainerops-ai/actions/runs/27285190047`                                      |
 | 2026-06-11 | Ran a full Codex Security repository-wide rescan and fixed all reportable findings found.         | `docs/codex-security/full-rescan-2026-06-11.md`, `npm run verify`                                                   |
 | 2026-06-11 | Added npm package publication checks to the verification gate.                                    | `npm run pack:check`, `npm pack --dry-run`, `publint`                                                               |
+| 2026-06-11 | Prepared `v0.1.2` release materials for the full rescan fixes.                                    | `docs/releases/v0.1.2.md`, package version `0.1.2`                                                                  |
+| 2026-06-11 | Added another real public repository review packet and eval case.                                 | `docs/review-packets/daily-hub-diary-app-pr-2.md`, `examples/evals/golden.json`                                     |
 
 ## Current metrics
 
 - Public triage fixtures: 1
-- Offline eval cases: 5
+- Offline eval cases: 6
 - Unit tests: 8
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
-- Real public repository review packets: 3
+- Real public repository review packets: 4
 - GitHub releases: 2
 - npm package status: `maintainerops-ai@0.1.1` published at `https://www.npmjs.com/package/maintainerops-ai`
 

@@ -1,6 +1,6 @@
 {
   "name": "maintainerops-ai",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "AI-assisted OSS maintainer workflows for PR review, issue triage, security triage, and release notes.",
   "type": "module",
   "files": [
