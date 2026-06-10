@@ -17,6 +17,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-10 | Generated review packets against real public repositories.                                        | `docs/review-packets/`                                                                                              |
 | 2026-06-10 | Ran post-fix verification and dependency checks.                                                  | `npm run verify`, secret pattern check, `npm audit --audit-level=moderate`                                          |
 | 2026-06-10 | Attempted to activate the GitHub Actions workflow.                                                | `gh auth refresh -h github.com -s workflow` timed out waiting for interactive OAuth approval                        |
+| 2026-06-10 | Activated and manually verified the GitHub Actions workflow.                                      | `MaintainerOps AI` workflow run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/27284781369`     |
 
 ## Current metrics
 
@@ -50,4 +51,4 @@ These entries are intentionally tracked as planned or completed so the public re
 - Maintainer time saved per review packet.
 - False-positive and false-negative notes from eval review.
 - First external user feedback or install/download evidence.
-- Active GitHub Actions run after OAuth `workflow` scope is granted.
+- First issue-triggered and pull-request-triggered workflow runs after new public work items are opened.

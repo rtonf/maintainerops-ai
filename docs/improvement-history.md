@@ -30,3 +30,5 @@
   - `rtonf/maintainerops-ai` issue #3
 - Added a post-fix security rescan report summarizing fixed findings, verification commands, and remaining workflow activation risk.
 - Documented the GitHub Actions activation blocker: the current GitHub OAuth token still needs `workflow` scope.
+- Activated `.github/workflows/maintainerops.yml` after OAuth `workflow` scope was granted.
+- Verified the active workflow with a successful manual `workflow_dispatch` run: `https://github.com/rtonf/maintainerops-ai/actions/runs/27284781369`.
