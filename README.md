@@ -109,6 +109,8 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)
 - [Real repository review packets](docs/review-packets/README.md)
+- [Application answers](docs/application-answers.md)
+- [External feedback request](docs/external-feedback-request.md)
 - [v0.1.0 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.0)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 

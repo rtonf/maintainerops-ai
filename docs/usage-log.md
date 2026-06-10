@@ -18,6 +18,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-10 | Ran post-fix verification and dependency checks.                                                  | `npm run verify`, secret pattern check, `npm audit --audit-level=moderate`                                          |
 | 2026-06-10 | Attempted to activate the GitHub Actions workflow.                                                | `gh auth refresh -h github.com -s workflow` timed out waiting for interactive OAuth approval                        |
 | 2026-06-10 | Activated and manually verified the GitHub Actions workflow.                                      | `MaintainerOps AI` workflow run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/27284781369`     |
+| 2026-06-10 | Expanded deterministic eval coverage from real maintainer packets.                                | `examples/evals/golden.json`, `EVALS.md`                                                                            |
+| 2026-06-10 | Prepared application answers and an external feedback request.                                    | `docs/application-answers.md`, `docs/external-feedback-request.md`                                                  |
 
 ## Current metrics
 
