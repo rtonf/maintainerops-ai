@@ -22,14 +22,15 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-10 | Prepared application answers and an external feedback request.                                    | `docs/application-answers.md`, `docs/external-feedback-request.md`                                                  |
 | 2026-06-10 | Verified the active workflow on a real pull request event.                                        | PR #5, `https://github.com/rtonf/maintainerops-ai/actions/runs/27285123074`                                         |
 | 2026-06-10 | Opened an external feedback issue and verified the issue-triggered workflow.                      | Issue #6, `https://github.com/rtonf/maintainerops-ai/actions/runs/27285190047`                                      |
+| 2026-06-11 | Ran a full Codex Security repository-wide rescan and fixed all reportable findings found.         | `docs/codex-security/full-rescan-2026-06-11.md`, `npm run verify`                                                   |
 
 ## Current metrics
 
 - Public triage fixtures: 1
-- Offline eval cases: 2
-- Unit tests: 7
+- Offline eval cases: 5
+- Unit tests: 8
 - UI smoke tests: 1
-- Codex Security reportable findings fixed: 4
+- Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 3
 - GitHub releases: 2

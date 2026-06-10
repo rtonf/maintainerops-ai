@@ -105,6 +105,8 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Codex Security HTML report](docs/codex-security/report.html)
 - [Focused fix report](docs/codex-security/fix-report.md)
 - [Post-fix rescan report](docs/codex-security/rescan-report.md)
+- [Full Codex Security rescan report](docs/codex-security/full-rescan-2026-06-11.md)
+- [Full Codex Security rescan HTML](docs/codex-security/full-rescan-2026-06-11.html)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)

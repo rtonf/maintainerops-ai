@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MaintainerOps AI Codex Security Full Rescan</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #fff;
+      --bg-elev: #fafafa;
+      --bg-muted: #f5f5f7;
+      --fg: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --code: #f3f4f6;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0f14;
+        --bg-elev: #0f141b;
+        --bg-muted: #121923;
+        --fg: #e5e7eb;
+        --muted: #9ca3af;
+        --border: #243040;
+        --accent: #60a5fa;
+        --code: #111827;
+        --shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 15px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    body.sidebar-collapsed .layout { grid-template-columns: 44px minmax(0, 1fr); }
+
+    .sidebar {
+      min-height: 100vh;
+      border-right: 1px solid var(--border);
+      background: var(--bg-muted);
+    }
+
+    .toc-inner {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 10px 8px;
+    }
+
+    .nav-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+    }
+
+    .nav-toggle {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--fg);
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+    }
+
+    .nav-toggle:hover { box-shadow: var(--shadow); }
+    .nav-meta { color: var(--muted); font-size: 12px; margin: 0 0 12px; padding: 0 4px; }
+
+    body.sidebar-collapsed .toc-inner {
+      display: flex;
+      align-items: center;
+      padding: 8px 6px;
+    }
+
+    body.sidebar-collapsed .nav-title span,
+    body.sidebar-collapsed .nav-meta,
+    body.sidebar-collapsed .toc { display: none; }
+
+    main { max-width: 1040px; padding: 32px 44px 80px; }
+    h1, h2, h3 { line-height: 1.2; margin-top: 1.7em; }
+    h1:first-child { margin-top: 0; }
+    h2 { border-top: 1px solid var(--border); padding-top: 1em; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { background: var(--code); border-radius: 4px; padding: 0.1em 0.3em; }
+    pre { background: var(--code); border: 1px solid var(--border); border-radius: 8px; overflow: auto; padding: 16px; }
+    pre code { background: transparent; padding: 0; }
+    table { border-collapse: collapse; width: 100%; margin: 18px 0; }
+    th, td { border: 1px solid var(--border); padding: 8px 10px; vertical-align: top; }
+    th { text-align: left; background: var(--code); }
+
+    main h3[id^="0-"] + table,
+    main h3[id^="1-"] + table,
+    main h3[id^="2-"] + table,
+    main h3[id^="3-"] + table,
+    main h3[id^="4-"] + table,
+    main h3[id^="5-"] + table,
+    main h3[id^="6-"] + table,
+    main h3[id^="7-"] + table,
+    main h3[id^="8-"] + table,
+    main h3[id^="9-"] + table {
+      margin: 10px 0 24px;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      background: var(--bg-elev);
+      box-shadow: var(--shadow);
+    }
+
+    main h3[id^="0-"] + table th,
+    main h3[id^="1-"] + table th,
+    main h3[id^="2-"] + table th,
+    main h3[id^="3-"] + table th,
+    main h3[id^="4-"] + table th,
+    main h3[id^="5-"] + table th,
+    main h3[id^="6-"] + table th,
+    main h3[id^="7-"] + table th,
+    main h3[id^="8-"] + table th,
+    main h3[id^="9-"] + table th { display: none; }
+
+    main h3[id^="0-"] + table td:first-child,
+    main h3[id^="1-"] + table td:first-child,
+    main h3[id^="2-"] + table td:first-child,
+    main h3[id^="3-"] + table td:first-child,
+    main h3[id^="4-"] + table td:first-child,
+    main h3[id^="5-"] + table td:first-child,
+    main h3[id^="6-"] + table td:first-child,
+    main h3[id^="7-"] + table td:first-child,
+    main h3[id^="8-"] + table td:first-child,
+    main h3[id^="9-"] + table td:first-child {
+      width: 170px;
+      color: var(--muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    main h3[id^="0-"] + table td,
+    main h3[id^="1-"] + table td,
+    main h3[id^="2-"] + table td,
+    main h3[id^="3-"] + table td,
+    main h3[id^="4-"] + table td,
+    main h3[id^="5-"] + table td,
+    main h3[id^="6-"] + table td,
+    main h3[id^="7-"] + table td,
+    main h3[id^="8-"] + table td,
+    main h3[id^="9-"] + table td { border-left: 0; border-right: 0; }
+
+    .toc { list-style: none; padding: 0; margin: 0; }
+    .toc a {
+      display: block;
+      border-radius: 6px;
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.3;
+      padding: 4px 6px;
+      position: relative;
+      transition: background 160ms ease, color 160ms ease, padding-left 160ms ease;
+    }
+
+    .toc a:hover { background: var(--bg-elev); text-decoration: none; }
+    .toc-item { list-style: none; margin: 1px 0; }
+    .toc-item.depth-1 > a { font-weight: 700; }
+    .toc-item.depth-2 { padding-left: 14px; }
+    .toc-item.depth-3 { padding-left: 28px; }
+
+    .toc-item.active > a {
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      font-weight: 700;
+      padding-left: 10px;
+    }
+
+    .toc-item.active > a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .layout { display: block; }
+      .sidebar { min-height: 0; border-right: 0; border-bottom: 1px solid var(--border); }
+      .toc-inner { position: static; height: auto; max-height: 45vh; }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" aria-label="Table of contents">
+      <div class="toc-inner">
+        <div class="nav-title">
+          <span>Outline</span>
+          <button id="navToggle" class="nav-toggle" aria-pressed="false" aria-label="Collapse sidebar" title="Collapse sidebar">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path id="navToggleIcon" d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="nav-meta">MaintainerOps AI Codex Security Full Rescan</div>
+        <ul class="toc">
+          <li class="toc-item depth-1"><a href="#security-review-maintainerops-ai">Security Review: MaintainerOps AI</a></li>
+<li class="toc-item depth-2"><a href="#scope">Scope</a></li>
+<li class="toc-item depth-3"><a href="#scan-summary">Scan Summary</a></li>
+<li class="toc-item depth-2"><a href="#threat-model">Threat Model</a></li>
+<li class="toc-item depth-1"><a href="#maintainerops-ai-repository-threat-model">MaintainerOps AI Repository Threat Model</a></li>
+<li class="toc-item depth-2"><a href="#product-surfaces">Product surfaces</a></li>
+<li class="toc-item depth-2"><a href="#assets-and-privileges">Assets and privileges</a></li>
+<li class="toc-item depth-2"><a href="#trust-boundaries">Trust boundaries</a></li>
+<li class="toc-item depth-2"><a href="#required-invariants">Required invariants</a></li>
+<li class="toc-item depth-2"><a href="#repository-specific-vulnerability-classes-of-concern">Repository-specific vulnerability classes of concern</a></li>
+<li class="toc-item depth-2"><a href="#findings">Findings</a></li>
+<li class="toc-item depth-3"><a href="#confidence-scale">Confidence Scale</a></li>
+<li class="toc-item depth-3"><a href="#1-pr-controlled-build-could-read-persisted-checkout-token">[1] PR-controlled build could read persisted checkout token</a></li>
+<li class="toc-item depth-3"><a href="#2-unquoted-colon-form-secrets-were-not-redacted">[2] Unquoted colon-form secrets were not redacted</a></li>
+<li class="toc-item depth-3"><a href="#3-json-output-exposed-non-secret-raw-analyzed-content">[3] JSON output exposed non-secret raw analyzed content</a></li>
+<li class="toc-item depth-3"><a href="#4-reusable-action-auto-authorized-live-analysis-in-github-actions">[4] Reusable Action auto-authorized live analysis in GitHub Actions</a></li>
+<li class="toc-item depth-2"><a href="#reviewed-surfaces">Reviewed Surfaces</a></li>
+<li class="toc-item depth-2"><a href="#open-questions-and-follow-up">Open Questions And Follow Up</a></li>
+        </ul>
+      </div>
+    </aside>
+    <main>
+      <h1 id="security-review-maintainerops-ai">Security Review: MaintainerOps AI</h1>
+
+<h2 id="scope">Scope</h2>
+
+<ul><li>Target: <code>C:\Users\mario\Documents\project　1a</code></li><li>Repository: <code>rtonf/maintainerops-ai</code></li><li>Scan mode: Codex Security repository-wide full rescan.</li><li>Scan date: 2026-06-11.</li><li>Commit at scan start: <code>dc336f2</code>.</li><li>In-scope code: CLI, GitHub Action wrapper/workflow, GitHub API ingestion, OpenAI prompt/response path, redaction, formatter/report output, offline analyzer, eval harness, React/Vite dashboard, demo tooling, package metadata, lockfile, and security/application docs.</li><li>Threat model: generated during Phase 1 and saved to <code>artifacts/01_context/threat_model.md</code>; this is scan-generated context, not an external input.</li><li>Artifacts reviewed: <code>rank_input.csv</code>, <code>deep_review_input.csv</code>, <code>work_ledger.jsonl</code>, <code>raw_candidates.jsonl</code>, <code>repository_coverage_ledger.md</code>, per-candidate ledgers, validation reports, attack-path reports, and <code>npm run verify</code> output.</li><li>Exclusions and limitations: generated <code>dist-web</code> and <code>test-results</code> artifacts were closed as not applicable after canonical source review; no live OpenAI request or real credential disclosure was performed.</li></ul>
+
+<h3 id="scan-summary">Scan Summary</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Reportable findings</td>
+<td>4 fixed during scan; 0 unfixed</td>
+</tr>
+<tr>
+<td>Severity mix</td>
+<td>medium: 2 fixed; low: 2 fixed</td>
+</tr>
+<tr>
+<td>Confidence mix</td>
+<td>high: 2; medium-high: 2</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>31 rank/deep-review rows generated; 16 repository coverage ledger rows closed</td>
+</tr>
+<tr>
+<td>Candidate ledger status</td>
+<td>MOAI-005 through MOAI-008 each have discovery, validation, and attack-path receipts</td>
+</tr>
+<tr>
+<td>Validation mode</td>
+<td>Static source/config tracing, focused runtime probes, local tests, <code>npm run verify</code>, and <code>npm audit --audit-level=moderate</code></td>
+</tr>
+<tr>
+<td>Markdown report</td>
+<td><code>C:\Users\mario\AppData\Local\Temp\codex-security-scans\project-1a\dc336f2_20260611T000000Z\report.md</code></td>
+</tr>
+<tr>
+<td>HTML report</td>
+<td><code>C:\Users\mario\AppData\Local\Temp\codex-security-scans\project-1a\dc336f2_20260611T000000Z\report.html</code></td>
+</tr>
+<tr>
+<td>Public report copy</td>
+<td><code>docs/codex-security/full-rescan-2026-06-11.md</code></td>
+</tr>
+</tbody></table>
+
+<h2 id="threat-model">Threat Model</h2>
+
+<h1 id="maintainerops-ai-repository-threat-model">MaintainerOps AI Repository Threat Model</h1>
+
+<p>Date: 2026-06-11  </p>
+<p>Repository: rtonf/maintainerops-ai  </p>
+<p>Scope: entire repository at commit dc336f2</p>
+
+<h2 id="product-surfaces">Product surfaces</h2>
+
+<p>MaintainerOps AI is a TypeScript/Node.js OSS maintainer assistant with these runtime surfaces:</p>
+
+<ul><li>CLI entrypoint that analyzes local fixtures or authorized GitHub issues/pull requests.</li><li>GitHub API client that fetches issue, pull request, diff, file, comment, and metadata context using <code>GITHUB_TOKEN</code>.</li><li>OpenAI API client that sends redacted maintainer work-item context and expects structured assessment output.</li><li>GitHub Action wrapper and workflow that run the analyzer in CI.</li><li>Offline heuristic analyzer used for deterministic CI, evals, and public examples.</li><li>React/Vite dashboard prototype for displaying maintainer review workflow state.</li><li>Eval harness, fixtures, examples, and documentation used by maintainers and applicants.</li></ul>
+
+<h2 id="assets-and-privileges">Assets and privileges</h2>
+
+<ul><li><code>OPENAI_API_KEY</code>, <code>GITHUB_TOKEN</code>, and any user-provided tokens or secrets in issues, PRs, diffs, fixtures, comments, logs, or environment variables.</li><li>Repository read permissions granted to GitHub Actions and local CLI runs.</li><li>Maintainer attention and trust in AI-generated labels, risk levels, comments, release notes, and security notes.</li><li>Public npm package integrity and GitHub Action behavior.</li><li>Public security/evidence reports used in application review.</li></ul>
+
+<h2 id="trust-boundaries">Trust boundaries</h2>
+
+<ul><li>User-provided CLI arguments cross into local file reads and GitHub API selection.</li><li>Local fixture JSON crosses into analyzer logic, redaction, model prompts, and report formatting.</li><li>GitHub issue/PR titles, bodies, comments, diffs, file paths, and check metadata are attacker-controlled when analyzing public contributions.</li><li>OpenAI model output is untrusted text and must not be treated as executable workflow commands or authoritative maintainer decisions.</li><li>GitHub Actions events, especially <code>pull_request</code>, run against untrusted contribution context and must not receive high-value secrets.</li><li>README/docs/examples are public guidance and must not instruct unsafe secret handling.</li></ul>
+
+<h2 id="required-invariants">Required invariants</h2>
+
+<ul><li>Live GitHub analysis requires explicit <code>--authorized</code> user intent.</li><li>The tool must not analyze repositories the user does not own, maintain, or have authorization to administer.</li><li>Secrets and structured credentials must be redacted before model submission and before serialized report output.</li><li>PR-triggered CI must not expose <code>OPENAI_API_KEY</code> or other high-value secrets to PR-controlled code.</li><li>Model-controlled or attacker-controlled Markdown must not be able to emit GitHub Actions workflow commands through stdout.</li><li>CLI and Action modes must remain human-in-the-loop: no automatic merge, close, release, vulnerability disclosure, or permission-changing side effects.</li><li>JSON and Markdown output should preserve auditability without leaking raw untrusted secrets.</li><li>Dependency and release tooling should remain reproducible and avoid hidden privileged package behavior.</li></ul>
+
+<h2 id="repository-specific-vulnerability-classes-of-concern">Repository-specific vulnerability classes of concern</h2>
+
+<ul><li>Secret exfiltration from fixtures, GitHub content, environment, logs, model prompts, JSON reports, or GitHub Actions.</li><li>Prompt injection or instruction smuggling from untrusted issue/PR content into maintainer-facing recommendations.</li><li>Workflow command injection through model/PR-controlled stdout in GitHub Actions.</li><li>Unauthorized live GitHub API access or confusing authorization gates.</li><li>Unsafe file/path handling for fixture inputs and report generation.</li><li>XSS or unsafe rendering in the dashboard if untrusted packet text is later introduced.</li><li>Dependency supply-chain issues in npm package/runtime scripts.</li><li>Documentation encouraging unsafe use outside owned or authorized repositories.</li></ul>
+
+<h2 id="findings">Findings</h2>
+
+<table>
+<thead><tr>
+<th>#</th>
+<th>Title</th>
+<th>Severity</th>
+<th>Confidence</th>
+<th>Status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-pr-controlled-build-could-read-persisted-checkout-token">PR-controlled build could read persisted checkout token</a></td>
+<td>Medium</td>
+<td>medium-high</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-unquoted-colon-form-secrets-were-not-redacted">Unquoted colon-form secrets were not redacted</a></td>
+<td>Medium</td>
+<td>High</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-json-output-exposed-non-secret-raw-analyzed-content">JSON output exposed non-secret raw analyzed content</a></td>
+<td>Low</td>
+<td>High</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-reusable-action-auto-authorized-live-analysis-in-github-actions">Reusable Action auto-authorized live analysis in GitHub Actions</a></td>
+<td>Low</td>
+<td>medium-high</td>
+<td>fixed</td>
+</tr>
+</tbody></table>
+
+<h3 id="confidence-scale">Confidence Scale</h3>
+
+<table>
+<thead><tr>
+<th>Label</th>
+<th>Meaning</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>high</td>
+<td>Direct source, configuration, or runtime evidence supports the finding, with no material unresolved reachability or exploitability blocker.</td>
+</tr>
+<tr>
+<td>medium</td>
+<td>Source evidence supports a plausible issue, but runtime behavior, deployment configuration, role reachability, type constraints, or exploit reliability still need proof.</td>
+</tr>
+<tr>
+<td>low</td>
+<td>Weak or incomplete evidence; include only when the user explicitly wants follow-up candidates in the final report.</td>
+</tr>
+</tbody></table>
+
+<h3 id="1-pr-controlled-build-could-read-persisted-checkout-token">[1] PR-controlled build could read persisted checkout token</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>medium-high</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>The workflow source and actions/checkout documentation directly support the token-persistence behavior; impact is limited by read-only workflow permissions.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>CI credential exposure</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-522: Insufficiently Protected Credentials</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td><code>.github/workflows/maintainerops.yml:19-21</code>, <code>.github/workflows/maintainerops.yml:25-26</code>, <code>docs/github-workflows/maintainerops.yml:18-20</code></td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+<p>The pre-fix <code>pull_request</code> workflow checked out PR-controlled code and then ran <code>npm ci</code> and <code>npm run build</code>. <code>actions/checkout@v4</code> persists the auth token by default so later scripts can run authenticated git commands. That meant PR-controlled install or build logic could read or use the persisted read-only token before the analyzer ran.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>Validation used static workflow review plus the official actions/checkout documentation, which states that the auth token is persisted by default and <code>persist-credentials: false</code> opts out. The workflow now sets <code>persist-credentials: false</code> in both the active workflow and mirrored sample workflow. <code>npm run verify</code> passed after the fix.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p><code>pull_request</code> event -&gt; <code>actions/checkout@v4</code> -&gt; persisted local git credentials -&gt; PR-controlled <code>npm ci</code> / <code>npm run build</code> -&gt; possible token read/use. The fix inserts <code>persist-credentials: false</code> at checkout before npm commands run.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>A pull request author can influence package/build code in a PR workflow. The token permissions are read-only (<code>contents</code>, <code>issues</code>, <code>pull-requests</code>), so the realistic outcome is repository metadata/API read exposure rather than repository write access.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Medium. The bug crosses the CI credential boundary, but severity is reduced by read-only permissions and absence of high-value secrets in PR jobs. Evidence that the same pattern was used with write scopes or private sensitive repositories would raise severity; a fully isolated no-token checkout would lower it.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Set <code>persist-credentials: false</code> on checkout and keep PR-triggered jobs offline/no-secret. Future workflows that need authenticated git operations should use the shortest-lived, least-privileged credential after untrusted build steps are complete.</p>
+
+<h3 id="2-unquoted-colon-form-secrets-were-not-redacted">[2] Unquoted colon-form secrets were not redacted</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>A focused runtime probe showed unquoted colon-form secrets survived before the fix, and the new redaction tests now cover those forms.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Secret redaction bypass</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-200: Exposure of Sensitive Information to an Unauthorized Actor</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td><code>src/redaction.ts:13-20</code>, <code>src/redaction.test.ts:28-39</code></td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+<p>The previous redaction logic covered quoted JSON/colon values but not unquoted YAML-style values such as <code>api_key: secret</code> or <code>aws_secret_access_key: secret</code>. Those forms can appear in issues, PRs, diffs, comments, or fixtures and then flow into model prompts or report output.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>A runtime probe confirmed the unquoted colon values survived before the fix. The fix adds an unquoted colon key-value redaction pattern covering API keys, tokens, secrets, passwords, AWS key fields, access tokens, and refresh tokens. <code>src/redaction.test.ts</code> now verifies those cases, and <code>npm run verify</code> passed.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p>Untrusted issue/PR/fixture content -&gt; <code>buildAssessmentPrompt</code> or <code>formatAssessment</code> -&gt; <code>redactSecrets</code> -&gt; OpenAI prompt or JSON/Markdown output. The missing unquoted-colon branch was the broken control.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>Any maintainer who analyzes content containing YAML-style credentials could trigger the path. The attacker may be the party who placed the value in the analyzed content, but accidental credential inclusion by maintainers or private repo content is the important risk.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Medium. The issue can disclose credentials to model prompts or generated artifacts if sensitive content is analyzed, but it requires a credential-like value to be present in input. More evidence of private repo defaults or automatic model-backed analysis would raise severity; strict no-secret input policies would lower it.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Keep the unquoted colon redaction pattern and expand regression tests when adding new credential formats. Prefer minimizing prompt/report payloads in addition to redaction.</p>
+
+<h3 id="3-json-output-exposed-non-secret-raw-analyzed-content">[3] JSON output exposed non-secret raw analyzed content</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>Canary values in body, comments, patches, and metadata survived before the fix; the formatter now omits those fields and tests assert minimization.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Sensitive data exposure in logs/artifacts</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-200: Exposure of Sensitive Information to an Unauthorized Actor</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td><code>src/format.ts:9-10</code>, <code>src/format.ts:65-86</code>, <code>src/format.test.ts:41-55</code></td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+<p>JSON mode previously emitted the work-item object after secret redaction. That still allowed non-secret but private or sensitive raw content from bodies, diffs, comments, patches, and metadata to appear in logs or artifacts.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>A canary test confirmed raw body/comment/patch/metadata strings survived before the fix. The formatter now emits only audit metadata and changed-file summaries in JSON mode. <code>src/format.test.ts</code> asserts that body, diff, comments, metadata, and patch fields are omitted while useful file metadata remains. <code>npm run verify</code> passed.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p>Raw analyzed work item -&gt; <code>formatAssessment(..., &quot;json&quot;)</code> -&gt; JSON stdout/artifact. The fix changes <code>redactWorkItem</code> from redacted full serialization to explicit metadata minimization.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>The path is reachable when a maintainer or CI job uses <code>--format json</code>. It is most relevant for private repositories, sensitive issues, or logs/artifacts shared more broadly than intended.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Low. Secrets are still redacted and JSON output is operator-controlled, but minimizing raw analyzed content is a safer default. Evidence that JSON output was automatically uploaded to public artifacts would raise severity.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Keep JSON output minimized by default. If raw debug output is needed later, make it an explicit unsafe/debug mode with clear warnings.</p>
+
+<h3 id="4-reusable-action-auto-authorized-live-analysis-in-github-actions">[4] Reusable Action auto-authorized live analysis in GitHub Actions</h3>
+
+<table>
+<thead><tr>
+<th>Field</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>medium-high</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>Source review showed the action wrapper previously added <code>--authorized</code> for any GitHub Actions run; the current code requires explicit input or environment authorization.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Authorization / policy boundary weakness</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-284: Improper Access Control</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td><code>src/action.ts:10-15</code>, <code>action.yml:20-22</code></td>
+</tr>
+</tbody></table>
+
+<h4 id="summary">Summary</h4>
+
+<p>The reusable Action wrapper previously treated <code>GITHUB_ACTIONS=true</code> as enough to add <code>--authorized</code>, while <code>action.yml</code> exposed <code>repo</code> and <code>number</code> inputs. That weakened the CLI&#x27;s explicit authorization UX for downstream action consumers.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>Current <code>action.yml</code> has an <code>authorized</code> input defaulting to <code>false</code>, and <code>src/action.ts</code> adds <code>--authorized</code> only when <code>INPUT_AUTHORIZED=true</code> or <code>MAINTAINEROPS_AUTHORIZED=true</code>. <code>npm run verify</code> passed after the change.</p>
+
+<h4 id="dataflow">Dataflow</h4>
+
+<p>Downstream workflow input <code>repo</code>/<code>number</code> -&gt; <code>src/action.ts</code> argv construction -&gt; <code>--authorized</code> -&gt; <code>fetchIssueWorkItem</code>/<code>fetchPullRequestWorkItem</code> with <code>GITHUB_TOKEN</code>. The fix restores explicit authorization as the root control.</p>
+
+<h4 id="reachability">Reachability</h4>
+
+<p>This is mainly a reusable-action consumer risk. The repository&#x27;s own active workflow calls the CLI directly against <code>$GITHUB_REPOSITORY</code>, uses read-only permissions, and runs PR/issue jobs offline.</p>
+
+<h4 id="severity">Severity</h4>
+
+<p>Low. It is a policy-boundary and UX issue rather than a direct exploit in the current repo workflow. A downstream workflow using a broad PAT and arbitrary repo inputs would raise severity.</p>
+
+<h4 id="remediation">Remediation</h4>
+
+<p>Keep explicit <code>authorized: true</code> required for reusable Action live analysis and document that it must only be set for owned, maintained, or authorized repositories.</p>
+
+<h2 id="reviewed-surfaces">Reviewed Surfaces</h2>
+
+<table>
+<thead><tr>
+<th>Surface</th>
+<th>Risk Area</th>
+<th>Outcome</th>
+<th>Notes</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CLI authorization</td>
+<td>Live GitHub authorization</td>
+<td>No issue found</td>
+<td><code>src/cli.ts:92-95</code> rejects live repo analysis without explicit authorization.</td>
+</tr>
+<tr>
+<td>GitHub API client</td>
+<td>SSRF / token misuse</td>
+<td>No issue found</td>
+<td>Fixed GitHub API origin and token only in Authorization header.</td>
+</tr>
+<tr>
+<td>OpenAI prompt path</td>
+<td>Secret exfiltration</td>
+<td>Reported fixed</td>
+<td>MOAI-006 fixed unquoted colon-form redaction; prompt is truncated and redacted.</td>
+</tr>
+<tr>
+<td>Model output formatter</td>
+<td>Workflow command injection</td>
+<td>No issue found</td>
+<td>Line-start <code>::</code> is escaped for model-controlled fields.</td>
+</tr>
+<tr>
+<td>JSON output formatter</td>
+<td>Sensitive content exposure</td>
+<td>Reported fixed</td>
+<td>MOAI-007 minimized JSON work-item output.</td>
+</tr>
+<tr>
+<td>GitHub Actions PR workflow</td>
+<td>CI credential exposure</td>
+<td>Reported fixed</td>
+<td>MOAI-005 added <code>persist-credentials:false</code>.</td>
+</tr>
+<tr>
+<td>GitHub Actions issue workflow</td>
+<td>Secret exposure / mutation</td>
+<td>No issue found</td>
+<td>Active workflow uses read-only <code>GITHUB_TOKEN</code>, no <code>OPENAI_API_KEY</code>, and offline CLI mode.</td>
+</tr>
+<tr>
+<td>Reusable Action wrapper</td>
+<td>Authorization UX</td>
+<td>Reported fixed</td>
+<td>MOAI-008 added explicit <code>authorized</code> input and removed automatic Actions authorization.</td>
+</tr>
+<tr>
+<td>Fixture loader</td>
+<td>File/path injection</td>
+<td>Not applicable</td>
+<td>Fixture path is explicit local operator input.</td>
+</tr>
+<tr>
+<td>Offline analyzer</td>
+<td>Unsafe execution</td>
+<td>No issue found</td>
+<td>String heuristics only; no eval, shell, or network.</td>
+</tr>
+<tr>
+<td>Eval harness</td>
+<td>Unsafe script/path</td>
+<td>No issue found</td>
+<td>Fixed local golden file and offline analyzer only.</td>
+</tr>
+<tr>
+<td>Frontend dashboard</td>
+<td>XSS</td>
+<td>No issue found</td>
+<td>Static/mock React JSX; no <code>dangerouslySetInnerHTML</code>, <code>innerHTML</code>, or eval sink.</td>
+</tr>
+<tr>
+<td>Demo GIF generator</td>
+<td>File write/path injection</td>
+<td>No issue found</td>
+<td>Fixed repo-local input/output paths; no user path or shell.</td>
+</tr>
+<tr>
+<td>Dependencies/package</td>
+<td>Known vulnerable dependencies</td>
+<td>No issue found</td>
+<td><code>npm audit --audit-level=moderate</code> found 0 vulnerabilities.</td>
+</tr>
+<tr>
+<td>Generated build/test artifacts</td>
+<td>Runtime source review</td>
+<td>Not applicable</td>
+<td>Canonical source reviewed instead.</td>
+</tr>
+<tr>
+<td>Public docs</td>
+<td>Unsafe guidance</td>
+<td>No issue found</td>
+<td>Docs emphasize authorized repos, human review, and no automatic merge/close/release.</td>
+</tr>
+</tbody></table>
+
+<h2 id="open-questions-and-follow-up">Open Questions And Follow Up</h2>
+
+<ul><li>Re-run this scan after publishing the next npm version so the package artifact contains the redaction, JSON minimization, action authorization, and checkout credential fixes.</li><li>Add a regression policy check that fails if a <code>pull_request</code> workflow uses <code>actions/checkout</code> without <code>persist-credentials:false</code> before running PR-controlled npm scripts.</li><li>If the dashboard later renders live GitHub/model data, run a focused XSS/Markdown rendering scan before shipping.</li></ul>
+    </main>
+  </div>
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const icon = document.getElementById('navToggleIcon');
+    const collapsedKey = 'codex-security-report:sidebar-collapsed';
+
+    function setCollapsed(collapsed) {
+      document.body.classList.toggle('sidebar-collapsed', collapsed);
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', collapsed ? 'true' : 'false');
+        toggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+        toggle.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      }
+      if (icon) icon.setAttribute('d', collapsed ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6');
+      try { localStorage.setItem(collapsedKey, collapsed ? '1' : '0'); } catch {}
+    }
+
+    try { setCollapsed(localStorage.getItem(collapsedKey) === '1'); } catch {}
+    if (toggle) toggle.addEventListener('click', () => setCollapsed(!document.body.classList.contains('sidebar-collapsed')));
+
+    const tocLinks = Array.from(document.querySelectorAll('.toc a'));
+    const sections = tocLinks.map((link) => {
+      const id = decodeURIComponent(link.getAttribute('href').slice(1));
+      return [link, document.getElementById(id)];
+    }).filter((pair) => pair[1]);
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (!visible) return;
+      tocLinks.forEach((link) => link.parentElement.classList.remove('active'));
+      const active = tocLinks.find((link) => link.getAttribute('href') === '#' + visible.target.id);
+      if (active) active.parentElement.classList.add('active');
+    }, { rootMargin: '-10% 0px -75% 0px', threshold: [0, 1] });
+
+    sections.forEach(([, section]) => observer.observe(section));
+  </script>
+</body>
+</html>

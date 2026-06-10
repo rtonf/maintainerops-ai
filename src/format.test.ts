@@ -8,7 +8,20 @@ const item: MaintainerWorkItem = {
   repository: "owner/repo",
   title: "Add maintainer automation",
   body: 'contains "api_key": "json-colon-secret-1234567890"',
-  diff: `aws_access_key_id: ${"AKIA"}${"ABCDEFGHIJKLMNOP"}`
+  diff: `aws_access_key_id: ${"AKIA"}${"ABCDEFGHIJKLMNOP"}`,
+  comments: ["PRIVATE_CANARY_COMMENT_12345"],
+  files: [
+    {
+      path: "src/feature.ts",
+      status: "modified",
+      additions: 10,
+      deletions: 2,
+      patch: "PRIVATE_CANARY_PATCH_12345"
+    }
+  ],
+  metadata: {
+    raw: "PRIVATE_CANARY_METADATA_12345"
+  }
 };
 
 const assessment: MaintainerAssessment = {
@@ -27,8 +40,17 @@ const assessment: MaintainerAssessment = {
 describe("formatAssessment", () => {
   it("redacts raw work item content in JSON output", () => {
     const output = formatAssessment(item, assessment, "json");
+    const parsed = JSON.parse(output) as { item: MaintainerWorkItem };
     assert.equal(output.includes("json-colon-secret-1234567890"), false);
     assert.equal(output.includes(`${"AKIA"}${"ABCDEFGHIJKLMNOP"}`), false);
+    assert.equal(output.includes("PRIVATE_CANARY_COMMENT_12345"), false);
+    assert.equal(output.includes("PRIVATE_CANARY_PATCH_12345"), false);
+    assert.equal(output.includes("PRIVATE_CANARY_METADATA_12345"), false);
+    assert.equal("body" in parsed.item, false);
+    assert.equal("diff" in parsed.item, false);
+    assert.equal("comments" in parsed.item, false);
+    assert.equal("metadata" in parsed.item, false);
+    assert.equal(output.includes("src/feature.ts"), true);
     assert.match(output, /REDACTED/);
   });
 

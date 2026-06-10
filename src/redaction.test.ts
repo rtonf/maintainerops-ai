@@ -24,4 +24,17 @@ describe("redactSecrets", () => {
     assert.equal(output.includes("aws-secret-value-1234567890"), false);
     assert.match(output, /REDACTED/);
   });
+
+  it("redacts unquoted colon key-value credential forms", () => {
+    const input = [
+      "api_key: plain-colon-secret-1234567890",
+      "aws_secret_access_key: aws-secret-value-1234567890",
+      "access_token: token-value-1234567890"
+    ].join("\n");
+    const output = redactSecrets(input);
+    assert.equal(output.includes("plain-colon-secret-1234567890"), false);
+    assert.equal(output.includes("aws-secret-value-1234567890"), false);
+    assert.equal(output.includes("token-value-1234567890"), false);
+    assert.match(output, /REDACTED/);
+  });
 });

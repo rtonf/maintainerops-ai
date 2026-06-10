@@ -7,8 +7,10 @@ const number = process.env.INPUT_NUMBER;
 const fixture = process.env.INPUT_FIXTURE;
 const format = process.env.INPUT_FORMAT || "markdown";
 
+const authorized = process.env.INPUT_AUTHORIZED === "true" || process.env.MAINTAINEROPS_AUTHORIZED === "true";
+
 const args = ["analyze", "--format", format];
-if (process.env.MAINTAINEROPS_AUTHORIZED === "true" || process.env.GITHUB_ACTIONS === "true") {
+if (authorized) {
   args.push("--authorized");
 }
 

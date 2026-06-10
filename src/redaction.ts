@@ -6,10 +6,17 @@ const secretPatterns: Array<[RegExp, string]> = [
   [/\bASIA[0-9A-Z]{16}\b/g, "ASIA[REDACTED]"],
   [/-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----/g, "[REDACTED_PRIVATE_KEY]"],
   [/eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}/g, "[REDACTED_JWT]"],
-  [/(api[_-]?key|token|secret|password)\s*=\s*["']?[^"'\s]+["']?/gi, "$1=[REDACTED]"],
+  [
+    /(api[_-]?key|token|secret|password|aws_access_key_id|aws_secret_access_key|access_token|refresh_token)\s*=\s*["']?[^"'\s]+["']?/gi,
+    "$1=[REDACTED]"
+  ],
   [
     /(\\?["']?)(api[_-]?key|token|secret|password|aws_access_key_id|aws_secret_access_key|access_token|refresh_token)(\\?["']?)\s*:\s*(\\?["'])([^"'\\]+)(\\?["'])/gi,
     "$1$2$3: $4[REDACTED]$6"
+  ],
+  [
+    /\b(api[_-]?key|token|secret|password|aws_access_key_id|aws_secret_access_key|access_token|refresh_token)\s*:\s*[^"'\s,}]+/gi,
+    "$1: [REDACTED]"
   ],
   [/Bearer\s+[A-Za-z0-9._~+/-]{20,}/g, "Bearer [REDACTED]"]
 ];

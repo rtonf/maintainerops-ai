@@ -63,7 +63,27 @@ function listOrNone(items: string[]): string {
 }
 
 function redactWorkItem(item: MaintainerWorkItem): MaintainerWorkItem {
-  return JSON.parse(redactSecrets(JSON.stringify(item))) as MaintainerWorkItem;
+  const redacted = JSON.parse(redactSecrets(JSON.stringify(item))) as MaintainerWorkItem;
+  return {
+    kind: redacted.kind,
+    repository: redacted.repository,
+    number: redacted.number,
+    title: redacted.title,
+    author: redacted.author,
+    url: redacted.url,
+    labels: redacted.labels,
+    files: redacted.files?.map((file) => ({
+      path: file.path,
+      status: file.status,
+      additions: file.additions,
+      deletions: file.deletions
+    })),
+    checks: redacted.checks?.map((check) => ({
+      name: check.name,
+      conclusion: check.conclusion,
+      status: check.status
+    }))
+  };
 }
 
 function sanitizeAssessment(assessment: MaintainerAssessment): MaintainerAssessment {

@@ -17,6 +17,9 @@ inputs:
   format:
     description: "Output format: markdown or json"
     default: markdown
+  authorized:
+    description: "Set to true only when you own, maintain, or have permission to review the target repository"
+    default: "false"
 runs:
   using: node20
   main: dist/action.js
