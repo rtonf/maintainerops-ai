@@ -5,6 +5,7 @@ These files show MaintainerOps AI used against real public repositories where th
 | Repository                  | Work item       | Packet                                                     |
 | --------------------------- | --------------- | ---------------------------------------------------------- |
 | `rtonf/daily-hub-diary-app` | Pull request #1 | [daily-hub-diary-app-pr-1.md](daily-hub-diary-app-pr-1.md) |
+| `rtonf/daily-hub-diary-app` | Pull request #2 | [daily-hub-diary-app-pr-2.md](daily-hub-diary-app-pr-2.md) |
 | `rtonf/daily-hub-diary-app` | Pull request #4 | [daily-hub-diary-app-pr-4.md](daily-hub-diary-app-pr-4.md) |
 | `rtonf/maintainerops-ai`    | Issue #3        | [maintainerops-ai-issue-3.md](maintainerops-ai-issue-3.md) |
 

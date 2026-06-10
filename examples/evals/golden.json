@@ -67,6 +67,31 @@
     }
   },
   {
+    "name": "capacitor runtime dependency update without tests",
+    "expectedLabels": ["maintainer-review", "security-review", "release-notes", "tests-needed"],
+    "item": {
+      "kind": "pull_request",
+      "repository": "rtonf/daily-hub-diary-app",
+      "number": 2,
+      "title": "Bump @capacitor/core from 8.3.4 to 8.4.0",
+      "body": "Dependency update for the Capacitor runtime used by the Android application.",
+      "files": [
+        {
+          "path": "package.json",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 1
+        },
+        {
+          "path": "package-lock.json",
+          "status": "modified",
+          "additions": 8,
+          "deletions": 8
+        }
+      ]
+    }
+  },
+  {
     "name": "release readiness issue",
     "expectedLabels": ["needs-triage", "release-notes"],
     "maxRisk": "low",
