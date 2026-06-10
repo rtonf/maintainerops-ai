@@ -1,0 +1,34 @@
+name: MaintainerOps AI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  issues:
+    types: [opened, edited, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - name: Analyze pull request
+        if: github.event_name == 'pull_request'
+        run: node dist/cli.js analyze --repo "$GITHUB_REPOSITORY" --pull "${{ github.event.pull_request.number }}" --format markdown --offline --authorized
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Analyze issue
+        if: github.event_name == 'issues'
+        run: node dist/cli.js analyze --repo "$GITHUB_REPOSITORY" --issue "${{ github.event.issue.number }}" --format markdown --offline --authorized
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
