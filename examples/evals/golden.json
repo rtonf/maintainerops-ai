@@ -29,5 +29,53 @@
       "title": "Documentation typo in install guide",
       "body": "The Windows command has a typo."
     }
+  },
+  {
+    "name": "gradle wrapper dependency update without tests",
+    "expectedLabels": ["maintainer-review", "security-review", "release-notes", "tests-needed"],
+    "item": {
+      "kind": "pull_request",
+      "repository": "rtonf/daily-hub-diary-app",
+      "number": 1,
+      "title": "Bump gradle-wrapper from 9.4.1 to 9.5.1 in /android",
+      "body": "Dependency update touching Gradle wrapper files in the Android project.",
+      "files": [
+        {
+          "path": "android/gradle/wrapper/gradle-wrapper.properties",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 1
+        },
+        {
+          "path": "android/gradlew",
+          "status": "modified",
+          "additions": 12,
+          "deletions": 7
+        }
+      ]
+    }
+  },
+  {
+    "name": "prompt-injection-safe issue triage",
+    "expectedLabels": ["needs-triage", "security-review"],
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 3,
+      "title": "Triage example: prompt-injection safe comment draft",
+      "body": "Validate that untrusted issue text cannot force a maintainer bot to reveal secrets, ignore policy, or execute unauthorized actions."
+    }
+  },
+  {
+    "name": "release readiness issue",
+    "expectedLabels": ["needs-triage", "release-notes"],
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 2,
+      "title": "Triage example: release readiness packet for v0.1.0",
+      "body": "Prepare release notes and maintainer checklist for the initial public release."
+    }
   }
 ]

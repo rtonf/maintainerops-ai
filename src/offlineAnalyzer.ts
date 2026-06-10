@@ -12,6 +12,9 @@ const securityTerms = [
   "crypto",
   "permission",
   "sandbox",
+  "dependency update",
+  "gradle-wrapper",
+  "wrapper",
   "path validation",
   "path traversal",
   "traverse",
@@ -20,7 +23,7 @@ const securityTerms = [
   "plugin loader"
 ];
 
-const releaseTerms = ["breaking", "migration", "deprecated", "remove", "major", "release"];
+const releaseTerms = ["breaking", "migration", "deprecated", "remove", "major", "release", "bump", "upgrade"];
 const testTerms = ["test", "spec", "__tests__", ".test.", ".spec."];
 
 export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
