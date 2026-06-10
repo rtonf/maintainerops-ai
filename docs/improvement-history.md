@@ -18,3 +18,15 @@
 - Published GitHub Release `v0.1.0`.
 - Published npm package `maintainerops-ai`.
 - Prepared `0.1.1` patch release to remove an accidental local npm authentication helper dependency from the package manifest.
+
+## 2026-06-10
+
+- Triaged, commented on, and closed public workflow issues #1 through #4 with MaintainerOps AI packets.
+- Verified the public npm package by running `maintainerops --help` through `npm exec`.
+- Added npm version/download badges and npm install evidence to the README evidence path.
+- Generated review packet examples from real public repositories:
+  - `rtonf/daily-hub-diary-app` pull request #1
+  - `rtonf/daily-hub-diary-app` pull request #4
+  - `rtonf/maintainerops-ai` issue #3
+- Added a post-fix security rescan report summarizing fixed findings, verification commands, and remaining workflow activation risk.
+- Documented the GitHub Actions activation blocker: the current GitHub OAuth token still needs `workflow` scope.

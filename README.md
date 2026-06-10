@@ -1,6 +1,11 @@
 # MaintainerOps AI
 
+[![npm version](https://img.shields.io/npm/v/maintainerops-ai.svg)](https://www.npmjs.com/package/maintainerops-ai)
+[![npm downloads](https://img.shields.io/npm/dm/maintainerops-ai.svg)](https://www.npmjs.com/package/maintainerops-ai)
+
 MaintainerOps AI is a GitHub-aware CLI and GitHub Action for open-source maintainers. It turns pull requests, issues, security alerts, and release inputs into structured review packets that a maintainer can accept, edit, or ignore.
+
+OSS ecosystems rely on a small number of maintainers making high-quality decisions under constant backlog pressure. MaintainerOps AI makes that work easier to audit and repeat: it converts noisy issues, PRs, dependency updates, and release tasks into review packets that preserve maintainer control while improving security, code quality, and response time.
 
 The project is intentionally human-in-the-loop. It does not merge pull requests, close issues, publish releases, or run security scans against repositories you do not own or administer.
 
@@ -99,8 +104,11 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Codex Security scan report](docs/codex-security/report.md)
 - [Codex Security HTML report](docs/codex-security/report.html)
 - [Focused fix report](docs/codex-security/fix-report.md)
+- [Post-fix rescan report](docs/codex-security/rescan-report.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
+- [npm install evidence](docs/npm-install-evidence.md)
+- [Real repository review packets](docs/review-packets/README.md)
 - [v0.1.0 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.0)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
