@@ -23,6 +23,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-10 | Verified the active workflow on a real pull request event.                                        | PR #5, `https://github.com/rtonf/maintainerops-ai/actions/runs/27285123074`                                         |
 | 2026-06-10 | Opened an external feedback issue and verified the issue-triggered workflow.                      | Issue #6, `https://github.com/rtonf/maintainerops-ai/actions/runs/27285190047`                                      |
 | 2026-06-11 | Ran a full Codex Security repository-wide rescan and fixed all reportable findings found.         | `docs/codex-security/full-rescan-2026-06-11.md`, `npm run verify`                                                   |
+| 2026-06-11 | Added npm package publication checks to the verification gate.                                    | `npm run pack:check`, `npm pack --dry-run`, `publint`                                                               |
 
 ## Current metrics
 
