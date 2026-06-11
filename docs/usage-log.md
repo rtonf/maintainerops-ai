@@ -34,6 +34,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-11 | Prepared external maintainer outreach instructions for Issue #6 feedback.                         | `docs/external-feedback-request.md`, `https://github.com/rtonf/maintainerops-ai/issues/6`                                                       |
 | 2026-06-11 | Prepared GitHub Marketplace metadata and README Action usage guidance.                            | `action.yml`, `docs/github-marketplace.md`, README GitHub Action section                                                                        |
 | 2026-06-11 | Ran a Codex Security diff review for the Marketplace preparation changes.                         | `docs/codex-security/marketplace-diff-scan-2026-06-11.md`, `npm run verify`                                                                     |
+| 2026-06-11 | Audited public repository contents and converted the Marketplace Action to composite runtime.     | `action.yml`, `src/action.ts`, `docs/publication-audit-2026-06-11.md`, `docs/codex-security/publication-exposure-scan-2026-06-11.md`            |
 
 ## Current metrics
 

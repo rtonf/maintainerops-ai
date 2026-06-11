@@ -67,6 +67,7 @@ jobs:
           repo: ${{ github.repository }}
           number: ${{ github.event.pull_request.number || github.event.issue.number }}
           format: markdown
+          offline: true
           authorized: true
 ```
 

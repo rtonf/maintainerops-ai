@@ -116,9 +116,11 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Post-fix rescan report](docs/codex-security/rescan-report.md)
 - [Full Codex Security rescan report](docs/codex-security/full-rescan-2026-06-11.md)
 - [Full Codex Security rescan HTML](docs/codex-security/full-rescan-2026-06-11.html)
+- [Publication exposure scan](docs/codex-security/publication-exposure-scan-2026-06-11.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)
+- [Publication audit](docs/publication-audit-2026-06-11.md)
 - [Real repository review packets](docs/review-packets/README.md)
 - [Application answers](docs/application-answers.md)
 - [External feedback request](docs/external-feedback-request.md)
@@ -163,6 +165,7 @@ jobs:
           repo: ${{ github.repository }}
           number: ${{ github.event.pull_request.number || github.event.issue.number }}
           format: markdown
+          offline: true
           authorized: true
 ```
 

@@ -6,10 +6,14 @@ const repo = process.env.INPUT_REPO || process.env.GITHUB_REPOSITORY;
 const number = process.env.INPUT_NUMBER;
 const fixture = process.env.INPUT_FIXTURE;
 const format = process.env.INPUT_FORMAT || "markdown";
+const offline = process.env.INPUT_OFFLINE === "true";
 
 const authorized = process.env.INPUT_AUTHORIZED === "true" || process.env.MAINTAINEROPS_AUTHORIZED === "true";
 
 const args = ["analyze", "--format", format];
+if (offline) {
+  args.push("--offline");
+}
 if (authorized) {
   args.push("--authorized");
 }
