@@ -30,6 +30,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-11 | Published GitHub Release `v0.1.2` for the full rescan fixes.                                      | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.2`                                                                            |
 | 2026-06-11 | Verified the merged `v0.1.2` workflow with manual and issue-triggered runs.                       | `https://github.com/rtonf/maintainerops-ai/actions/runs/27289619637`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27289692884` |
 | 2026-06-11 | Opened npm publication follow-up for `v0.1.2`.                                                    | Issue #8, `https://github.com/rtonf/maintainerops-ai/issues/8`                                                                             |
+| 2026-06-11 | Published `maintainerops-ai@0.1.2` to npm and verified the public CLI.                            | `docs/npm-install-evidence.md`, `npm view maintainerops-ai version`, `npm exec --yes --package maintainerops-ai@latest -- maintainerops --help` |
 
 ## Current metrics
 
@@ -41,7 +42,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
 - GitHub releases: 3
-- npm package status: repository prepared at `0.1.2`; npm registry latest remains `0.1.1` until maintainer npm authentication is restored
+- npm package status: `maintainerops-ai@0.1.2` is published as the npm `latest` dist-tag
 
 ## Seven-day evidence plan
 

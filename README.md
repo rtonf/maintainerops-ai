@@ -11,8 +11,8 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), prepared for `v0.1.2`.
-- GitHub releases: `v0.1.0`, `v0.1.1`, with `v0.1.2` release notes prepared.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest `v0.1.2`.
+- GitHub releases: `v0.1.0`, `v0.1.1`, and `v0.1.2`.
 - Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for external maintainer feedback, and real repository review packets published.
@@ -123,6 +123,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Application answers](docs/application-answers.md)
 - [External feedback request](docs/external-feedback-request.md)
 - [v0.1.0 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.0)
+- [v0.1.2 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.2)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials
