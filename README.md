@@ -134,7 +134,43 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 
 ## GitHub Action
 
-See [action.yml](action.yml) and the safe no-secret pull request workflow example at [docs/github-workflows/maintainerops.yml](docs/github-workflows/maintainerops.yml).
+Use MaintainerOps AI as a read-only GitHub Action to generate review packets during pull request and issue triage.
+
+```yaml
+name: MaintainerOps AI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+
+jobs:
+  review-packet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: rtonf/maintainerops-ai@v0.1.2
+        with:
+          mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
+          repo: ${{ github.repository }}
+          number: ${{ github.event.pull_request.number || github.event.issue.number }}
+          format: markdown
+          authorized: true
+```
+
+Marketplace listing summary:
+
+> MaintainerOps AI helps open-source maintainers turn pull requests and issues into human-reviewed triage packets with risk level, labels, review checklist, security notes, release-note hints, and a draft response. It is read-only by design, requires explicit authorization for live repository analysis, and does not merge, close, label, or publish anything automatically.
+
+See [action.yml](action.yml), [Marketplace listing notes](docs/github-marketplace.md), and the safe no-secret pull request workflow example at [docs/github-workflows/maintainerops.yml](docs/github-workflows/maintainerops.yml).
 
 ## OpenAI alignment
 

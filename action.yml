@@ -1,6 +1,9 @@
 name: MaintainerOps AI
-description: Generate maintainer review packets for GitHub issues and pull requests.
+description: Generate human-reviewed PR and issue triage packets for OSS maintainers.
 author: MaintainerOps AI contributors
+branding:
+  icon: shield
+  color: blue
 inputs:
   mode:
     description: "Analysis mode: pull_request, issue, or fixture"
