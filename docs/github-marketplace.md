@@ -61,7 +61,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.2
+      - uses: rtonf/maintainerops-ai@v0.1.3
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

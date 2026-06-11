@@ -28,15 +28,15 @@ No new reportable security finding was identified in the public documentation or
 - The Action was converted to a composite action that runs `npm ci`, builds the trusted tagged action source, and runs `node dist/action.js`.
 - This keeps generated `dist/`, `dist-web/`, and `node_modules/` out of GitHub while making the Marketplace Action runnable.
 
-## Public Removal Candidates
+## Public Removal
 
-The following files are safe candidates for a later cleanup PR because they do not materially strengthen the public application evidence:
+The following files were selected as safe to remove because they do not materially strengthen the public application evidence:
 
 - `design/security-review-workbench-reference.png`
 - `design-qa.md`
 - `docs/application-draft.md`
 
-They were not removed in this pass because the user requested selection/classification rather than destructive deletion.
+They were removed in the follow-up `v0.1.3` cleanup.
 
 ## Keep Public
 
@@ -87,5 +87,4 @@ Observed:
 ## Follow-Up
 
 - Publish a new GitHub release tag after the composite Action change.
-- Consider a `v0.1.3` npm cleanup that excludes `dist/**/*.test.*` and `dist/**/*.map` from the package.
-- Remove the selected public cleanup candidates in a dedicated cleanup PR if preserving the current evidence trail is no longer useful.
+- Publish the `v0.1.3` GitHub release and npm package after verification.

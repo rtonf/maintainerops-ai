@@ -15,9 +15,9 @@ No live secrets or private keys were found in the publishable source tree. The l
 
 The most important functional issue was the GitHub Action runtime. The public repository does not publish `dist/action.js`, while `action.yml` previously used `node20` with `main: dist/action.js`. To avoid publishing generated `dist/` and dependency files to GitHub, the Action was converted to a composite action that installs dependencies, builds the trusted action source from the published tag, and then runs `dist/action.js`.
 
-## Selected GitHub Removal Candidates
+## Removed From GitHub Publication
 
-These files are not necessary for public GitHub review and can be removed in a cleanup PR:
+These files were selected as unnecessary for public GitHub review and removed during the `v0.1.3` cleanup:
 
 - `design/security-review-workbench-reference.png`
   - Reason: large design reference image, duplicated in purpose by the optimized public screenshot/GIF under `docs/images/`.
@@ -66,13 +66,13 @@ The local `.env.example` is also ignored by the current `.gitignore`. It contain
 
 ## npm Package Notes
 
-`npm pack --dry-run --json` shows the package is small, but it currently includes generated test files and source maps under `dist/`:
+`npm pack --dry-run --json` shows the package is small. The `v0.1.3` package allowlist was narrowed so generated test files and source maps under `dist/` are not shipped:
 
 - `dist/*.test.js`
 - `dist/*.test.d.ts`
 - `dist/*.js.map`
 
-These are not a security issue, but they are not required for runtime. Recommended follow-up for `v0.1.3`: narrow the npm `files` allowlist so only runtime JavaScript, declarations, README, license, security policy, eval fixtures, and `action.yml` are shipped.
+These files were not a security issue, but they are not required for runtime. Runtime JavaScript, declarations, README, license, security policy, eval fixtures, and `action.yml` remain publishable.
 
 ## GitHub Release Notes
 
@@ -88,5 +88,4 @@ Before publishing to GitHub Marketplace:
 
 1. Keep generated `dist/`, `dist-web/`, `node_modules/`, and `artifacts/` out of GitHub.
 2. Use the composite `action.yml` runtime so the Action can build from the trusted tag without committing generated output.
-3. Publish a follow-up release tag after this cleanup so Marketplace users can reference the fixed Action metadata.
-4. For the next npm patch, remove test build outputs and source maps from the npm package.
+3. Publish the `v0.1.3` release tag so Marketplace users can reference the fixed Action metadata.

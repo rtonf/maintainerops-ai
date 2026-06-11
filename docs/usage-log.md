@@ -35,6 +35,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-11 | Prepared GitHub Marketplace metadata and README Action usage guidance.                            | `action.yml`, `docs/github-marketplace.md`, README GitHub Action section                                                                        |
 | 2026-06-11 | Ran a Codex Security diff review for the Marketplace preparation changes.                         | `docs/codex-security/marketplace-diff-scan-2026-06-11.md`, `npm run verify`                                                                     |
 | 2026-06-11 | Audited public repository contents and converted the Marketplace Action to composite runtime.     | `action.yml`, `src/action.ts`, `docs/publication-audit-2026-06-11.md`, `docs/codex-security/publication-exposure-scan-2026-06-11.md`            |
+| 2026-06-11 | Prepared `v0.1.3` cleanup for Marketplace Action publishing and npm package hygiene.              | Removed public cleanup candidates, updated Action examples to `v0.1.3`, narrowed npm package files                                              |
+| 2026-06-11 | Ran a Codex Security diff scan for `v0.1.3` cleanup and release preparation.                      | `docs/codex-security/v0.1.3-diff-scan-2026-06-11.md`, `npm run verify`                                                                          |
 
 ## Current metrics
 
@@ -45,8 +47,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
-- GitHub releases: 3
-- npm package status: `maintainerops-ai@0.1.2` is published as the npm `latest` dist-tag
+- GitHub releases: 4
+- npm package status: `maintainerops-ai@0.1.3` is published as the npm `latest` dist-tag
 
 ## Seven-day evidence plan
 

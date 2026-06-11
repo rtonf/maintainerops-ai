@@ -11,8 +11,8 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest `v0.1.2`.
-- GitHub releases: `v0.1.0`, `v0.1.1`, and `v0.1.2`.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest `v0.1.3`.
+- GitHub releases: `v0.1.0`, `v0.1.1`, `v0.1.2`, and `v0.1.3`.
 - Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for external maintainer feedback, and real repository review packets published.
@@ -117,6 +117,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Full Codex Security rescan report](docs/codex-security/full-rescan-2026-06-11.md)
 - [Full Codex Security rescan HTML](docs/codex-security/full-rescan-2026-06-11.html)
 - [Publication exposure scan](docs/codex-security/publication-exposure-scan-2026-06-11.md)
+- [v0.1.3 Codex Security diff scan](docs/codex-security/v0.1.3-diff-scan-2026-06-11.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)
@@ -126,12 +127,12 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [External feedback request](docs/external-feedback-request.md)
 - [v0.1.0 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.0)
 - [v0.1.2 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.2)
+- [v0.1.3 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.3)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials
 
 - [OpenAI alignment](docs/openai-alignment.md)
-- [Application draft](docs/application-draft.md)
 - [Evals](EVALS.md)
 
 ## GitHub Action
@@ -159,7 +160,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.2
+      - uses: rtonf/maintainerops-ai@v0.1.3
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
