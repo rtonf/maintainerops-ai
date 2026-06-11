@@ -31,6 +31,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-11 | Verified the merged `v0.1.2` workflow with manual and issue-triggered runs.                       | `https://github.com/rtonf/maintainerops-ai/actions/runs/27289619637`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27289692884` |
 | 2026-06-11 | Opened npm publication follow-up for `v0.1.2`.                                                    | Issue #8, `https://github.com/rtonf/maintainerops-ai/issues/8`                                                                             |
 | 2026-06-11 | Published `maintainerops-ai@0.1.2` to npm and verified the public CLI.                            | `docs/npm-install-evidence.md`, `npm view maintainerops-ai version`, `npm exec --yes --package maintainerops-ai@latest -- maintainerops --help` |
+| 2026-06-11 | Prepared external maintainer outreach instructions for Issue #6 feedback.                         | `docs/external-feedback-request.md`, `https://github.com/rtonf/maintainerops-ai/issues/6`                                                   |
 
 ## Current metrics
 
