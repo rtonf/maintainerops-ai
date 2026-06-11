@@ -37,6 +37,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-11 | Audited public repository contents and converted the Marketplace Action to composite runtime.     | `action.yml`, `src/action.ts`, `docs/publication-audit-2026-06-11.md`, `docs/codex-security/publication-exposure-scan-2026-06-11.md`            |
 | 2026-06-11 | Prepared `v0.1.3` cleanup for Marketplace Action publishing and npm package hygiene.              | Removed public cleanup candidates, updated Action examples to `v0.1.3`, narrowed npm package files                                              |
 | 2026-06-11 | Ran a Codex Security diff scan for `v0.1.3` cleanup and release preparation.                      | `docs/codex-security/v0.1.3-diff-scan-2026-06-11.md`, `npm run verify`                                                                          |
+| 2026-06-11 | Published GitHub Release `v0.1.3`; npm publish is pending maintainer OTP confirmation.            | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.3`, npm `EOTP` publish blocker                                                     |
 
 ## Current metrics
 
@@ -48,7 +49,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
 - GitHub releases: 4
-- npm package status: `maintainerops-ai@0.1.3` is published as the npm `latest` dist-tag
+- npm package status: repository prepared at `0.1.3`; npm registry latest remains `0.1.2` until maintainer OTP confirmation is completed
 
 ## Seven-day evidence plan
 
