@@ -27,5 +27,6 @@ The Codex for Open Source application has been submitted. The maintenance goal f
 ## Remaining Work
 
 - Collect at least one external tester comment on Issue #6.
-- Re-check the Marketplace page after `v0.1.5` is published.
+- Publish `v0.1.5` to Marketplace from the GitHub Release UI if the Marketplace page still displays `v0.1.4`.
+- Re-check the Marketplace page after `v0.1.5` is published to Marketplace.
 - Continue 2026-06-14 through 2026-06-16 maintenance log entries.
