@@ -43,6 +43,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-12 | Closed the `v0.1.3` npm publication follow-up and refreshed external feedback instructions.                                                | Issue #9 closed, Issue #6 updated for npm latest `0.1.3`                                                                                                                                               |
 | 2026-06-12 | Hardened GitHub PR pagination, Action input failure behavior, npm dependency scope, Node 24/v6 workflow compatibility, and public wording. | `src/github.ts`, `src/actionArgs.ts`, `src/action.ts`, `.github/workflows/maintainerops.yml`, `package.json`, README, `docs/codex-security/action-hardening-diff-scan-2026-06-12.md`, `npm run verify` |
 | 2026-06-12 | Prepared `v0.1.4` hardening release and Marketplace feedback path for Issue #6.                                                            | Issue #11, `docs/releases/v0.1.4.md`, `docs/github-marketplace.md`, `docs/external-feedback-request.md`, README                                                                                        |
+| 2026-06-12 | Published GitHub Release `v0.1.4`; npm publish is pending maintainer authentication.                                                       | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.4`, npm `E401` auth blocker                                                                                                               |
 
 ## Current metrics
 
@@ -54,7 +55,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
 - GitHub releases: 5
-- npm package status: `maintainerops-ai@0.1.4` is the release target for the latest hardening fixes
+- npm package status: `maintainerops-ai@0.1.3` is published as npm `latest`; `v0.1.4` GitHub Release is published and npm publish is pending maintainer authentication
 
 ## Seven-day evidence plan
 
