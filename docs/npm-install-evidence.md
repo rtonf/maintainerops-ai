@@ -6,7 +6,7 @@ This document records public registry install evidence for the Codex for Open So
 
 - Package: `maintainerops-ai`
 - Registry: `https://www.npmjs.com/package/maintainerops-ai`
-- Verified version: `0.1.3`
+- Verified version: `0.1.4`
 - Dist tag: `latest`
 - Binary: `maintainerops`
 
@@ -22,17 +22,18 @@ Observed result:
 
 ```json
 {
-  "version": "0.1.3",
+  "version": "0.1.4",
   "dist-tags": {
-    "latest": "0.1.3"
+    "latest": "0.1.4"
   },
   "time": {
     "created": "2026-06-09T10:56:25.010Z",
-    "modified": "2026-06-11T07:06:07.048Z",
+    "modified": "2026-06-12T13:03:52.257Z",
     "0.1.0": "2026-06-09T10:56:25.492Z",
     "0.1.1": "2026-06-09T10:58:36.319Z",
     "0.1.2": "2026-06-11T00:30:20.260Z",
-    "0.1.3": "2026-06-11T07:06:06.928Z"
+    "0.1.3": "2026-06-11T07:06:06.928Z",
+    "0.1.4": "2026-06-12T13:03:52.165Z"
   }
 }
 ```
@@ -59,7 +60,7 @@ Options:
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.
 ```
 
-The command completed successfully from the public npm package after publishing `maintainerops-ai@0.1.3`. The package exposes a CLI that can generate maintainer review packets from fixtures or authorized GitHub pull requests/issues.
+The command completed successfully from the public npm package after publishing `maintainerops-ai@0.1.4`. The package exposes a CLI that can generate maintainer review packets from fixtures or authorized GitHub pull requests/issues.
 
 ## README badge
 
