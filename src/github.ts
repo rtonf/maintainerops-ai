@@ -37,7 +37,7 @@ export async function fetchIssueWorkItem(repo: string, issueNumber: number): Pro
 
 export async function fetchPullRequestWorkItem(repo: string, pullNumber: number): Promise<MaintainerWorkItem> {
   const pr = await githubJson<GitHubPullRequest>(`/repos/${repo}/pulls/${pullNumber}`);
-  const files = await githubJson<GitHubFile[]>(`/repos/${repo}/pulls/${pullNumber}/files?per_page=100`);
+  const files = await fetchPullRequestFiles(repo, pullNumber);
 
   return {
     kind: "pull_request",
@@ -51,6 +51,24 @@ export async function fetchPullRequestWorkItem(repo: string, pullNumber: number)
     files: files.map(toChangedFile),
     diff: files.map((file) => `diff -- ${file.filename}\n${file.patch ?? "[patch unavailable]"}`).join("\n\n")
   };
+}
+
+async function fetchPullRequestFiles(repo: string, pullNumber: number): Promise<GitHubFile[]> {
+  const files: GitHubFile[] = [];
+  let page = 1;
+
+  while (true) {
+    const pageFiles = await githubJson<GitHubFile[]>(
+      `/repos/${repo}/pulls/${pullNumber}/files?per_page=100&page=${page}`
+    );
+    files.push(...pageFiles);
+
+    if (pageFiles.length < 100) {
+      return files;
+    }
+
+    page += 1;
+  }
 }
 
 async function githubJson<T>(path: string): Promise<T> {

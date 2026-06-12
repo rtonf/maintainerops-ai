@@ -58,7 +58,7 @@ jobs:
   review-packet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: rtonf/maintainerops-ai@v0.1.3

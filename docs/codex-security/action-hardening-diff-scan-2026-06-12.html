@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Codex Security Diff Scan: Action Hardening</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.5;
+        margin: 2rem auto;
+        max-width: 900px;
+        color: #172033;
+      }
+      code,
+      pre {
+        background: #f5f7fb;
+        border-radius: 4px;
+        padding: 0.15rem 0.3rem;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #d7deea;
+        padding: 0.45rem;
+        text-align: left;
+      }
+      th {
+        background: #eef3fb;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Codex Security Diff Scan: Action Hardening</h1>
+    <p><strong>Date:</strong> 2026-06-12</p>
+    <p>
+      <strong>Scope:</strong> working-tree patch for GitHub PR file pagination, GitHub Action input handling, npm
+      dependency scope, GitHub Actions Node 24 / v6 compatibility, and public documentation wording.
+    </p>
+    <h2>Result</h2>
+    <p>No reportable security findings were identified in this diff.</p>
+    <h2>Verification</h2>
+    <pre>npm run verify</pre>
+    <p>
+      Result: passed. Verification included TypeScript check, ESLint, Prettier check, source tests, Playwright UI smoke
+      test, evals, npm package dry run, publint, and npm audit.
+    </p>
+    <h2>Residual Risk</h2>
+    <p>
+      External maintainer feedback remains the largest adoption and application-readiness gap. The composite Action still
+      installs dependencies and builds at runtime, which is a Marketplace performance concern rather than a reportable
+      security vulnerability.
+    </p>
+  </body>
+</html>
