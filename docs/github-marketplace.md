@@ -61,7 +61,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.3
+      - uses: rtonf/maintainerops-ai@v0.1.4
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
@@ -76,3 +76,21 @@ jobs:
 MaintainerOps AI is a human-in-the-loop assistant. It does not make repository changes by itself. Maintainers must review the packet and decide whether to comment, label, request changes, merge, close, or release.
 
 Use this Action only on repositories you own, maintain, or are explicitly authorized to administer.
+
+## Feedback CTA
+
+Marketplace users can leave early maintainer feedback at:
+
+https://github.com/rtonf/maintainerops-ai/issues/6
+
+Suggested comment:
+
+```text
+I tried MaintainerOps AI from GitHub Marketplace.
+
+Repository or fixture used:
+Command or workflow used:
+What was useful:
+What was noisy or missing:
+Would I use this in a read-only OSS maintainer workflow?
+```

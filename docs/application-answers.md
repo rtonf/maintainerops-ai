@@ -4,12 +4,12 @@ These answers are prepared for the public application form.
 
 ## Why this repository should qualify
 
-MaintainerOps AI targets a core OSS bottleneck: maintainers must review PRs, triage issues, handle dependency/security findings, and prepare releases with limited time. This public repo demonstrates that workflow end to end: npm package, GitHub Action, evals, SECURITY policy, Codex Security reports/fixes/full rescan, issue triage examples, real repo review packets, and successful Actions evidence. It is designed to improve security and code quality while keeping maintainers in control.
+MaintainerOps AI targets a core OSS bottleneck: maintainers must review PRs, triage issues, handle dependency/security findings, and prepare releases with limited time. This public repo demonstrates that workflow end to end: npm package, GitHub Action, Marketplace-ready release path, evals, SECURITY policy, Codex Security reports/fixes/full rescan, issue triage examples, real repo review packets, and successful Actions evidence. It is designed to improve security and code quality while keeping maintainers in control.
 
 Form-ready answer, under 500 characters:
 
 ```text
-MaintainerOps AI supports core OSS maintenance work: PR review, issue triage, dependency/security finding review, and release readiness. The public repo includes an npm package, GitHub Action, SECURITY policy, EVALS, Codex Security reports/fixes/full rescan, real repo review packets, and successful Actions evidence. It keeps humans in control without auto-merge or auto-close.
+MaintainerOps AI supports OSS maintenance: PR review, issue triage, dependency/security finding review, and release readiness. The public repo includes npm package, GitHub Action, Marketplace-ready v0.1.4 path, SECURITY, EVALS, Codex Security reports/fixes/full rescan, real review packets, and successful Actions evidence. It keeps humans in control without auto-merge or auto-close.
 ```
 
 ## How API credits will be used

@@ -4,6 +4,8 @@ MaintainerOps AI is ready for early external maintainer feedback.
 
 Public feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 
+Marketplace listing path: publish the `v0.1.4` GitHub Action release to GitHub Marketplace, then send Marketplace users back to Issue #6 for public feedback.
+
 ## Copy/paste request
 
 ```text
@@ -11,6 +13,7 @@ Could you try MaintainerOps AI and leave short feedback on Issue #6?
 
 Package: https://www.npmjs.com/package/maintainerops-ai
 Feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
+GitHub Action: https://github.com/rtonf/maintainerops-ai
 
 Quick check:
 npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
@@ -26,6 +29,41 @@ Please mention:
 ```
 
 ## What to try
+
+From GitHub Marketplace or a repository workflow:
+
+```yaml
+name: MaintainerOps AI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+
+jobs:
+  review-packet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: rtonf/maintainerops-ai@v0.1.4
+        with:
+          mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
+          repo: ${{ github.repository }}
+          number: ${{ github.event.pull_request.number || github.event.issue.number }}
+          format: markdown
+          offline: true
+          authorized: true
+```
+
+From npm:
 
 ```bash
 npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
