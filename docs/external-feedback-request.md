@@ -4,7 +4,7 @@ MaintainerOps AI is ready for early external maintainer feedback.
 
 Public feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 
-Marketplace listing path: publish the `v0.1.4` GitHub Action release to GitHub Marketplace, then send Marketplace users back to Issue #6 for public feedback.
+Marketplace listing path: publish the GitHub Action release to GitHub Marketplace, then send Marketplace users back to Issue #6 for public feedback.
 
 ## Copy/paste request
 
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.4
+      - uses: rtonf/maintainerops-ai@v0.1.5
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

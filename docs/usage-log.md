@@ -45,6 +45,9 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-12 | Prepared `v0.1.4` hardening release and Marketplace feedback path for Issue #6.                                                            | Issue #11, `docs/releases/v0.1.4.md`, `docs/github-marketplace.md`, `docs/external-feedback-request.md`, README                                                                                        |
 | 2026-06-12 | Published GitHub Release `v0.1.4`; npm publish is pending maintainer authentication.                                                       | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.4`, npm `E401` auth blocker                                                                                                               |
 | 2026-06-12 | Published npm `maintainerops-ai@0.1.4` and verified the GitHub Marketplace listing.                                                        | `https://www.npmjs.com/package/maintainerops-ai`, `https://github.com/marketplace/actions/maintainerops-ai`, `docs/npm-install-evidence.md`                                                            |
+| 2026-06-13 | Submitted the Codex for Open Source application and started post-application maintenance.                                                  | `docs/application-answers.md`, `docs/maintenance-log-2026-06-13.md`                                                                                                                                    |
+| 2026-06-13 | Re-ran local verification and confirmed npm, GitHub Release, and Marketplace publication status.                                           | `npm run verify`, `npm view maintainerops-ai version dist-tags time --json`, `https://github.com/marketplace/actions/maintainerops-ai`                                                                 |
+| 2026-06-13 | Prepared `v0.1.5` GitHub Action release to refresh the Marketplace-facing README and evidence snapshot.                                    | `docs/releases/v0.1.5.md`, README, `docs/github-marketplace.md`, `docs/external-feedback-request.md`                                                                                                   |
 
 ## Current metrics
 
@@ -55,23 +58,24 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
-- GitHub releases: 5
+- GitHub releases: 6
 - npm package status: `maintainerops-ai@0.1.4` is published as npm `latest`
 - GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`
+- Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan
 
 These entries are intentionally tracked as planned or completed so the public record does not claim future work before it happens.
 
-| Date       | Status    | Planned evidence                                                                                  |
-| ---------- | --------- | ------------------------------------------------------------------------------------------------- |
-| 2026-06-10 | Completed | Close issues #1-#4, npm install proof, real repo review packets, post-fix checks                  |
-| 2026-06-11 | Completed | Full security rescan, v0.1.2 release, PR/issue/workflow runs, review packet #4                    |
-| 2026-06-12 | Completed | Confirm npm `v0.1.3` latest, merge PR #10, prepare `v0.1.4`, refresh Marketplace feedback request |
-| 2026-06-13 | Planned   | Re-run security/dependency checks and document any drift                                          |
-| 2026-06-14 | Planned   | Use the packet output for a release-readiness or dependency-update review                         |
-| 2026-06-15 | Planned   | Record false-positive and false-negative notes from packet review                                 |
-| 2026-06-16 | Planned   | Summarize weekly usage, time saved, and follow-up improvements                                    |
+| Date       | Status    | Planned evidence                                                                                       |
+| ---------- | --------- | ------------------------------------------------------------------------------------------------------ |
+| 2026-06-10 | Completed | Close issues #1-#4, npm install proof, real repo review packets, post-fix checks                       |
+| 2026-06-11 | Completed | Full security rescan, v0.1.2 release, PR/issue/workflow runs, review packet #4                         |
+| 2026-06-12 | Completed | Confirm npm `v0.1.3` latest, merge PR #10, prepare `v0.1.4`, refresh Marketplace feedback request      |
+| 2026-06-13 | Completed | Re-run verification, confirm npm/Marketplace/release status, and document post-application maintenance |
+| 2026-06-14 | Planned   | Use the packet output for a release-readiness or dependency-update review                              |
+| 2026-06-15 | Planned   | Record false-positive and false-negative notes from packet review                                      |
+| 2026-06-16 | Planned   | Summarize weekly usage, time saved, and follow-up improvements                                         |
 
 ## Next evidence to collect
 

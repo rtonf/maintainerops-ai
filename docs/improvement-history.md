@@ -32,3 +32,13 @@
 - Documented the GitHub Actions activation blocker: the current GitHub OAuth token still needs `workflow` scope.
 - Activated `.github/workflows/maintainerops.yml` after OAuth `workflow` scope was granted.
 - Verified the active workflow with a successful manual `workflow_dispatch` run: `https://github.com/rtonf/maintainerops-ai/actions/runs/27284781369`.
+
+## 2026-06-13
+
+- Submitted the Codex for Open Source application using the public repository, npm package, Marketplace Action, Codex Security reports, evals, review packets, and Actions evidence.
+- Re-ran `npm run verify` as the first post-application maintenance check.
+- Confirmed npm latest remains `maintainerops-ai@0.1.4`.
+- Confirmed the GitHub Marketplace listing is public at `https://github.com/marketplace/actions/maintainerops-ai`.
+- Found that the Marketplace page still rendered the older `v0.1.4` release README, which contained stale npm-pending wording.
+- Prepared `v0.1.5` as a GitHub Action release to refresh the Marketplace-facing README without rewriting an existing public tag.
+- Added a dedicated 2026-06-13 maintenance log and kept Issue #6 as the public feedback target.
