@@ -11,10 +11,10 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest `v0.1.2`; `v0.1.3` is prepared and pending npm OTP publish.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest `v0.1.3`.
 - GitHub releases: `v0.1.0`, `v0.1.1`, `v0.1.2`, and `v0.1.3`.
 - Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
-- Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs.
+- Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including `v0.1.3`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for external maintainer feedback, and real repository review packets published.
 - Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
 
