@@ -6,7 +6,7 @@ This document records public registry install evidence for the Codex for Open So
 
 - Package: `maintainerops-ai`
 - Registry: `https://www.npmjs.com/package/maintainerops-ai`
-- Verified version: `0.1.3`
+- Verified version: `0.1.4`
 - Dist tag: `latest`
 - Binary: `maintainerops`
 

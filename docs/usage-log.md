@@ -42,6 +42,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-12 | Confirmed `maintainerops-ai@0.1.3` is npm `latest` and verified CLI execution from the registry.                                           | `docs/npm-install-evidence.md`, `npm view maintainerops-ai version dist-tags time --json`, `npm exec --yes --package maintainerops-ai@latest -- maintainerops --help`                                  |
 | 2026-06-12 | Closed the `v0.1.3` npm publication follow-up and refreshed external feedback instructions.                                                | Issue #9 closed, Issue #6 updated for npm latest `0.1.3`                                                                                                                                               |
 | 2026-06-12 | Hardened GitHub PR pagination, Action input failure behavior, npm dependency scope, Node 24/v6 workflow compatibility, and public wording. | `src/github.ts`, `src/actionArgs.ts`, `src/action.ts`, `.github/workflows/maintainerops.yml`, `package.json`, README, `docs/codex-security/action-hardening-diff-scan-2026-06-12.md`, `npm run verify` |
+| 2026-06-12 | Prepared `v0.1.4` hardening release and Marketplace feedback path for Issue #6.                                                            | Issue #11, `docs/releases/v0.1.4.md`, `docs/github-marketplace.md`, `docs/external-feedback-request.md`, README                                                                                        |
 
 ## Current metrics
 
@@ -52,22 +53,22 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
-- GitHub releases: 4
-- npm package status: `maintainerops-ai@0.1.3` is published as the npm `latest` dist-tag
+- GitHub releases: 5
+- npm package status: `maintainerops-ai@0.1.4` is the release target for the latest hardening fixes
 
 ## Seven-day evidence plan
 
 These entries are intentionally tracked as planned or completed so the public record does not claim future work before it happens.
 
-| Date       | Status    | Planned evidence                                                                 |
-| ---------- | --------- | -------------------------------------------------------------------------------- |
-| 2026-06-10 | Completed | Close issues #1-#4, npm install proof, real repo review packets, post-fix checks |
-| 2026-06-11 | Completed | Full security rescan, v0.1.2 release, PR/issue/workflow runs, review packet #4   |
-| 2026-06-12 | Completed | Confirm npm `v0.1.3` latest, close issue #9, refresh external feedback request   |
-| 2026-06-13 | Planned   | Re-run security/dependency checks and document any drift                         |
-| 2026-06-14 | Planned   | Use the packet output for a release-readiness or dependency-update review        |
-| 2026-06-15 | Planned   | Record false-positive and false-negative notes from packet review                |
-| 2026-06-16 | Planned   | Summarize weekly usage, time saved, and follow-up improvements                   |
+| Date       | Status    | Planned evidence                                                                                  |
+| ---------- | --------- | ------------------------------------------------------------------------------------------------- |
+| 2026-06-10 | Completed | Close issues #1-#4, npm install proof, real repo review packets, post-fix checks                  |
+| 2026-06-11 | Completed | Full security rescan, v0.1.2 release, PR/issue/workflow runs, review packet #4                    |
+| 2026-06-12 | Completed | Confirm npm `v0.1.3` latest, merge PR #10, prepare `v0.1.4`, refresh Marketplace feedback request |
+| 2026-06-13 | Planned   | Re-run security/dependency checks and document any drift                                          |
+| 2026-06-14 | Planned   | Use the packet output for a release-readiness or dependency-update review                         |
+| 2026-06-15 | Planned   | Record false-positive and false-negative notes from packet review                                 |
+| 2026-06-16 | Planned   | Summarize weekly usage, time saved, and follow-up improvements                                    |
 
 ## Next evidence to collect
 
