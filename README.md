@@ -127,6 +127,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Real repository review packets](docs/review-packets/README.md)
 - [Application answers](docs/application-answers.md)
 - [External feedback request](docs/external-feedback-request.md)
+- [Operator runbook](docs/operator-runbook.md)
 - [v0.1.0 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.0)
 - [v0.1.2 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.2)
 - [v0.1.3 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.3)
