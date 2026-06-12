@@ -10,6 +10,7 @@ The Codex for Open Source application has been submitted. The maintenance goal f
 - npm registry: `maintainerops-ai@0.1.4` is the `latest` dist-tag.
 - GitHub Release: `v0.1.4` is public.
 - GitHub Marketplace: `MaintainerOps AI` is public.
+- GitHub Actions: manual `workflow_dispatch` run succeeded at `https://github.com/rtonf/maintainerops-ai/actions/runs/27427501684`.
 - Repository state: `main` is synchronized with `origin/main` before maintenance edits.
 
 ## Findings

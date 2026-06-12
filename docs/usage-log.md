@@ -48,6 +48,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-13 | Submitted the Codex for Open Source application and started post-application maintenance.                                                  | `docs/application-answers.md`, `docs/maintenance-log-2026-06-13.md`                                                                                                                                    |
 | 2026-06-13 | Re-ran local verification and confirmed npm, GitHub Release, and Marketplace publication status.                                           | `npm run verify`, `npm view maintainerops-ai version dist-tags time --json`, `https://github.com/marketplace/actions/maintainerops-ai`                                                                 |
 | 2026-06-13 | Prepared GitHub Action Release `v0.1.5` to refresh the Marketplace-facing README and evidence snapshot.                                    | `docs/releases/v0.1.5.md`, README, `docs/github-marketplace.md`, `docs/external-feedback-request.md`; Marketplace still displays `v0.1.4` until the release is published through the Marketplace UI    |
+| 2026-06-13 | Verified a fresh post-application manual GitHub Actions run.                                                                               | `https://github.com/rtonf/maintainerops-ai/actions/runs/27427501684`                                                                                                                                   |
 
 ## Current metrics
 
