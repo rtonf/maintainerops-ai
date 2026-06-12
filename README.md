@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/maintainerops-ai.svg)](https://www.npmjs.com/package/maintainerops-ai)
 [![npm downloads](https://img.shields.io/npm/dm/maintainerops-ai.svg)](https://www.npmjs.com/package/maintainerops-ai)
 
-MaintainerOps AI is a GitHub-aware CLI and GitHub Action for open-source maintainers. It turns pull requests, issues, security alerts, and release inputs into structured review packets that a maintainer can accept, edit, or ignore.
+MaintainerOps AI is a GitHub-aware CLI and GitHub Action for open-source maintainers. It turns pull requests, issues, and fixture-based security or release inputs into structured review packets that a maintainer can accept, edit, or ignore.
 
 OSS ecosystems rely on a small number of maintainers making high-quality decisions under constant backlog pressure. MaintainerOps AI makes that work easier to audit and repeat: it converts noisy issues, PRs, dependency updates, and release tasks into review packets that preserve maintainer control while improving security, code quality, and response time.
 
@@ -24,7 +24,7 @@ Open-source maintenance work is repetitive and high-stakes:
 
 - Review pull requests for risk, test gaps, and security-sensitive changes.
 - Triage issues into actionable labels and missing-information requests.
-- Summarize Dependabot, CodeQL, Semgrep, and package audit output.
+- Summarize dependency, CodeQL, Semgrep, and package audit output when maintainers provide those findings through issues or fixtures.
 - Draft release notes from merged pull requests and breaking changes.
 
 MaintainerOps AI uses the OpenAI API to reduce the reading and drafting load while keeping maintainers in control.
@@ -118,6 +118,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Full Codex Security rescan HTML](docs/codex-security/full-rescan-2026-06-11.html)
 - [Publication exposure scan](docs/codex-security/publication-exposure-scan-2026-06-11.md)
 - [v0.1.3 Codex Security diff scan](docs/codex-security/v0.1.3-diff-scan-2026-06-11.md)
+- [Action hardening Codex Security diff scan](docs/codex-security/action-hardening-diff-scan-2026-06-12.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)
@@ -157,7 +158,7 @@ jobs:
   review-packet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: rtonf/maintainerops-ai@v0.1.3
