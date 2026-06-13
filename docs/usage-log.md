@@ -53,6 +53,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-13 | Implemented bundled GitHub Action runtime, centralized the OpenAI model default, and added direct offline analyzer unit tests.              | `action.yml`, `dist-action/index.js`, `src/defaults.ts`, `src/offlineAnalyzer.test.ts`, `docs/action-bundling-plan.md`, `npm run verify`                                                               |
 | 2026-06-13 | Verified the bundled Action runtime changes on `main` with a fresh manual GitHub Actions run.                                               | `https://github.com/rtonf/maintainerops-ai/actions/runs/27462826049`                                                                                                                                   |
 | 2026-06-13 | Hardened GitHub API error handling, capped PR file pagination, strengthened model response validation, and sanitized security report paths. | `src/github.ts`, `src/schema.ts`, `src/github.test.ts`, `src/schema.test.ts`, `docs/codex-security/hardening-review-2026-06-13.md`                                                                     |
+| 2026-06-13 | Verified the hardening commit on `main` with a fresh manual GitHub Actions run.                                                             | `https://github.com/rtonf/maintainerops-ai/actions/runs/27464546983`                                                                                                                                   |
 
 ## Current metrics
 

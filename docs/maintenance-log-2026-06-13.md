@@ -10,7 +10,7 @@ The Codex for Open Source application has been submitted. The maintenance goal f
 - npm registry: `maintainerops-ai@0.1.4` is the `latest` dist-tag.
 - GitHub Release: `v0.1.4` is public.
 - GitHub Marketplace: `MaintainerOps AI` is public and displays `v0.1.5` as `Latest`.
-- GitHub Actions: manual `workflow_dispatch` runs succeeded at `https://github.com/rtonf/maintainerops-ai/actions/runs/27427501684` and `https://github.com/rtonf/maintainerops-ai/actions/runs/27462826049`.
+- GitHub Actions: manual `workflow_dispatch` runs succeeded at `https://github.com/rtonf/maintainerops-ai/actions/runs/27427501684`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27462826049`, and `https://github.com/rtonf/maintainerops-ai/actions/runs/27464546983`.
 - Repository state: `main` is synchronized with `origin/main` before maintenance edits.
 
 ## Findings
@@ -36,6 +36,7 @@ The Codex for Open Source application has been submitted. The maintenance goal f
 - Added a pull request changed-file pagination cap to avoid unbounded GitHub API calls on extreme PRs.
 - Strengthened runtime validation for model assessment `riskLevel`, `recommendedAction`, confidence range, string arrays, and evidence entries.
 - Sanitized public Codex Security reports to remove local Windows user paths.
+- Verified the hardening commit on `main` with a fresh `workflow_dispatch` run.
 
 ## Remaining Work
 
