@@ -51,6 +51,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-13 | Verified a fresh post-application manual GitHub Actions run.                                                                               | `https://github.com/rtonf/maintainerops-ai/actions/runs/27427501684`                                                                                                                                   |
 | 2026-06-13 | Checked the Marketplace page again; it still displays `v0.1.4`, so `v0.1.5` still needs the GitHub Release UI Marketplace publish step.    | `https://github.com/marketplace/actions/maintainerops-ai`                                                                                                                                              |
 | 2026-06-13 | Implemented bundled GitHub Action runtime, centralized the OpenAI model default, and added direct offline analyzer unit tests.             | `action.yml`, `dist-action/index.js`, `src/defaults.ts`, `src/offlineAnalyzer.test.ts`, `docs/action-bundling-plan.md`, `npm run verify`                                                               |
+| 2026-06-13 | Verified the bundled Action runtime changes on `main` with a fresh manual GitHub Actions run.                                              | `https://github.com/rtonf/maintainerops-ai/actions/runs/27462826049`                                                                                                                                   |
 
 ## Current metrics
 
