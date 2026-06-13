@@ -46,3 +46,7 @@
 - Centralized the default OpenAI model in `src/defaults.ts` and changed README setup guidance to avoid hard-coding a changing model id as a user requirement.
 - Added direct `offlineAnalyzer` unit coverage for security-sensitive PR routing, documentation issue triage, and large PR test-gap detection.
 - Verified the bundled Action fixture path and completed `npm run verify` successfully after the changes.
+- Confirmed the GitHub Marketplace listing displays `v0.1.5` as `Latest` and refreshed stale README evidence text.
+- Removed local Windows user paths from public Codex Security reports.
+- Hardened GitHub API error messages to avoid including response bodies in exceptions.
+- Added a PR changed-file pagination cap and runtime enum validation for OpenAI assessment packets.

@@ -21,6 +21,8 @@ interface GitHubFile {
   patch?: string;
 }
 
+const MAX_PULL_REQUEST_FILE_PAGES = 30;
+
 export async function fetchIssueWorkItem(repo: string, issueNumber: number): Promise<MaintainerWorkItem> {
   const issue = await githubJson<GitHubIssue>(`/repos/${repo}/issues/${issueNumber}`);
   return {
@@ -57,7 +59,7 @@ async function fetchPullRequestFiles(repo: string, pullNumber: number): Promise<
   const files: GitHubFile[] = [];
   let page = 1;
 
-  while (true) {
+  while (page <= MAX_PULL_REQUEST_FILE_PAGES) {
     const pageFiles = await githubJson<GitHubFile[]>(
       `/repos/${repo}/pulls/${pullNumber}/files?per_page=100&page=${page}`
     );
@@ -69,6 +71,10 @@ async function fetchPullRequestFiles(repo: string, pullNumber: number): Promise<
 
     page += 1;
   }
+
+  throw new Error(
+    `Pull request file list exceeds ${MAX_PULL_REQUEST_FILE_PAGES * 100} files; split the review or analyze a narrower change set.`
+  );
 }
 
 async function githubJson<T>(path: string): Promise<T> {
@@ -84,8 +90,7 @@ async function githubJson<T>(path: string): Promise<T> {
 
   const response = await fetch(`https://api.github.com${path}`, { headers });
   if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`GitHub request failed: ${response.status} ${response.statusText}\n${body}`);
+    throw new Error(`GitHub API error ${response.status} ${response.statusText} on ${path}`);
   }
 
   return (await response.json()) as T;

@@ -250,7 +250,7 @@
 
 <h2 id="scope">Scope</h2>
 
-<ul><li>Target: <code>C:\Users\mario\Documents\project　1a</code></li><li>Repository: <code>rtonf/maintainerops-ai</code></li><li>Scan mode: Codex Security repository-wide full rescan.</li><li>Scan date: 2026-06-11.</li><li>Commit at scan start: <code>dc336f2</code>.</li><li>In-scope code: CLI, GitHub Action wrapper/workflow, GitHub API ingestion, OpenAI prompt/response path, redaction, formatter/report output, offline analyzer, eval harness, React/Vite dashboard, demo tooling, package metadata, lockfile, and security/application docs.</li><li>Threat model: generated during Phase 1 and saved to <code>artifacts/01_context/threat_model.md</code>; this is scan-generated context, not an external input.</li><li>Artifacts reviewed: <code>rank_input.csv</code>, <code>deep_review_input.csv</code>, <code>work_ledger.jsonl</code>, <code>raw_candidates.jsonl</code>, <code>repository_coverage_ledger.md</code>, per-candidate ledgers, validation reports, attack-path reports, and <code>npm run verify</code> output.</li><li>Exclusions and limitations: generated <code>dist-web</code> and <code>test-results</code> artifacts were closed as not applicable after canonical source review; no live OpenAI request or real credential disclosure was performed.</li></ul>
+<ul><li>Target: <code><repo-root></code></li><li>Repository: <code>rtonf/maintainerops-ai</code></li><li>Scan mode: Codex Security repository-wide full rescan.</li><li>Scan date: 2026-06-11.</li><li>Commit at scan start: <code>dc336f2</code>.</li><li>In-scope code: CLI, GitHub Action wrapper/workflow, GitHub API ingestion, OpenAI prompt/response path, redaction, formatter/report output, offline analyzer, eval harness, React/Vite dashboard, demo tooling, package metadata, lockfile, and security/application docs.</li><li>Threat model: generated during Phase 1 and saved to <code>artifacts/01_context/threat_model.md</code>; this is scan-generated context, not an external input.</li><li>Artifacts reviewed: <code>rank_input.csv</code>, <code>deep_review_input.csv</code>, <code>work_ledger.jsonl</code>, <code>raw_candidates.jsonl</code>, <code>repository_coverage_ledger.md</code>, per-candidate ledgers, validation reports, attack-path reports, and <code>npm run verify</code> output.</li><li>Exclusions and limitations: generated <code>dist-web</code> and <code>test-results</code> artifacts were closed as not applicable after canonical source review; no live OpenAI request or real credential disclosure was performed.</li></ul>
 
 <h3 id="scan-summary">Scan Summary</h3>
 
@@ -286,11 +286,11 @@
 </tr>
 <tr>
 <td>Markdown report</td>
-<td><code>C:\Users\mario\AppData\Local\Temp\codex-security-scans\project-1a\dc336f2_20260611T000000Z\report.md</code></td>
+<td><code><local-scan-artifacts>\dc336f2_20260611T000000Z\report.md</code></td>
 </tr>
 <tr>
 <td>HTML report</td>
-<td><code>C:\Users\mario\AppData\Local\Temp\codex-security-scans\project-1a\dc336f2_20260611T000000Z\report.html</code></td>
+<td><code><local-scan-artifacts>\dc336f2_20260611T000000Z\report.html</code></td>
 </tr>
 <tr>
 <td>Public report copy</td>

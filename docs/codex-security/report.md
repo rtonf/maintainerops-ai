@@ -2,7 +2,7 @@
 
 ## Scope
 
-- Target: C:\Users\mario\Documents\project　1a
+- Target: <repo-root>
 - Scan mode: Codex Security repository-wide scan.
 - Scan id: worktree_20260608T231306Z.
 - In-scope code: CLI, GitHub Action wrapper/workflow, OpenAI prompt/response path, GitHub API ingestion, formatter/report output, local React/Vite dashboard, tests, build metadata, and generated rows closed through source review.

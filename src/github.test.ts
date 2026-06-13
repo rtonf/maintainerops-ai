@@ -52,6 +52,56 @@ test("fetchPullRequestWorkItem paginates changed files", async () => {
   assert.equal(requestedUrls.filter((url) => url.includes("/files?")).length, 2);
 });
 
+test("fetchPullRequestWorkItem caps changed file pagination", async () => {
+  globalThis.fetch = (async (input: string | URL | Request) => {
+    const url = String(input);
+
+    if (url.endsWith("/repos/owner/repo/pulls/8")) {
+      return jsonResponse({
+        number: 8,
+        title: "Huge PR",
+        body: "body",
+        html_url: "https://github.com/owner/repo/pull/8",
+        user: { login: "maintainer" },
+        labels: []
+      });
+    }
+
+    if (url.includes("/repos/owner/repo/pulls/8/files?")) {
+      return jsonResponse(
+        Array.from({ length: 100 }, (_, index) => ({
+          filename: `src/huge-${index}.ts`,
+          status: "modified",
+          patch: `@@ huge ${index}`
+        }))
+      );
+    }
+
+    throw new Error(`unexpected fetch: ${url}`);
+  }) as typeof fetch;
+
+  await assert.rejects(() => fetchPullRequestWorkItem("owner/repo", 8), /Pull request file list exceeds 3000 files/);
+});
+
+test("fetchPullRequestWorkItem does not include GitHub response body in errors", async () => {
+  globalThis.fetch = (async () =>
+    new Response(JSON.stringify({ message: "secret diagnostic body" }), {
+      status: 403,
+      statusText: "Forbidden",
+      headers: { "content-type": "application/json" }
+    })) as typeof fetch;
+
+  await assert.rejects(
+    () => fetchPullRequestWorkItem("owner/repo", 9),
+    (error) => {
+      assert(error instanceof Error);
+      assert.match(error.message, /GitHub API error 403 Forbidden/);
+      assert.doesNotMatch(error.message, /secret diagnostic body/);
+      return true;
+    }
+  );
+});
+
 function jsonResponse(body: unknown): Response {
   return new Response(JSON.stringify(body), {
     status: 200,

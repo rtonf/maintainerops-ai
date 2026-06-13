@@ -2,7 +2,7 @@
 
 ## Scope
 
-- Target: `C:\Users\mario\Documents\project　1a`
+- Target: `<repo-root>`
 - Repository: `rtonf/maintainerops-ai`
 - Scan mode: Codex Security repository-wide full rescan.
 - Scan date: 2026-06-11.
@@ -22,8 +22,8 @@
 | Coverage | 31 rank/deep-review rows generated; 16 repository coverage ledger rows closed |
 | Candidate ledger status | MOAI-005 through MOAI-008 each have discovery, validation, and attack-path receipts |
 | Validation mode | Static source/config tracing, focused runtime probes, local tests, `npm run verify`, and `npm audit --audit-level=moderate` |
-| Markdown report | `C:\Users\mario\AppData\Local\Temp\codex-security-scans\project-1a\dc336f2_20260611T000000Z\report.md` |
-| HTML report | `C:\Users\mario\AppData\Local\Temp\codex-security-scans\project-1a\dc336f2_20260611T000000Z\report.html` |
+| Markdown report | `<local-scan-artifacts>\dc336f2_20260611T000000Z\report.md` |
+| HTML report | `<local-scan-artifacts>\dc336f2_20260611T000000Z\report.html` |
 | Public report copy | `docs/codex-security/full-rescan-2026-06-11.md` |
 
 ## Threat Model

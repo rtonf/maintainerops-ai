@@ -68,6 +68,7 @@ function validateWorkItem(item) {
 }
 
 ;// CONCATENATED MODULE: ./src/github.ts
+const MAX_PULL_REQUEST_FILE_PAGES = 30;
 async function fetchIssueWorkItem(repo, issueNumber) {
     const issue = await githubJson(`/repos/${repo}/issues/${issueNumber}`);
     return {
@@ -100,7 +101,7 @@ async function fetchPullRequestWorkItem(repo, pullNumber) {
 async function fetchPullRequestFiles(repo, pullNumber) {
     const files = [];
     let page = 1;
-    while (true) {
+    while (page <= MAX_PULL_REQUEST_FILE_PAGES) {
         const pageFiles = await githubJson(`/repos/${repo}/pulls/${pullNumber}/files?per_page=100&page=${page}`);
         files.push(...pageFiles);
         if (pageFiles.length < 100) {
@@ -108,6 +109,7 @@ async function fetchPullRequestFiles(repo, pullNumber) {
         }
         page += 1;
     }
+    throw new Error(`Pull request file list exceeds ${MAX_PULL_REQUEST_FILE_PAGES * 100} files; split the review or analyze a narrower change set.`);
 }
 async function githubJson(path) {
     const headers = {
@@ -120,8 +122,7 @@ async function githubJson(path) {
     }
     const response = await fetch(`https://api.github.com${path}`, { headers });
     if (!response.ok) {
-        const body = await response.text();
-        throw new Error(`GitHub request failed: ${response.status} ${response.statusText}\n${body}`);
+        throw new Error(`GitHub API error ${response.status} ${response.statusText} on ${path}`);
     }
     return (await response.json());
 }
@@ -11743,6 +11744,18 @@ class BedrockOpenAI extends OpenAI {
 
 //# sourceMappingURL=index.mjs.map
 ;// CONCATENATED MODULE: ./src/schema.ts
+const riskLevels = new Set(["low", "medium", "high", "critical"]);
+const recommendedActions = new Set([
+    "needs_human_review",
+    "request_changes",
+    "ask_for_reproduction",
+    "ready_to_merge",
+    "needs_security_review",
+    "needs_release_manager",
+    "close_as_duplicate",
+    "needs_more_info"
+]);
+const evidenceSources = new Set(["title", "body", "diff", "file", "comment", "check", "metadata"]);
 const assessmentJsonSchema = {
     type: "object",
     additionalProperties: false,
@@ -11836,9 +11849,39 @@ function assertAssessment(value) {
     if (typeof assessment.confidence !== "number") {
         throw new Error("Assessment response is missing numeric field: confidence");
     }
+    if (!Number.isFinite(assessment.confidence) || assessment.confidence < 0 || assessment.confidence > 1) {
+        throw new Error("Assessment response confidence must be between 0 and 1.");
+    }
+    if (!riskLevels.has(assessment.riskLevel)) {
+        throw new Error(`Assessment response has invalid riskLevel: ${assessment.riskLevel}`);
+    }
+    if (!recommendedActions.has(assessment.recommendedAction)) {
+        throw new Error(`Assessment response has invalid recommendedAction: ${assessment.recommendedAction}`);
+    }
     for (const field of ["labels", "reviewChecklist", "securityNotes", "releaseNotes", "evidence"]) {
         if (!Array.isArray(assessment[field])) {
             throw new Error(`Assessment response is missing array field: ${field}`);
+        }
+    }
+    for (const field of ["labels", "reviewChecklist", "securityNotes", "releaseNotes"]) {
+        const entries = assessment[field];
+        if (!Array.isArray(entries) || !entries.every((entry) => typeof entry === "string")) {
+            throw new Error(`Assessment response array field must contain only strings: ${field}`);
+        }
+    }
+    const evidence = assessment.evidence;
+    if (!Array.isArray(evidence)) {
+        throw new Error("Assessment response is missing array field: evidence");
+    }
+    for (const [index, entry] of evidence.entries()) {
+        if (!entry || typeof entry !== "object") {
+            throw new Error(`Assessment response evidence entry ${index} is not an object.`);
+        }
+        if (!evidenceSources.has(entry.source)) {
+            throw new Error(`Assessment response evidence entry ${index} has invalid source: ${entry.source}`);
+        }
+        if (typeof entry.reference !== "string" || typeof entry.note !== "string") {
+            throw new Error(`Assessment response evidence entry ${index} is missing string fields.`);
         }
     }
     return assessment;
