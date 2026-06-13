@@ -4,6 +4,7 @@
   "description": "AI-assisted OSS maintainer workflows for PR review, issue triage, security triage, and release notes.",
   "type": "module",
   "files": [
+    "dist-action/**/*",
     "dist/**/*.js",
     "dist/**/*.d.ts",
     "!dist/**/*.test.js",
@@ -20,8 +21,9 @@
     "maintainerops": "dist/cli.js"
   },
   "scripts": {
-    "build": "npm run build:cli && npm run build:web",
+    "build": "npm run build:cli && npm run build:action && npm run build:web",
     "build:cli": "tsc -p tsconfig.json",
+    "build:action": "node scripts/clean-action-dist.mjs && ncc build src/action.ts --out dist-action --target es2022 && node scripts/write-action-package-json.mjs",
     "build:web": "vite build",
     "check": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
@@ -61,6 +63,7 @@
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@vercel/ncc": "^0.44.0",
     "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^10.4.1",
     "gifenc": "^1.0.3",

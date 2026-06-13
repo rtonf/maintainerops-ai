@@ -49,12 +49,14 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-13 | Re-ran local verification and confirmed npm, GitHub Release, and Marketplace publication status.                                           | `npm run verify`, `npm view maintainerops-ai version dist-tags time --json`, `https://github.com/marketplace/actions/maintainerops-ai`                                                                 |
 | 2026-06-13 | Prepared GitHub Action Release `v0.1.5` to refresh the Marketplace-facing README and evidence snapshot.                                    | `docs/releases/v0.1.5.md`, README, `docs/github-marketplace.md`, `docs/external-feedback-request.md`; Marketplace still displays `v0.1.4` until the release is published through the Marketplace UI    |
 | 2026-06-13 | Verified a fresh post-application manual GitHub Actions run.                                                                               | `https://github.com/rtonf/maintainerops-ai/actions/runs/27427501684`                                                                                                                                   |
+| 2026-06-13 | Checked the Marketplace page again; it still displays `v0.1.4`, so `v0.1.5` still needs the GitHub Release UI Marketplace publish step.    | `https://github.com/marketplace/actions/maintainerops-ai`                                                                                                                                              |
+| 2026-06-13 | Implemented bundled GitHub Action runtime, centralized the OpenAI model default, and added direct offline analyzer unit tests.             | `action.yml`, `dist-action/index.js`, `src/defaults.ts`, `src/offlineAnalyzer.test.ts`, `docs/action-bundling-plan.md`, `npm run verify`                                                               |
 
 ## Current metrics
 
 - Public triage fixtures: 1
 - Offline eval cases: 6
-- Unit tests: 8
+- Unit tests: 16
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4

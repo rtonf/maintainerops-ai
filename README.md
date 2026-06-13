@@ -57,10 +57,12 @@ With the OpenAI API enabled:
 
 ```bash
 set OPENAI_API_KEY=<your-openai-api-key>
-set OPENAI_MODEL=gpt-5.4-mini
+set OPENAI_MODEL=<supported-openai-model>
 npm run build
 node dist/cli.js analyze --fixture examples/fixtures/pull_request.json --format markdown
 ```
+
+If `OPENAI_MODEL` is omitted, the CLI uses its built-in default model. Set the variable explicitly when your organization has standardized on a specific supported OpenAI model.
 
 Against GitHub:
 

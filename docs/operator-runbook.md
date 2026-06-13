@@ -10,32 +10,39 @@ This runbook records the checks needed before publishing evidence for the Codex 
    npm run verify
    ```
 
-2. Confirm npm authentication before publishing:
+2. Confirm the bundled Action runtime is up to date:
+
+   ```bash
+   npm run build:action
+   git diff --exit-code -- dist-action
+   ```
+
+3. Confirm npm authentication before publishing:
 
    ```bash
    npm whoami
    ```
 
-3. Publish the package from the repository root:
+4. Publish the package from the repository root:
 
    ```bash
    npm publish --access public
    ```
 
-4. Verify npm latest and CLI execution:
+5. Verify npm latest and CLI execution:
 
    ```bash
    npm view maintainerops-ai version dist-tags time --json
    npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
    ```
 
-5. Verify the GitHub Release:
+6. Verify the GitHub Release:
 
    ```bash
-   gh release view v0.1.4 --repo rtonf/maintainerops-ai --json url,tagName,name,publishedAt,isDraft,isPrerelease,targetCommitish
+   gh release view v0.1.5 --repo rtonf/maintainerops-ai --json url,tagName,name,publishedAt,isDraft,isPrerelease,targetCommitish
    ```
 
-6. Verify the GitHub Marketplace listing:
+7. Verify the GitHub Marketplace listing:
 
    ```text
    https://github.com/marketplace/actions/maintainerops-ai
@@ -43,11 +50,11 @@ This runbook records the checks needed before publishing evidence for the Codex 
 
    The page should show:
    - Name: `MaintainerOps AI`
-   - Version: the release tag, for example `v0.1.4`
+   - Version: the release tag, for example `v0.1.5`
    - Status: `Latest`
    - Publisher: `rtonf`
 
-7. Update public evidence:
+8. Update public evidence:
    - `README.md`
    - `docs/npm-install-evidence.md`
    - `docs/usage-log.md`

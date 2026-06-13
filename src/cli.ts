@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { pathToFileURL } from "node:url";
 import { assessWorkItem, resolveWorkItem } from "./analyze.js";
+import { DEFAULT_OPENAI_MODEL } from "./defaults.js";
 import { formatAssessment } from "./format.js";
 import type { CliArgs } from "./types.js";
 
@@ -22,7 +23,7 @@ export async function runCli(argv: string[]): Promise<void> {
   const assessment = await assessWorkItem(item, {
     format: args.format,
     offline: args.offline,
-    model: args.model ?? process.env.OPENAI_MODEL ?? "gpt-5.4-mini"
+    model: args.model ?? process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL
   });
 
   process.stdout.write(`${formatAssessment(item, assessment, args.format)}\n`);

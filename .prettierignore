@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-action/
 dist-web/
 coverage/
 test-results/

@@ -42,3 +42,7 @@
 - Found that the Marketplace page still rendered the older `v0.1.4` release README, which contained stale npm-pending wording.
 - Prepared `v0.1.5` as a GitHub Action release to refresh the Marketplace-facing README without rewriting an existing public tag; Marketplace still needs the release UI publish step if it displays `v0.1.4`.
 - Added a dedicated 2026-06-13 maintenance log and kept Issue #6 as the public feedback target.
+- Reworked the GitHub Action runtime to use a prebuilt `@vercel/ncc` bundle, removing per-user `npm ci` and TypeScript build steps from Marketplace workflows.
+- Centralized the default OpenAI model in `src/defaults.ts` and changed README setup guidance to avoid hard-coding a changing model id as a user requirement.
+- Added direct `offlineAnalyzer` unit coverage for security-sensitive PR routing, documentation issue triage, and large PR test-gap detection.
+- Verified the bundled Action fixture path and completed `npm run verify` successfully after the changes.

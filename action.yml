@@ -29,18 +29,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install MaintainerOps AI dependencies
-      shell: bash
-      working-directory: ${{ github.action_path }}
-      run: npm ci
-    - name: Build MaintainerOps AI action runtime
-      shell: bash
-      working-directory: ${{ github.action_path }}
-      run: npm run build:cli
     - name: Generate maintainer review packet
       shell: bash
       working-directory: ${{ github.action_path }}
-      run: node dist/action.js
+      run: node dist-action/index.js
       env:
         GITHUB_TOKEN: ${{ github.token }}
         INPUT_MODE: ${{ inputs.mode }}
