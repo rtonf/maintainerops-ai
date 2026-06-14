@@ -12,8 +12,8 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 ## Current evidence snapshot
 
 - Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest `v0.1.4`.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest `v0.1.5`.
-- GitHub releases: `v0.1.0`, `v0.1.1`, `v0.1.2`, `v0.1.3`, `v0.1.4`, and `v0.1.5`.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), currently displaying `v0.1.5`; `v0.1.6` is prepared for the hardening release.
+- GitHub releases: `v0.1.0`, `v0.1.1`, `v0.1.2`, `v0.1.3`, `v0.1.4`, `v0.1.5`, and `v0.1.6`.
 - Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
@@ -135,6 +135,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [v0.1.3 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.3)
 - [v0.1.4 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.4)
 - [v0.1.5 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.5)
+- [v0.1.6 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.6)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials
@@ -167,7 +168,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.5
+      - uses: rtonf/maintainerops-ai@v0.1.6
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

@@ -50,3 +50,9 @@
 - Removed local Windows user paths from public Codex Security reports.
 - Hardened GitHub API error messages to avoid including response bodies in exceptions.
 - Added a PR changed-file pagination cap and runtime enum validation for OpenAI assessment packets.
+
+## 2026-06-15
+
+- Prepared `v0.1.6` as the GitHub Action hardening release for Marketplace publication.
+- Updated README, Marketplace notes, and external feedback instructions to use `rtonf/maintainerops-ai@v0.1.6`.
+- Kept npm publication unchanged because the immediate goal is to publish the hardened GitHub Action runtime.

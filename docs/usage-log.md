@@ -54,6 +54,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-13 | Verified the bundled Action runtime changes on `main` with a fresh manual GitHub Actions run.                                               | `https://github.com/rtonf/maintainerops-ai/actions/runs/27462826049`                                                                                                                                   |
 | 2026-06-13 | Hardened GitHub API error handling, capped PR file pagination, strengthened model response validation, and sanitized security report paths. | `src/github.ts`, `src/schema.ts`, `src/github.test.ts`, `src/schema.test.ts`, `docs/codex-security/hardening-review-2026-06-13.md`                                                                     |
 | 2026-06-13 | Verified the hardening commit on `main` with a fresh manual GitHub Actions run.                                                             | `https://github.com/rtonf/maintainerops-ai/actions/runs/27464546983`                                                                                                                                   |
+| 2026-06-15 | Prepared `v0.1.6` as the GitHub Action hardening release for Marketplace publication.                                                       | `docs/releases/v0.1.6.md`, `docs/maintenance-log-2026-06-15.md`, README, `docs/github-marketplace.md`, `docs/external-feedback-request.md`                                                             |
 
 ## Current metrics
 
@@ -64,9 +65,9 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
-- GitHub releases: 6
+- GitHub releases: 7 after `v0.1.6` publication
 - npm package status: `maintainerops-ai@0.1.4` is published as npm `latest`
-- GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.5` as `Latest`
+- GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.5` until `v0.1.6` is published from the GitHub Release UI
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan
@@ -80,7 +81,7 @@ These entries are intentionally tracked as planned or completed so the public re
 | 2026-06-12 | Completed | Confirm npm `v0.1.3` latest, merge PR #10, prepare `v0.1.4`, refresh Marketplace feedback request      |
 | 2026-06-13 | Completed | Re-run verification, confirm npm/Marketplace/release status, and document post-application maintenance |
 | 2026-06-14 | Planned   | Use the packet output for a release-readiness or dependency-update review                              |
-| 2026-06-15 | Planned   | Record false-positive and false-negative notes from packet review                                      |
+| 2026-06-15 | Completed | Prepare `v0.1.6` GitHub Action hardening release and update Marketplace-facing evidence                |
 | 2026-06-16 | Planned   | Summarize weekly usage, time saved, and follow-up improvements                                         |
 
 ## Next evidence to collect
