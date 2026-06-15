@@ -57,3 +57,4 @@
 - Updated README, Marketplace notes, and external feedback instructions to use `rtonf/maintainerops-ai@v0.1.6`.
 - Kept npm publication unchanged because the immediate goal is to publish the hardened GitHub Action runtime.
 - Created GitHub Release `v0.1.6`, verified a fresh manual Actions run, and refreshed Issue #6 for external tester feedback.
+- Confirmed GitHub Marketplace displays `v0.1.6` as the latest Action release.

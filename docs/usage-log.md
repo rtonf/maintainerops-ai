@@ -56,6 +56,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-13 | Verified the hardening commit on `main` with a fresh manual GitHub Actions run.                                                             | `https://github.com/rtonf/maintainerops-ai/actions/runs/27464546983`                                                                                                                                                |
 | 2026-06-15 | Prepared `v0.1.6` as the GitHub Action hardening release for Marketplace publication.                                                       | `docs/releases/v0.1.6.md`, `docs/maintenance-log-2026-06-15.md`, README, `docs/github-marketplace.md`, `docs/external-feedback-request.md`                                                                          |
 | 2026-06-15 | Published GitHub Release `v0.1.6`, verified a fresh manual Actions run, and refreshed Issue #6 external feedback request.                   | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.6`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27503076169`, `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4702156681` |
+| 2026-06-15 | Confirmed GitHub Marketplace displays `v0.1.6` as `Latest`.                                                                                 | `https://github.com/marketplace/actions/maintainerops-ai`                                                                                                                                                           |
+| 2026-06-15 | Verified another fresh manual Actions run after Marketplace showed `v0.1.6`, then added a Marketplace confirmation comment to Issue #6.     | `https://github.com/rtonf/maintainerops-ai/actions/runs/27547530631`, `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4708114377`                                                                  |
 
 ## Current metrics
 
@@ -68,7 +70,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Real public repository review packets: 4
 - GitHub releases: 7
 - npm package status: `maintainerops-ai@0.1.4` is published as npm `latest`
-- GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.5` until `v0.1.6` is published from the GitHub Release UI
+- GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.6` as `Latest`
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan
