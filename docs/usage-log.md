@@ -60,6 +60,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-15 | Verified another fresh manual Actions run after Marketplace showed `v0.1.6`, then added a Marketplace confirmation comment to Issue #6.     | `https://github.com/rtonf/maintainerops-ai/actions/runs/27547530631`, `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4708114377`                                                                  |
 | 2026-06-16 | Completed the first-week maintenance summary and prepared external promotion material for collecting maintainer feedback.                   | `docs/maintenance-log-2026-06-16.md`, `docs/promotion-kit.md`, `docs/promotion-plan-ja.md`, `docs/x-post-ja.md`, `docs/note-article-ja.md`                                                                          |
 | 2026-06-16 | Added a concise final Issue #6 feedback request and verified a fresh manual GitHub Actions run.                                             | `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4718966092`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27619164451`                                                                  |
+| 2026-06-16 | Published npm `maintainerops-ai@0.1.5` and verified public CLI execution from the registry.                                                 | `docs/npm-install-evidence.md`, `npm view maintainerops-ai version dist-tags time --json`, `npm exec --yes --package maintainerops-ai@latest -- maintainerops --help`                                               |
 
 ## Current metrics
 
@@ -71,7 +72,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 4
 - GitHub releases: 7
-- npm package status: `maintainerops-ai@0.1.4` is published as npm `latest`
+- npm package status: `maintainerops-ai@0.1.5` is published as npm `latest`
 - GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.6` as `Latest`
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 

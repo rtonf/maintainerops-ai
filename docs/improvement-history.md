@@ -65,3 +65,4 @@
 - Added a 2026-06-16 maintenance log with the first-week summary, current gaps, and next improvements.
 - Updated README links so the promotion kit and Japanese outreach material are visible from the public project page.
 - Marked the seven-day evidence plan complete through 2026-06-16.
+- Published npm `maintainerops-ai@0.1.5` and verified public CLI execution from the registry.
