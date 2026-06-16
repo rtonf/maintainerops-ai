@@ -58,6 +58,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-15 | Published GitHub Release `v0.1.6`, verified a fresh manual Actions run, and refreshed Issue #6 external feedback request.                   | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.6`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27503076169`, `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4702156681` |
 | 2026-06-15 | Confirmed GitHub Marketplace displays `v0.1.6` as `Latest`.                                                                                 | `https://github.com/marketplace/actions/maintainerops-ai`                                                                                                                                                           |
 | 2026-06-15 | Verified another fresh manual Actions run after Marketplace showed `v0.1.6`, then added a Marketplace confirmation comment to Issue #6.     | `https://github.com/rtonf/maintainerops-ai/actions/runs/27547530631`, `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4708114377`                                                                  |
+| 2026-06-16 | Completed the first-week maintenance summary and prepared external promotion material for collecting maintainer feedback.                   | `docs/maintenance-log-2026-06-16.md`, `docs/promotion-kit.md`, `docs/promotion-plan-ja.md`, `docs/x-post-ja.md`, `docs/note-article-ja.md`                                                                          |
+| 2026-06-16 | Added a concise final Issue #6 feedback request and verified a fresh manual GitHub Actions run.                                             | `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4718966092`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27619164451`                                                                  |
 
 ## Current metrics
 
@@ -85,12 +87,12 @@ These entries are intentionally tracked as planned or completed so the public re
 | 2026-06-13 | Completed | Re-run verification, confirm npm/Marketplace/release status, and document post-application maintenance |
 | 2026-06-14 | Planned   | Use the packet output for a release-readiness or dependency-update review                              |
 | 2026-06-15 | Completed | Prepare `v0.1.6` GitHub Action hardening release and update Marketplace-facing evidence                |
-| 2026-06-16 | Planned   | Summarize weekly usage, time saved, and follow-up improvements                                         |
+| 2026-06-16 | Completed | Summarize weekly usage and prepare external feedback/promotion materials                               |
 
 ## Next evidence to collect
 
 - One week of issue triage examples from real authorized repositories.
 - Maintainer time saved per review packet.
 - False-positive and false-negative notes from eval review.
-- First external user feedback or install/download evidence.
+- First external user feedback beyond owner-authored Issue #6 comments.
 - First issue-triggered and pull-request-triggered workflow runs after new public work items are opened.

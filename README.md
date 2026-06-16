@@ -142,6 +142,10 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 
 - [OpenAI alignment](docs/openai-alignment.md)
 - [Evals](EVALS.md)
+- [Promotion kit](docs/promotion-kit.md)
+- [Japanese promotion plan](docs/promotion-plan-ja.md)
+- [Japanese X post drafts](docs/x-post-ja.md)
+- [Japanese note article draft](docs/note-article-ja.md)
 
 ## GitHub Action
 

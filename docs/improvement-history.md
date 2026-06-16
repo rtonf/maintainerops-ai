@@ -58,3 +58,10 @@
 - Kept npm publication unchanged because the immediate goal is to publish the hardened GitHub Action runtime.
 - Created GitHub Release `v0.1.6`, verified a fresh manual Actions run, and refreshed Issue #6 for external tester feedback.
 - Confirmed GitHub Marketplace displays `v0.1.6` as the latest Action release.
+
+## 2026-06-16
+
+- Repaired Japanese promotion material and added public outreach drafts for X and note.
+- Added a 2026-06-16 maintenance log with the first-week summary, current gaps, and next improvements.
+- Updated README links so the promotion kit and Japanese outreach material are visible from the public project page.
+- Marked the seven-day evidence plan complete through 2026-06-16.
