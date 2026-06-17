@@ -58,4 +58,21 @@ describe("analyzeOffline", () => {
     assert.equal(assessment.labels.includes("large-change"), true);
     assert.equal(assessment.labels.includes("tests-needed"), true);
   });
+
+  it("does not inflate feedback request issues that mention security evidence", () => {
+    const item: MaintainerWorkItem = {
+      kind: "issue",
+      repository: "owner/repo",
+      number: 6,
+      title: "External maintainer feedback wanted",
+      body: "Please try the Marketplace Action or npm CLI and comment on whether the security review packet is useful."
+    };
+
+    const assessment = analyzeOffline(item);
+
+    assert.equal(assessment.riskLevel, "low");
+    assert.equal(assessment.recommendedAction, "needs_more_info");
+    assert.equal(assessment.labels.includes("needs-triage"), true);
+    assert.equal(assessment.labels.includes("security-review"), false);
+  });
 });

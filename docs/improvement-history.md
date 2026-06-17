@@ -66,3 +66,10 @@
 - Updated README links so the promotion kit and Japanese outreach material are visible from the public project page.
 - Marked the seven-day evidence plan complete through 2026-06-16.
 - Published npm `maintainerops-ai@0.1.5` and verified public CLI execution from the registry.
+
+## 2026-06-17
+
+- Added a real review packet for Issue #6 and linked it from the review packet index.
+- Fixed a concrete offline analyzer false-positive pattern for feedback/outreach issues that mention security evidence.
+- Added unit and deterministic eval coverage for that false-positive case.
+- Verified another fresh manual GitHub Actions run on `main`.

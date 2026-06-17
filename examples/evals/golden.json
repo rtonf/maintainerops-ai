@@ -102,5 +102,17 @@
       "title": "Triage example: release readiness packet for v0.1.0",
       "body": "Prepare release notes and maintainer checklist for the initial public release."
     }
+  },
+  {
+    "name": "external feedback issue mentions security evidence",
+    "expectedLabels": ["needs-triage"],
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 6,
+      "title": "External maintainer feedback wanted",
+      "body": "Please try the GitHub Marketplace Action or npm CLI and comment on whether the security review packet helps real PR or issue triage."
+    }
   }
 ]

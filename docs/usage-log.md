@@ -61,16 +61,19 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-16 | Completed the first-week maintenance summary and prepared external promotion material for collecting maintainer feedback.                   | `docs/maintenance-log-2026-06-16.md`, `docs/promotion-kit.md`, `docs/promotion-plan-ja.md`, `docs/x-post-ja.md`, `docs/note-article-ja.md`                                                                          |
 | 2026-06-16 | Added a concise final Issue #6 feedback request and verified a fresh manual GitHub Actions run.                                             | `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4718966092`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27619164451`                                                                  |
 | 2026-06-16 | Published npm `maintainerops-ai@0.1.5` and verified public CLI execution from the registry.                                                 | `docs/npm-install-evidence.md`, `npm view maintainerops-ai version dist-tags time --json`, `npm exec --yes --package maintainerops-ai@latest -- maintainerops --help`                                               |
+| 2026-06-17 | Added a real review packet for Issue #6, fixed the resulting offline false positive, and added eval coverage.                               | `docs/review-packets/maintainerops-ai-issue-6.md`, `src/offlineAnalyzer.ts`, `src/offlineAnalyzer.test.ts`, `examples/evals/golden.json`, `EVALS.md`, `docs/maintenance-log-2026-06-17.md`                          |
+| 2026-06-17 | Verified a fresh manual GitHub Actions run on `main`.                                                                                       | `https://github.com/rtonf/maintainerops-ai/actions/runs/27697651320`                                                                                                                                                |
+| 2026-06-17 | Re-ran the full local verification gate after the analyzer and eval updates.                                                                | `npm run verify`, 23 unit tests, 1 UI smoke test, 7 eval cases, package dry run, publint, npm audit                                                                                                                 |
 
 ## Current metrics
 
 - Public triage fixtures: 1
-- Offline eval cases: 6
-- Unit tests: 22
+- Offline eval cases: 7
+- Unit tests: 23
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 8
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
-- Real public repository review packets: 4
+- Real public repository review packets: 5
 - GitHub releases: 7
 - npm package status: `maintainerops-ai@0.1.5` is published as npm `latest`
 - GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.6` as `Latest`
@@ -94,6 +97,6 @@ These entries are intentionally tracked as planned or completed so the public re
 
 - One week of issue triage examples from real authorized repositories.
 - Maintainer time saved per review packet.
-- False-positive and false-negative notes from eval review.
+- First false-positive fix from issue #6 feedback-request packet.
 - First external user feedback beyond owner-authored Issue #6 comments.
 - First issue-triggered and pull-request-triggered workflow runs after new public work items are opened.

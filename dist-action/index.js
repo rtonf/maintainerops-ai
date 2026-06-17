@@ -169,6 +169,31 @@ const securityTerms = [
     "ssrf",
     "plugin loader"
 ];
+const actionableSecurityPatterns = [
+    /\bbypass\b/,
+    /\bexploit\b/,
+    /\bvulnerability\b/,
+    /\bcve-\d{4}-\d+\b/,
+    /\bleak(?:ed|s|ing)?\b/,
+    /\bexposed\b/,
+    /\bpath traversal\b/,
+    /\brce\b/,
+    /\bssrf\b/,
+    /\bxss\b/,
+    /\bcsrf\b/,
+    /\bsql injection\b/,
+    /\bprompt[- ]injection\b/,
+    /\bunauthorized\b/
+];
+const feedbackRequestTerms = [
+    "feedback",
+    "external tester",
+    "external maintainer",
+    "try",
+    "marketplace",
+    "npm",
+    "comment"
+];
 const releaseTerms = ["breaking", "migration", "deprecated", "remove", "major", "release", "bump", "upgrade"];
 const testTerms = ["test", "spec", "__tests__", ".test.", ".spec."];
 function analyzeOffline(item) {
@@ -183,7 +208,10 @@ function analyzeOffline(item) {
         .join("\n")
         .toLowerCase();
     const touchedFiles = item.files ?? [];
-    const hasSecuritySignal = securityTerms.some((term) => searchable.includes(term));
+    const hasRawSecuritySignal = securityTerms.some((term) => searchable.includes(term));
+    const isFeedbackRequest = item.kind === "issue" && feedbackRequestTerms.some((term) => searchable.includes(term));
+    const hasActionableSecuritySignal = actionableSecurityPatterns.some((pattern) => pattern.test(searchable));
+    const hasSecuritySignal = hasRawSecuritySignal && (!isFeedbackRequest || hasActionableSecuritySignal);
     const hasReleaseSignal = releaseTerms.some((term) => searchable.includes(term));
     const hasTests = touchedFiles.some((file) => testTerms.some((term) => file.path.toLowerCase().includes(term)));
     const sourceFiles = touchedFiles.filter((file) => !testTerms.some((term) => file.path.toLowerCase().includes(term)));
