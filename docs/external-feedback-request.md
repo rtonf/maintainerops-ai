@@ -4,7 +4,11 @@ MaintainerOps AI is ready for early external maintainer feedback.
 
 Public feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 
-Marketplace listing path: publish the GitHub Action release to GitHub Marketplace, then send Marketplace users back to Issue #6 for public feedback.
+Current public channels:
+
+- npm latest: `maintainerops-ai@0.1.5`
+- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.6`
+- Source release candidate: `v0.1.7` is prepared for the next npm and Marketplace publication.
 
 ## Copy/paste request
 
@@ -13,7 +17,7 @@ Could you try MaintainerOps AI and leave short feedback on Issue #6?
 
 Package: https://www.npmjs.com/package/maintainerops-ai
 Feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
-GitHub Action: https://github.com/rtonf/maintainerops-ai
+GitHub Action: https://github.com/marketplace/actions/maintainerops-ai
 
 Quick check:
 npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
@@ -23,6 +27,7 @@ npm exec --yes --package maintainerops-ai@latest -- maintainerops analyze --fixt
 
 Please mention:
 - whether install/exec worked
+- whether Marketplace Action setup worked, if you tried it
 - whether the packet would help PR or issue triage
 - what was noisy, unclear, or missing
 - whether you would use this in a read-only OSS maintainer workflow

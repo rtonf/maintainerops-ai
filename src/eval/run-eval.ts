@@ -6,6 +6,7 @@ interface EvalCase {
   name: string;
   item: MaintainerWorkItem;
   expectedLabels: string[];
+  forbiddenLabels?: string[];
   maxRisk?: "low" | "medium" | "high" | "critical";
 }
 
@@ -22,6 +23,12 @@ async function main(): Promise<void> {
     for (const label of evalCase.expectedLabels) {
       if (!result.labels.includes(label)) {
         failures.push(`${evalCase.name}: expected label ${label}, got ${result.labels.join(", ")}`);
+      }
+    }
+
+    for (const label of evalCase.forbiddenLabels ?? []) {
+      if (result.labels.includes(label)) {
+        failures.push(`${evalCase.name}: forbidden label ${label}, got ${result.labels.join(", ")}`);
       }
     }
 

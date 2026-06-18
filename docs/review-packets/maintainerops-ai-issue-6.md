@@ -21,13 +21,13 @@ issue "External maintainer feedback wanted" needs maintainer review.
 ## Suggested labels
 
 - `needs-triage`
-- `release-notes`
 
 ## Review checklist
 
 - Confirm the change matches the project maintenance policy.
 - Check whether the description includes user impact and rollback notes.
-- Confirm reproduction steps, expected behavior, actual behavior, and affected versions.
+- Collect whether install, CLI execution, or Action setup worked for the external tester.
+- Capture what was useful, noisy, unclear, or missing for a real maintainer workflow.
 
 ## Security notes
 
@@ -35,11 +35,11 @@ issue "External maintainer feedback wanted" needs maintainer review.
 
 ## Release notes
 
-- Candidate release note: External maintainer feedback wanted
+- none
 
 ## Comment draft
 
-Thanks for the report. Could you add reproduction steps, affected version, expected behavior, and actual behavior so maintainers can triage this accurately?
+Thanks for trying MaintainerOps AI. Could you share whether install or Action setup worked, what repository or fixture you used, and what was useful, noisy, unclear, or missing?
 
 ## Evidence
 
@@ -52,4 +52,5 @@ This packet is useful as a real issue-triage example. It originally exposed a fa
 - The issue is an external feedback request, not a vulnerability report.
 - The offline heuristic likely elevated risk because the issue and comments mention security, release, authorization, and Marketplace context.
 - The analyzer was updated on 2026-06-17 so feedback/outreach issues that mention security evidence remain low risk unless they describe an actionable vulnerability.
-- The regression is covered by the deterministic eval case `external feedback issue mentions security evidence`.
+- The analyzer was tightened again on 2026-06-18 so this class of feedback/outreach issue also avoids noisy `release-notes` labels.
+- The regression is covered by the deterministic eval case `external feedback issue mentions security evidence`, including forbidden-label checks.

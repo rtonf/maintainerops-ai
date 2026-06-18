@@ -17,23 +17,23 @@ The current golden set checks that:
 - Runtime framework dependency updates receive security review, release-note, and test-gap labels.
 - Prompt-injection and secret-handling issues are routed to security review.
 - Release-readiness issues receive release-note handling without inflating risk.
-- External feedback issues that mention security evidence remain low risk unless they describe an actionable vulnerability.
+- External feedback issues that mention security evidence remain low risk and do not receive security or release labels unless they describe an actionable vulnerability or release task.
 
 ## Current golden cases
 
-| Case                                           | Source evidence                   | Expected outcome                                       | Error watched                          |
-| ---------------------------------------------- | --------------------------------- | ------------------------------------------------------ | -------------------------------------- |
-| Security-sensitive pull request without tests  | Synthetic auth-boundary fixture   | `security-review`, `tests-needed`                      | False negative on auth risk            |
-| Ordinary documentation issue                   | Synthetic docs issue              | `needs-triage`, max risk `low`                         | False positive risk inflation          |
-| Gradle wrapper dependency update without tests | `rtonf/daily-hub-diary-app` PR #1 | `maintainer-review`, `security-review`, `tests-needed` | Missing supply-chain review            |
-| Capacitor runtime dependency update            | `rtonf/daily-hub-diary-app` PR #2 | `maintainer-review`, `security-review`, `tests-needed` | Missing runtime dependency risk        |
-| Prompt-injection-safe issue triage             | `rtonf/maintainerops-ai` issue #3 | `needs-triage`, `security-review`                      | Missing untrusted-input handling       |
-| Release readiness issue                        | `rtonf/maintainerops-ai` issue #2 | `needs-triage`, `release-notes`, max risk `low`        | Treating release work as vuln          |
-| External feedback issue                        | `rtonf/maintainerops-ai` issue #6 | `needs-triage`, max risk `low`                         | Security-topic outreach false positive |
+| Case                                           | Source evidence                   | Expected outcome                                                        | Error watched                                  |
+| ---------------------------------------------- | --------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------- |
+| Security-sensitive pull request without tests  | Synthetic auth-boundary fixture   | `security-review`, `tests-needed`                                       | False negative on auth risk                    |
+| Ordinary documentation issue                   | Synthetic docs issue              | `needs-triage`, max risk `low`                                          | False positive risk inflation                  |
+| Gradle wrapper dependency update without tests | `rtonf/daily-hub-diary-app` PR #1 | `maintainer-review`, `security-review`, `tests-needed`                  | Missing supply-chain review                    |
+| Capacitor runtime dependency update            | `rtonf/daily-hub-diary-app` PR #2 | `maintainer-review`, `security-review`, `tests-needed`                  | Missing runtime dependency risk                |
+| Prompt-injection-safe issue triage             | `rtonf/maintainerops-ai` issue #3 | `needs-triage`, `security-review`                                       | Missing untrusted-input handling               |
+| Release readiness issue                        | `rtonf/maintainerops-ai` issue #2 | `needs-triage`, `release-notes`, max risk `low`                         | Treating release work as vuln                  |
+| External feedback issue                        | `rtonf/maintainerops-ai` issue #6 | `needs-triage`, no `security-review` or `release-notes`, max risk `low` | Security/release-topic outreach false positive |
 
 ## Current eval result
 
-The latest local run is expected to pass 7 deterministic offline cases:
+The latest local run is expected to pass 7 deterministic offline cases, including forbidden-label checks for outreach issues:
 
 ```bash
 npm run eval

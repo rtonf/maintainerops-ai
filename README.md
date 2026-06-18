@@ -11,8 +11,9 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest `v0.1.5`.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest `v0.1.6`.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.5`.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest published `v0.1.6`.
+- Source release candidate: `v0.1.7` prepares the Issue #6 false-positive fix, stricter eval checks, and refreshed maintenance evidence for the next npm and Marketplace publication.
 - GitHub releases: `v0.1.0`, `v0.1.1`, `v0.1.2`, `v0.1.3`, `v0.1.4`, `v0.1.5`, and `v0.1.6`.
 - Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
@@ -122,6 +123,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Publication exposure scan](docs/codex-security/publication-exposure-scan-2026-06-11.md)
 - [v0.1.3 Codex Security diff scan](docs/codex-security/v0.1.3-diff-scan-2026-06-11.md)
 - [Action hardening Codex Security diff scan](docs/codex-security/action-hardening-diff-scan-2026-06-12.md)
+- [Release alignment Codex Security diff review](docs/codex-security/release-alignment-diff-scan-2026-06-18.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)
@@ -136,6 +138,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [v0.1.4 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.4)
 - [v0.1.5 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.5)
 - [v0.1.6 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.6)
+- [v0.1.7 release candidate notes](docs/releases/v0.1.7.md)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials

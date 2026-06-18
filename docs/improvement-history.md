@@ -73,3 +73,12 @@
 - Fixed a concrete offline analyzer false-positive pattern for feedback/outreach issues that mention security evidence.
 - Added unit and deterministic eval coverage for that false-positive case.
 - Verified another fresh manual GitHub Actions run on `main`.
+
+## 2026-06-18
+
+- Reviewed the local project tree, GitHub releases, npm package state, Actions runs, and Issue #6 feedback status.
+- Prepared source version `0.1.7` as the next npm and Marketplace publication candidate.
+- Tightened feedback-request issue triage so outreach issues do not receive noisy security or release labels unless they describe actionable risk.
+- Added forbidden-label support to deterministic evals.
+- Refreshed public evidence wording so published npm/Marketplace versions and source release candidates are clearly separated.
+- Added a release-alignment diff review and `v0.1.7` release candidate checklist.

@@ -106,6 +106,7 @@
   {
     "name": "external feedback issue mentions security evidence",
     "expectedLabels": ["needs-triage"],
+    "forbiddenLabels": ["security-review", "release-notes"],
     "maxRisk": "low",
     "item": {
       "kind": "issue",

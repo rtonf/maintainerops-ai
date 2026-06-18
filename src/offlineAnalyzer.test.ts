@@ -74,5 +74,7 @@ describe("analyzeOffline", () => {
     assert.equal(assessment.recommendedAction, "needs_more_info");
     assert.equal(assessment.labels.includes("needs-triage"), true);
     assert.equal(assessment.labels.includes("security-review"), false);
+    assert.equal(assessment.labels.includes("release-notes"), false);
+    assert.match(assessment.commentDraft, /install or Action setup worked/);
   });
 });
