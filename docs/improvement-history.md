@@ -82,3 +82,10 @@
 - Added forbidden-label support to deterministic evals.
 - Refreshed public evidence wording so published npm/Marketplace versions and source release candidates are clearly separated.
 - Added a release-alignment diff review and `v0.1.7` release candidate checklist.
+
+## 2026-06-20
+
+- Merged the `v0.1.7` release-alignment and feedback-triage improvements through PR #13.
+- Published `maintainerops-ai@0.1.7` to npm and verified public CLI execution.
+- Published GitHub Release `v0.1.7` and confirmed GitHub Marketplace displays `v0.1.7` as latest.
+- Refreshed README, installation evidence, Marketplace examples, and maintenance logs with verified publication state.

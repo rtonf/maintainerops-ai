@@ -29,11 +29,10 @@ Today's maintenance completed the source-side `v0.1.7` release alignment and pre
 
 - Source version on `main`: `0.1.7`
 - npm latest: `maintainerops-ai@0.1.7`
-- Marketplace latest: `rtonf/maintainerops-ai@v0.1.6`
+- Marketplace latest: `rtonf/maintainerops-ai@v0.1.7`
 - GitHub Release `v0.1.7`: published as latest
 
 ## Remaining Actions
 
-1. Publish GitHub Action `v0.1.7` through the Marketplace release option if the listing has not updated automatically.
-2. Confirm the Marketplace displays `v0.1.7` as latest.
-3. Collect at least one external maintainer response on Issue #6.
+1. Collect at least one external maintainer response on Issue #6.
+2. Add the resulting feedback to a real-world eval case and improvement record.
