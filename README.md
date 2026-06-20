@@ -18,6 +18,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
+- External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
 - Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
 
 ## Why this exists

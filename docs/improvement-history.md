@@ -89,3 +89,4 @@
 - Published `maintainerops-ai@0.1.7` to npm and verified public CLI execution.
 - Published GitHub Release `v0.1.7` and confirmed GitHub Marketplace displays `v0.1.7` as latest.
 - Refreshed README, installation evidence, Marketplace examples, and maintenance logs with verified publication state.
+- Enabled GitHub Discussions and created Discussion #17 as a public, bilingual external feedback entry point linked to Issue #6.
