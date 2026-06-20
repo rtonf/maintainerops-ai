@@ -13,6 +13,9 @@ Today's maintenance completed the source-side `v0.1.7` release alignment and pre
 - Corrected the latest Issue #6 feedback request so its command and workflow examples render correctly.
 - Created a draft GitHub Release for `v0.1.7` from the existing release notes.
 - Attempted npm publication from the project root; npm accepted the package contents and stopped at the required OTP authentication step.
+- Completed npm authentication and published `maintainerops-ai@0.1.7` as `latest`.
+- Verified the public `0.1.7` CLI with `npm exec`.
+- Published GitHub Release `v0.1.7` as the latest release.
 
 ## Evidence
 
@@ -25,14 +28,12 @@ Today's maintenance completed the source-side `v0.1.7` release alignment and pre
 ## Publication State
 
 - Source version on `main`: `0.1.7`
-- npm latest: `maintainerops-ai@0.1.5`
+- npm latest: `maintainerops-ai@0.1.7`
 - Marketplace latest: `rtonf/maintainerops-ai@v0.1.6`
-- GitHub Release `v0.1.7`: draft, pending npm OTP publication and final Marketplace publication
+- GitHub Release `v0.1.7`: published as latest
 
 ## Remaining Actions
 
-1. Complete `npm publish --access public` from the project root using npm's browser/OTP authentication.
-2. Verify `maintainerops-ai@0.1.7` from the public registry and update `docs/npm-install-evidence.md`.
-3. Publish the draft GitHub Release and select the Marketplace publication option.
-4. Confirm the Marketplace displays `v0.1.7` as latest.
-5. Collect at least one external maintainer response on Issue #6.
+1. Publish GitHub Action `v0.1.7` through the Marketplace release option if the listing has not updated automatically.
+2. Confirm the Marketplace displays `v0.1.7` as latest.
+3. Collect at least one external maintainer response on Issue #6.

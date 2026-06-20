@@ -6,13 +6,13 @@ This document records public registry install evidence for the Codex for Open So
 
 - Package: `maintainerops-ai`
 - Registry: `https://www.npmjs.com/package/maintainerops-ai`
-- Verified version: `0.1.5`
+- Verified version: `0.1.7`
 - Dist tag: `latest`
 - Binary: `maintainerops`
 
 ## Install execution proof
 
-Registry check run on 2026-06-16:
+Registry check run on 2026-06-20:
 
 ```bash
 npm view maintainerops-ai version dist-tags time --json
@@ -22,24 +22,25 @@ Observed result:
 
 ```json
 {
-  "version": "0.1.5",
+  "version": "0.1.7",
   "dist-tags": {
-    "latest": "0.1.5"
+    "latest": "0.1.7"
   },
   "time": {
     "created": "2026-06-09T10:56:25.010Z",
-    "modified": "2026-06-16T13:11:57.896Z",
+    "modified": "2026-06-20T02:44:19.128Z",
     "0.1.0": "2026-06-09T10:56:25.492Z",
     "0.1.1": "2026-06-09T10:58:36.319Z",
     "0.1.2": "2026-06-11T00:30:20.260Z",
     "0.1.3": "2026-06-11T07:06:06.928Z",
     "0.1.4": "2026-06-12T13:03:52.165Z",
-    "0.1.5": "2026-06-16T13:11:57.789Z"
+    "0.1.5": "2026-06-16T13:11:57.789Z",
+    "0.1.7": "2026-06-20T02:44:19.011Z"
   }
 }
 ```
 
-Command run on 2026-06-16:
+Command run on 2026-06-20:
 
 ```bash
 npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
@@ -61,7 +62,7 @@ Options:
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.
 ```
 
-The command completed successfully from the public npm package after publishing `maintainerops-ai@0.1.5`. The package exposes a CLI that can generate maintainer review packets from fixtures or authorized GitHub pull requests/issues.
+The command completed successfully from the public npm package after publishing `maintainerops-ai@0.1.7`. The package exposes a CLI that can generate maintainer review packets from fixtures or authorized GitHub pull requests/issues.
 
 ## README badge
 
