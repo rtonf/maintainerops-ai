@@ -4,11 +4,13 @@ MaintainerOps AI is ready for early external maintainer feedback.
 
 Public feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 
+Public feedback discussion: https://github.com/rtonf/maintainerops-ai/discussions/17
+
 Current public channels:
 
 - npm latest: `maintainerops-ai@0.1.7`
 - GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.7`
-- Source release candidate: `v0.1.7` is prepared for the next npm and Marketplace publication.
+- GitHub Release latest: `v0.1.7`
 
 ## Copy/paste request
 
@@ -17,6 +19,7 @@ Could you try MaintainerOps AI and leave short feedback on Issue #6?
 
 Package: https://www.npmjs.com/package/maintainerops-ai
 Feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
+Feedback discussion: https://github.com/rtonf/maintainerops-ai/discussions/17
 GitHub Action: https://github.com/marketplace/actions/maintainerops-ai
 
 Quick check:
