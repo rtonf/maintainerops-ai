@@ -66,6 +66,9 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-17 | Re-ran the full local verification gate after the analyzer and eval updates.                                                                | `npm run verify`, 23 unit tests, 1 UI smoke test, 7 eval cases, package dry run, publint, npm audit                                                                                                                 |
 | 2026-06-18 | Reviewed GitHub and the local project tree, then prepared `v0.1.7` release-alignment updates.                                               | `docs/maintenance-log-2026-06-18.md`, `docs/releases/v0.1.7.md`, `docs/codex-security/release-alignment-diff-scan-2026-06-18.md`                                                                                    |
 | 2026-06-18 | Tightened feedback-request triage and evals so Issue #6-style outreach does not carry noisy security or release labels.                     | `src/offlineAnalyzer.ts`, `src/eval/run-eval.ts`, `examples/evals/golden.json`, `EVALS.md`, `npm run verify`                                                                                                        |
+| 2026-06-20 | Merged the `v0.1.7` release-alignment changes and verified the merged source locally and in GitHub Actions.                                 | PR #13, commit `fc18d126`, `npm run verify`, `https://github.com/rtonf/maintainerops-ai/actions/runs/27857755682`                                                                                                   |
+| 2026-06-20 | Corrected the rendered Issue #6 feedback instructions and prepared the draft GitHub Release.                                                | `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4739487671`, `docs/releases/v0.1.7.md`                                                                                                             |
+| 2026-06-20 | Attempted npm `0.1.7` publication from the project root; package validation passed and npm requested OTP authentication.                    | `npm publish --access public`, npm `EOTP`; no publication claim recorded                                                                                                                                            |
 
 ## Current metrics
 
@@ -79,7 +82,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - GitHub releases: 7
 - npm package status: `maintainerops-ai@0.1.5` is published as npm `latest`
 - GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.6` as `Latest`
-- Source release candidate: `v0.1.7` is prepared for the next npm and Marketplace publication
+- Source version: `v0.1.7` is merged on `main`; npm and Marketplace publication are pending
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan
@@ -101,6 +104,6 @@ These entries are intentionally tracked as planned or completed so the public re
 - One week of issue triage examples from real authorized repositories.
 - Maintainer time saved per review packet.
 - First external maintainer feedback beyond owner-authored Issue #6 comments.
-- npm `maintainerops-ai@0.1.7` publication after OTP confirmation.
+- npm `maintainerops-ai@0.1.7` publication after OTP confirmation from the project root.
 - GitHub Release and Marketplace publication for `v0.1.7`.
 - First issue-triggered and pull-request-triggered workflow runs after new public work items are opened.
