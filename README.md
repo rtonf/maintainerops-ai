@@ -12,7 +12,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 ## Current evidence snapshot
 
 - Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.7`.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest published `v0.1.6`.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest published `v0.1.7`.
 - Latest GitHub Release: [`v0.1.7`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.7), with the Issue #6 false-positive fix, stricter eval checks, and refreshed maintenance evidence.
 - GitHub releases: `v0.1.0` through `v0.1.7`.
 - Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
@@ -175,7 +175,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.6
+      - uses: rtonf/maintainerops-ai@v0.1.7
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

@@ -70,6 +70,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-20 | Corrected the rendered Issue #6 feedback instructions and prepared the draft GitHub Release.                                                | `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4739487671`, `docs/releases/v0.1.7.md`                                                                                                             |
 | 2026-06-20 | Attempted npm `0.1.7` publication from the project root; package validation passed and npm requested OTP authentication.                    | `npm publish --access public`, npm `EOTP`; no publication claim recorded                                                                                                                                            |
 | 2026-06-20 | Published npm `maintainerops-ai@0.1.7`, verified the public CLI, and published GitHub Release `v0.1.7`.                                     | `docs/npm-install-evidence.md`, `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.7`                                                                                                                     |
+| 2026-06-20 | Confirmed the public GitHub Marketplace page displays `v0.1.7` and refreshed current Action examples.                                       | `https://github.com/marketplace/actions/maintainerops-ai`, README, `docs/github-marketplace.md`, `docs/external-feedback-request.md`                                                                                |
 
 ## Current metrics
 
@@ -82,8 +83,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Real public repository review packets: 5
 - GitHub releases: 8
 - npm package status: `maintainerops-ai@0.1.7` is published as npm `latest`
-- GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.6` as `Latest`
-- Source version: `v0.1.7` is merged on `main` and published to npm and GitHub Releases; Marketplace confirmation is pending
+- GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.7` as `Latest`
+- Source version: `v0.1.7` is merged on `main` and published to npm, GitHub Releases, and GitHub Marketplace
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan
@@ -105,5 +106,4 @@ These entries are intentionally tracked as planned or completed so the public re
 - One week of issue triage examples from real authorized repositories.
 - Maintainer time saved per review packet.
 - First external maintainer feedback beyond owner-authored Issue #6 comments.
-- Marketplace publication confirmation for `v0.1.7`.
 - First issue-triggered and pull-request-triggered workflow runs after new public work items are opened.

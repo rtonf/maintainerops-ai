@@ -6,8 +6,8 @@ Public feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 
 Current public channels:
 
-- npm latest: `maintainerops-ai@0.1.5`
-- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.6`
+- npm latest: `maintainerops-ai@0.1.7`
+- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.7`
 - Source release candidate: `v0.1.7` is prepared for the next npm and Marketplace publication.
 
 ## Copy/paste request
@@ -58,7 +58,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.6
+      - uses: rtonf/maintainerops-ai@v0.1.7
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
