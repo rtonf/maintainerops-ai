@@ -20,9 +20,9 @@
 | Coverage | 25 / 25 worklist rows closed; 12 high-impact family rows closed |
 | Candidate ledger status | MOAI-001 through MOAI-004 each have discovery, validation, and attack-path receipts; suppressed CAND rows also have closure receipts |
 | Validation mode | Static source/config tracing plus bounded local runtime reproductions with synthetic canaries and artifact-local OpenAI stubs |
-| Markdown report | C:\tmp\codex-security-scans\project　1a\worktree_20260608T231306Z\report.md |
-| HTML report | C:\tmp\codex-security-scans\project　1a\worktree_20260608T231306Z\report.html |
-| Reviewed surfaces | C:\tmp\codex-security-scans\project　1a\worktree_20260608T231306Z\artifacts\03_coverage\reviewed_surfaces.md |
+| Markdown report | <scan artifact>/report.md |
+| HTML report | <scan artifact>/report.html |
+| Reviewed surfaces | <scan artifact>/artifacts/03_coverage/reviewed_surfaces.md |
 
 ## Threat Model
 

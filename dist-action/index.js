@@ -212,7 +212,7 @@ function analyzeOffline(item) {
     const isFeedbackRequest = item.kind === "issue" && feedbackRequestTerms.some((term) => searchable.includes(term));
     const hasActionableSecuritySignal = actionableSecurityPatterns.some((pattern) => pattern.test(searchable));
     const hasSecuritySignal = hasRawSecuritySignal && (!isFeedbackRequest || hasActionableSecuritySignal);
-    const hasReleaseSignal = releaseTerms.some((term) => searchable.includes(term));
+    const hasReleaseSignal = !isFeedbackRequest && releaseTerms.some((term) => searchable.includes(term));
     const hasTests = touchedFiles.some((file) => testTerms.some((term) => file.path.toLowerCase().includes(term)));
     const sourceFiles = touchedFiles.filter((file) => !testTerms.some((term) => file.path.toLowerCase().includes(term)));
     const largeChange = touchedFiles.length > 12 ||
@@ -238,7 +238,11 @@ function analyzeOffline(item) {
             ? "Verify the added or updated tests cover the changed behavior."
             : "Ask for tests or explain why tests are not needed.");
     }
-    if (item.kind === "issue") {
+    if (item.kind === "issue" && isFeedbackRequest) {
+        checklist.push("Collect whether install, CLI execution, or Action setup worked for the external tester.");
+        checklist.push("Capture what was useful, noisy, unclear, or missing for a real maintainer workflow.");
+    }
+    else if (item.kind === "issue") {
         checklist.push("Confirm reproduction steps, expected behavior, actual behavior, and affected versions.");
     }
     if (hasSecuritySignal) {
@@ -263,7 +267,7 @@ function analyzeOffline(item) {
         reviewChecklist: checklist,
         securityNotes,
         releaseNotes,
-        commentDraft: buildCommentDraft(item, hasSecuritySignal, hasTests),
+        commentDraft: buildCommentDraft(item, hasSecuritySignal, hasTests, isFeedbackRequest),
         evidence: buildEvidence(item, hasSecuritySignal, hasTests, largeChange)
     };
 }
@@ -286,7 +290,10 @@ function recommendedAction(item, hasSecuritySignal, hasTests, largeChange) {
         return "needs_human_review";
     return "ready_to_merge";
 }
-function buildCommentDraft(item, hasSecuritySignal, hasTests) {
+function buildCommentDraft(item, hasSecuritySignal, hasTests, isFeedbackRequest) {
+    if (item.kind === "issue" && isFeedbackRequest) {
+        return "Thanks for trying MaintainerOps AI. Could you share whether install or Action setup worked, what repository or fixture you used, and what was useful, noisy, unclear, or missing?";
+    }
     if (item.kind === "issue") {
         return "Thanks for the report. Could you add reproduction steps, affected version, expected behavior, and actual behavior so maintainers can triage this accurately?";
     }

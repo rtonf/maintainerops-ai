@@ -4,7 +4,7 @@ Date: 2026-06-11
 
 Scope:
 
-- Local project tree at `C:\Users\mario\Documents\project　1a`
+- Local project tree at `<local project root>`
 - Public GitHub repository `rtonf/maintainerops-ai`
 - GitHub releases and release assets
 - npm package dry-run contents

@@ -64,6 +64,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-17 | Added a real review packet for Issue #6, fixed the resulting offline false positive, and added eval coverage.                               | `docs/review-packets/maintainerops-ai-issue-6.md`, `src/offlineAnalyzer.ts`, `src/offlineAnalyzer.test.ts`, `examples/evals/golden.json`, `EVALS.md`, `docs/maintenance-log-2026-06-17.md`                          |
 | 2026-06-17 | Verified a fresh manual GitHub Actions run on `main`.                                                                                       | `https://github.com/rtonf/maintainerops-ai/actions/runs/27697651320`                                                                                                                                                |
 | 2026-06-17 | Re-ran the full local verification gate after the analyzer and eval updates.                                                                | `npm run verify`, 23 unit tests, 1 UI smoke test, 7 eval cases, package dry run, publint, npm audit                                                                                                                 |
+| 2026-06-18 | Reviewed GitHub and the local project tree, then prepared `v0.1.7` release-alignment updates.                                               | `docs/maintenance-log-2026-06-18.md`, `docs/releases/v0.1.7.md`, `docs/codex-security/release-alignment-diff-scan-2026-06-18.md`                                                                                    |
+| 2026-06-18 | Tightened feedback-request triage and evals so Issue #6-style outreach does not carry noisy security or release labels.                     | `src/offlineAnalyzer.ts`, `src/eval/run-eval.ts`, `examples/evals/golden.json`, `EVALS.md`, `npm run verify`                                                                                                        |
 
 ## Current metrics
 
@@ -77,26 +79,28 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - GitHub releases: 7
 - npm package status: `maintainerops-ai@0.1.5` is published as npm `latest`
 - GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.6` as `Latest`
+- Source release candidate: `v0.1.7` is prepared for the next npm and Marketplace publication
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan
 
 These entries are intentionally tracked as planned or completed so the public record does not claim future work before it happens.
 
-| Date       | Status    | Planned evidence                                                                                       |
-| ---------- | --------- | ------------------------------------------------------------------------------------------------------ |
-| 2026-06-10 | Completed | Close issues #1-#4, npm install proof, real repo review packets, post-fix checks                       |
-| 2026-06-11 | Completed | Full security rescan, v0.1.2 release, PR/issue/workflow runs, review packet #4                         |
-| 2026-06-12 | Completed | Confirm npm `v0.1.3` latest, merge PR #10, prepare `v0.1.4`, refresh Marketplace feedback request      |
-| 2026-06-13 | Completed | Re-run verification, confirm npm/Marketplace/release status, and document post-application maintenance |
-| 2026-06-14 | Planned   | Use the packet output for a release-readiness or dependency-update review                              |
-| 2026-06-15 | Completed | Prepare `v0.1.6` GitHub Action hardening release and update Marketplace-facing evidence                |
-| 2026-06-16 | Completed | Summarize weekly usage and prepare external feedback/promotion materials                               |
+| Date       | Status     | Planned evidence                                                                                       |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------ |
+| 2026-06-10 | Completed  | Close issues #1-#4, npm install proof, real repo review packets, post-fix checks                       |
+| 2026-06-11 | Completed  | Full security rescan, v0.1.2 release, PR/issue/workflow runs, review packet #4                         |
+| 2026-06-12 | Completed  | Confirm npm `v0.1.3` latest, merge PR #10, prepare `v0.1.4`, refresh Marketplace feedback request      |
+| 2026-06-13 | Completed  | Re-run verification, confirm npm/Marketplace/release status, and document post-application maintenance |
+| 2026-06-14 | Superseded | Weekend cadence resumed on 2026-06-15 with the `v0.1.6` Action hardening release                       |
+| 2026-06-15 | Completed  | Prepare `v0.1.6` GitHub Action hardening release and update Marketplace-facing evidence                |
+| 2026-06-16 | Completed  | Summarize weekly usage and prepare external feedback/promotion materials                               |
 
 ## Next evidence to collect
 
 - One week of issue triage examples from real authorized repositories.
 - Maintainer time saved per review packet.
-- First false-positive fix from issue #6 feedback-request packet.
-- First external user feedback beyond owner-authored Issue #6 comments.
+- First external maintainer feedback beyond owner-authored Issue #6 comments.
+- npm `maintainerops-ai@0.1.7` publication after OTP confirmation.
+- GitHub Release and Marketplace publication for `v0.1.7`.
 - First issue-triggered and pull-request-triggered workflow runs after new public work items are opened.
