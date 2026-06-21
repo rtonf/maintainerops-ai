@@ -90,3 +90,9 @@
 - Published GitHub Release `v0.1.7` and confirmed GitHub Marketplace displays `v0.1.7` as latest.
 - Refreshed README, installation evidence, Marketplace examples, and maintenance logs with verified publication state.
 - Enabled GitHub Discussions and created Discussion #17 as a public, bilingual external feedback entry point linked to Issue #6.
+
+## 2026-06-22
+
+- Reclassified Issue #6 with `help wanted` and a dedicated `feedback wanted` label.
+- Verified a fresh manual Actions run and the complete local verification gate.
+- Recorded that external feedback remains at zero and that model-backed eval execution requires an authorized `OPENAI_API_KEY`.
