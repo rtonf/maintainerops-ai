@@ -112,3 +112,5 @@
 - Prepared source version `0.1.8` to publish the verified full-rescan remediation.
 - Added release notes covering secret-redaction ordering, bounded patch analysis, routing correctness, and read-only workflow hardening.
 - Kept public npm, GitHub Release, and Marketplace claims on `v0.1.7` until publication can be verified.
+- Detected that the published npm `0.1.8` tarball omitted `dist/cli.js` after generated output was cleaned before publication.
+- Withheld the `v0.1.8` GitHub and Marketplace releases and prepared `v0.1.9` with a mandatory `prepack` build.

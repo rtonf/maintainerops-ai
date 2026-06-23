@@ -78,6 +78,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-23 | Opened the `v0.1.8` remediation release tracker and verified the hardened issue-triggered Action on merged `main`.                                | Issue #21, `https://github.com/rtonf/maintainerops-ai/actions/runs/28002820413`                                                                                                                                     |
 | 2026-06-23 | Verified the hardened `pull_request_target` workflow without checking out contributor code.                                                       | PR #22, `https://github.com/rtonf/maintainerops-ai/actions/runs/28002857175`                                                                                                                                        |
 | 2026-06-24 | Prepared and fully verified the `v0.1.8` source release candidate for the merged Codex Security remediation without claiming publication.         | Issue #21, `docs/releases/v0.1.8.md`, `docs/maintenance-log-2026-06-24.md`; 26 unit tests, 1 UI test, 7 eval cases, package checks, 0 audit vulnerabilities                                                         |
+| 2026-06-24 | Detected that npm `0.1.8` omitted `dist/cli.js`, withheld the GitHub/Marketplace release, and prepared `0.1.9` with a mandatory prepack build.    | Registry tarball contained 10 files and no `dist/`; `npm exec` failed; `docs/releases/v0.1.9.md`                                                                                                                    |
 
 ## Current metrics
 
@@ -89,9 +90,9 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 5
 - GitHub releases: 8
-- npm package status: `maintainerops-ai@0.1.7` is published as npm `latest`
+- npm package status: `0.1.8` is published but missing the CLI runtime; `0.1.9` is the repair candidate
 - GitHub Marketplace status: `MaintainerOps AI` is published at `https://github.com/marketplace/actions/maintainerops-ai`; current Marketplace display is `v0.1.7` as `Latest`
-- Source version: `v0.1.8` release candidate; npm, GitHub Releases, and GitHub Marketplace remain on published `v0.1.7`
+- Source version: `v0.1.9` repair candidate; GitHub Releases and GitHub Marketplace remain on published `v0.1.7`
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan

@@ -23,8 +23,20 @@ Today's maintenance prepared `v0.1.8` to publish the security and reliability fi
 
 ## Remaining Publication Steps
 
-1. Merge the `v0.1.8` release candidate.
-2. Publish npm `maintainerops-ai@0.1.8` with maintainer OTP.
+1. Merge the `v0.1.9` package repair.
+2. Publish npm `maintainerops-ai@0.1.9` with maintainer OTP.
 3. Verify the public CLI and update npm installation evidence.
-4. Create GitHub Release `v0.1.8` and publish it to GitHub Marketplace.
-5. Update the active workflow to the published `v0.1.8` commit SHA.
+4. Create GitHub Release `v0.1.9` and publish it to GitHub Marketplace.
+5. Update the active workflow to the published `v0.1.9` commit SHA.
+
+## npm 0.1.8 Publication Incident
+
+Post-publication installation testing found that npm `0.1.8` contained Action assets and documentation but omitted `dist/cli.js`. The local verification build had generated `dist/`, but cleanup removed that ignored directory before the later manual `npm publish` command.
+
+Response:
+
+- Kept the GitHub Release as a draft and then removed it without publishing.
+- Did not publish `v0.1.8` to GitHub Marketplace.
+- Prepared `0.1.9` with a `prepack` script that rebuilds CLI and Action runtime files during `npm pack` and `npm publish`.
+- Requested OTP-authorized deprecation or dist-tag repair for npm `0.1.8`.
+- Verified the `0.1.9` repair with a 38-file tarball, clean temporary installation, and successful installed `maintainerops.cmd --help` execution.
