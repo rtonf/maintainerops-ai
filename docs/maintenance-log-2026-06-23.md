@@ -16,6 +16,10 @@ Today's maintenance completed a full repository-wide Codex Security rescan and r
 - Merged the remediation through PR #20.
 - Opened Issue #21 to track npm, GitHub Release, and Marketplace publication for `v0.1.8`.
 - Verified the merged issue-triggered workflow on GitHub Actions.
+- Removed merged local branches, pruned stale remote-tracking refs, and confirmed `main` is the only active GitHub branch.
+- Removed regenerated build/test output, an obsolete local environment example, a duplicate screenshot, an empty design directory, and the superseded 2026-06-08 temporary scan workspace.
+- Kept `node_modules` for ongoing development, the latest full-scan workspace for the `v0.1.8` release audit, and all public security evidence.
+- Synchronized the documented workflow example with the active read-only, commit-pinned workflow.
 
 ## Evidence
 
