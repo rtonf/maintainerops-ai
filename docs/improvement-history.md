@@ -96,3 +96,13 @@
 - Reclassified Issue #6 with `help wanted` and a dedicated `feedback wanted` label.
 - Verified a fresh manual Actions run and the complete local verification gate.
 - Recorded that external feedback remains at zero and that model-backed eval execution requires an authorized `OPENAI_API_KEY`.
+
+## 2026-06-23
+
+- Ran a complete Codex Security repository-wide rescan across all 42 ranked source/runtime rows.
+- Corrected the model-boundary operation order so secret redaction occurs before lossy truncation.
+- Removed duplicate aggregate PR patch storage and bounded offline analyzer search text to prevent memory exhaustion.
+- Tightened feedback-request and authorization signal matching to reduce routing false positives.
+- Changed pull-request automation to a read-only `pull_request_target` path that executes a commit-pinned published Action without checking out contributor code.
+- Added regression tests, rebuilt `dist-action/index.js`, and passed the complete verification gate with 26 unit tests and 0 npm audit vulnerabilities.
+- Published the canonical rescan report, browser-readable HTML report, and post-fix remediation report.

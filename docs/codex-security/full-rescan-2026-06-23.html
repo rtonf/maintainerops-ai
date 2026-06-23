@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MaintainerOps AI Codex Security Full Rescan - 2026-06-23</title>
+<style>body{margin:0;background:#f6f8fa;color:#1f2328;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.page{box-sizing:border-box;max-width:1040px;margin:32px auto;padding:48px 56px;background:#fff;border:1px solid #d0d7de;border-radius:8px}.markdown-body pre{overflow:auto;padding:16px;background:#f6f8fa;border-radius:6px}.markdown-body code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.markdown-body table{border-collapse:collapse;width:100%;display:block;overflow:auto}.markdown-body th,.markdown-body td{padding:8px 12px;border:1px solid #d0d7de;text-align:left}.markdown-body blockquote{margin-left:0;padding-left:16px;border-left:4px solid #d0d7de;color:#59636e}@media(max-width:720px){.page{margin:0;padding:24px 18px;border:0;border-radius:0}}</style>
+</head>
+<body><main class="page markdown-body">
+<h1 dir="auto">Security Review: rtonf/maintainerops-ai at <a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/rtonf/maintainerops-ai/commit/a050554737e212e1d2dd3020f03bc290fe7b2e03/hovercard" href="https://github.com/rtonf/maintainerops-ai/commit/a050554737e212e1d2dd3020f03bc290fe7b2e03"><tt>a050554</tt></a></h1>
+<h2 dir="auto">Scope</h2>
+<p dir="auto">Repository-wide full scan of all 42 deterministic runtime/source-like worklist rows at the published v0.1.7 source revision.</p>
+<ul dir="auto">
+<li>Scan mode: repository</li>
+<li>Target kind: git_revision</li>
+<li>Target ID: <a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/rtonf/maintainerops-ai/commit/a050554737e212e1d2dd3020f03bc290fe7b2e03/hovercard" href="https://github.com/rtonf/maintainerops-ai/commit/a050554737e212e1d2dd3020f03bc290fe7b2e03"><tt>a050554</tt></a></li>
+<li>Revision: <a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/rtonf/maintainerops-ai/commit/a050554737e212e1d2dd3020f03bc290fe7b2e03/hovercard" href="https://github.com/rtonf/maintainerops-ai/commit/a050554737e212e1d2dd3020f03bc290fe7b2e03"><tt>a050554</tt></a></li>
+<li>Inventory strategy: repository</li>
+<li>Included paths: .</li>
+<li>Excluded paths: node_modules/**, .git/**</li>
+<li>Runtime or test status: npm run verify passed; 26 unit tests, 1 UI smoke, 7 evals, package validation, and zero npm audit vulnerabilities after fixes</li>
+<li>Artifacts reviewed: TypeScript CLI and GitHub Action source, active GitHub workflow and action metadata, generated Action and Web bundles, tests, build scripts, package metadata, and UI source</li>
+<li>Scan context: The reusable repository threat model was copied unchanged into this scan. Two reportable findings were validated against the original revision and fixed in the working tree.</li>
+</ul>
+<p dir="auto">Limitations and exclusions:</p>
+<ul dir="auto">
+<li>No live model-backed adversarial run because OPENAI_API_KEY was not configured.</li>
+<li>Exact maximum aggregate patch bytes returned by GitHub was not independently established.</li>
+<li>Final report describes the scanned revision; remediation evidence is recorded separately in artifacts/fix_report.md.</li>
+<li>Excluded node_modules/**: Third-party installed dependencies; dependency state covered by npm audit.</li>
+<li>Excluded .git/**: Version-control metadata, not runtime source.</li>
+</ul>
+<h3 dir="auto">Scan Summary</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reportable findings</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Severity mix</td>
+<td>medium: 1, low: 1</td>
+</tr>
+<tr>
+<td>Confidence mix</td>
+<td>high: 1, medium: 1</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>complete</td>
+</tr>
+<tr>
+<td>Validation mode</td>
+<td>full-file subagent review plus targeted deterministic PoCs and static source/control/sink validation</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto">Canonical artifacts: <code class="notranslate">scan-manifest.json</code>, <code class="notranslate">findings.json</code>, and <code class="notranslate">coverage.json</code>. This report is a deterministic projection of those files.</p>
+<h2 dir="auto">Threat Model</h2>
+<p dir="auto">MaintainerOps AI processes untrusted pull-request, issue, patch, fixture, and model content across GitHub token, local filesystem, CI log, and OpenAI API trust boundaries while requiring human review for all recommendations.</p>
+<h3 dir="auto">Assets</h3>
+<ul dir="auto">
+<li>GitHub workflow token and repository metadata</li>
+<li>Maintainer-visible issue and pull-request content</li>
+<li>Secrets embedded in reviewed content</li>
+<li>Integrity and availability of review packets</li>
+<li>Published npm and GitHub Action runtime</li>
+</ul>
+<h3 dir="auto">Trust Boundaries</h3>
+<ul dir="auto">
+<li>Contributor content to maintainer-controlled CLI/Action</li>
+<li>GitHub API and token to local process</li>
+<li>Work-item content to OpenAI API</li>
+<li>Model output to maintainer-facing stdout/CI logs</li>
+<li>Source tree to published generated bundle</li>
+</ul>
+<h3 dir="auto">Attacker Capabilities</h3>
+<ul dir="auto">
+<li>Create or edit public issues and pull requests</li>
+<li>Control PR titles, bodies, patches, filenames, and comments</li>
+<li>Supply a local fixture when already operating the CLI</li>
+<li>Influence model input but not directly execute repository mutations</li>
+</ul>
+<h3 dir="auto">Security Objectives</h3>
+<ul dir="auto">
+<li>Never expose secrets through model prompts or logs</li>
+<li>Keep untrusted content from obtaining meaningful token privileges</li>
+<li>Bound untrusted work-item resource consumption</li>
+<li>Validate model output and preserve human control</li>
+<li>Keep published bundles traceable to reviewed source</li>
+</ul>
+<h3 dir="auto">Assumptions</h3>
+<ul dir="auto">
+<li>Live repository analysis is explicitly authorized</li>
+<li>The project does not auto-merge, auto-close, or publish releases</li>
+<li>The public workflow token is read-only</li>
+<li>OpenAI API use requires an operator-provided key</li>
+</ul>
+<h2 dir="auto">Findings</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Finding</th>
+<th>Severity</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#finding-1">Truncation before redaction can disclose a complete structured secret</a></td>
+<td>medium</td>
+<td>high</td>
+</tr>
+<tr>
+<td><a href="#finding-2">Unbounded duplicate patch aggregation can exhaust process memory</a></td>
+<td>low</td>
+<td>medium</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h3 dir="auto">Confidence Scale</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Label</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>high</td>
+<td>Direct evidence supports the finding with no material unresolved blocker.</td>
+</tr>
+<tr>
+<td>medium</td>
+<td>Evidence supports a plausible issue, but material runtime or reachability proof remains.</td>
+</tr>
+<tr>
+<td>low</td>
+<td>Evidence is incomplete and the item is retained only for explicit follow-up.</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto"><a id="user-content-finding-1"></a></p>
+<h3 dir="auto">[1] Truncation before redaction can disclose a complete structured secret</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>medium</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>high</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>A deterministic PoC against the exact truncate/redact functions retained the complete secret and removed its key context.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Sensitive data exposure</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-200: Exposure of Sensitive Information to an Unauthorized Actor</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td>src/prompt.ts:5-23, src/redaction.ts:28-35, src/openaiAssessment.ts:8-19</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h4 dir="auto">Summary</h4>
+<p dir="auto">The model prompt truncates serialized work-item data before applying context-dependent secret redaction. A truncation boundary can remove a key such as password= while retaining the complete value, causing the value to be sent to the OpenAI API.</p>
+<h4 dir="auto">Root Cause</h4>
+<p dir="auto">The security invariant requires redaction to inspect complete key/value context before any lossy transformation. The caller applies the operations in the opposite order.</p>
+<p dir="auto"><strong>Truncate before redact</strong> — <code class="notranslate">src/prompt.ts:5-23</code></p>
+<p dir="auto">Context is discarded before key/value redaction runs.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">payload</span> <span class="pl-c1">=</span> <span class="pl-en">redactSecrets</span><span class="pl-kos">(</span><span class="pl-en">truncateForModel</span><span class="pl-kos">(</span><span class="pl-c1">JSON</span><span class="pl-kos">.</span><span class="pl-en">stringify</span><span class="pl-kos">(</span><span class="pl-kos">{</span> task<span class="pl-kos">,</span> instructions<span class="pl-kos">,</span> item <span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-c1">null</span><span class="pl-kos">,</span> <span class="pl-c1">2</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p dir="auto"><strong>Context-breaking tail slice</strong> — <code class="notranslate">src/redaction.ts:33-35</code></p>
+<p dir="auto">The tail can start between a credential key and its value.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">tail</span> <span class="pl-c1">=</span> <span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-en">slice</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">-</span> <span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">floor</span><span class="pl-kos">(</span><span class="pl-s1">maxChars</span> <span class="pl-c1">*</span> <span class="pl-c1">0.25</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<h4 dir="auto">Validation</h4>
+<p dir="auto">A deterministic PoC against the exact truncate/redact functions retained the complete secret and removed its key context. Validation details were not recorded separately.</p>
+<p dir="auto">Validation method: deterministic boundary PoC</p>
+<p dir="auto"><strong>Truncate before redact</strong> — <code class="notranslate">src/prompt.ts:5-23</code></p>
+<p dir="auto">Context is discarded before key/value redaction runs.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">payload</span> <span class="pl-c1">=</span> <span class="pl-en">redactSecrets</span><span class="pl-kos">(</span><span class="pl-en">truncateForModel</span><span class="pl-kos">(</span><span class="pl-c1">JSON</span><span class="pl-kos">.</span><span class="pl-en">stringify</span><span class="pl-kos">(</span><span class="pl-kos">{</span> task<span class="pl-kos">,</span> instructions<span class="pl-kos">,</span> item <span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-c1">null</span><span class="pl-kos">,</span> <span class="pl-c1">2</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p dir="auto"><strong>Context-breaking tail slice</strong> — <code class="notranslate">src/redaction.ts:33-35</code></p>
+<p dir="auto">The tail can start between a credential key and its value.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">tail</span> <span class="pl-c1">=</span> <span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-en">slice</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">-</span> <span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">floor</span><span class="pl-kos">(</span><span class="pl-s1">maxChars</span> <span class="pl-c1">*</span> <span class="pl-c1">0.25</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<h4 dir="auto">Dataflow</h4>
+<p dir="auto">The canonical finding records the affected path at src/prompt.ts:5-23, src/redaction.ts:28-35, src/openaiAssessment.ts:8-19, but no expanded source-to-sink narrative was recorded.</p>
+<p dir="auto"><strong>Truncate before redact</strong> — <code class="notranslate">src/prompt.ts:5-23</code></p>
+<p dir="auto">Context is discarded before key/value redaction runs.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">payload</span> <span class="pl-c1">=</span> <span class="pl-en">redactSecrets</span><span class="pl-kos">(</span><span class="pl-en">truncateForModel</span><span class="pl-kos">(</span><span class="pl-c1">JSON</span><span class="pl-kos">.</span><span class="pl-en">stringify</span><span class="pl-kos">(</span><span class="pl-kos">{</span> task<span class="pl-kos">,</span> instructions<span class="pl-kos">,</span> item <span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-c1">null</span><span class="pl-kos">,</span> <span class="pl-c1">2</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p dir="auto"><strong>Context-breaking tail slice</strong> — <code class="notranslate">src/redaction.ts:33-35</code></p>
+<p dir="auto">The tail can start between a credential key and its value.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">tail</span> <span class="pl-c1">=</span> <span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-en">slice</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">-</span> <span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">floor</span><span class="pl-kos">(</span><span class="pl-s1">maxChars</span> <span class="pl-c1">*</span> <span class="pl-c1">0.25</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<h4 dir="auto">Reachability</h4>
+<p dir="auto">Reachability was not recorded beyond the canonical finding summary and affected locations.</p>
+<h4 dir="auto">Severity</h4>
+<p dir="auto"><strong>Medium</strong> — A reproduced complete secret value crosses into an external model payload. Precise placement and authorized analysis reduce likelihood, while an active credential would have high impact.</p>
+<p dir="auto">Raise if ordinary private-repository inputs frequently hit the boundary or an active credential is observed; lower if model-bound inputs are independently secret-scanned after truncation.</p>
+<h4 dir="auto">Remediation</h4>
+<p dir="auto">Apply redactSecrets to the complete serialized payload before truncateForModel, then preserve a boundary regression test.</p>
+<p dir="auto">Tests:</p>
+<ul dir="auto">
+<li>src/prompt.test.ts boundary credential test</li>
+<li>post-fix PoC containsFullSecret=false</li>
+</ul>
+<p dir="auto">Preventive controls:</p>
+<ul dir="auto">
+<li>Keep lossy transforms after secret scanning</li>
+<li>Retain model-boundary canary tests</li>
+</ul>
+<p dir="auto"><a id="user-content-finding-2"></a></p>
+<h3 dir="auto">[2] Unbounded duplicate patch aggregation can exhaust process memory</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Severity</td>
+<td>low</td>
+</tr>
+<tr>
+<td>Confidence</td>
+<td>medium</td>
+</tr>
+<tr>
+<td>Confidence rationale</td>
+<td>The package-interface crash is deterministic; exact GitHub-hosted maximum aggregate patch reachability was not independently established.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Uncontrolled resource consumption</td>
+</tr>
+<tr>
+<td>CWE</td>
+<td>CWE-400: Uncontrolled Resource Consumption</td>
+</tr>
+<tr>
+<td>Affected lines</td>
+<td>src/github.ts:53-55, src/offlineAnalyzer.ts:55-64</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h4 dir="auto">Summary</h4>
+<p dir="auto">Pull-request patches are stored in both item.diff and files[].patch, then joined and lowercased without an aggregate byte limit. A large work item can exhaust the CLI or Action process heap before a review packet is produced.</p>
+<h4 dir="auto">Root Cause</h4>
+<p dir="auto">The analyzer lacks an aggregate text budget and consumes two representations of the same patch set.</p>
+<p dir="auto"><strong>Duplicate aggregate</strong> — <code class="notranslate">src/github.ts:53-55</code></p>
+<p dir="auto">Each patch is retained in the files array and duplicated into diff.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate">files: <span class="pl-s1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">toChangedFile</span><span class="pl-kos">)</span><span class="pl-kos">,</span> <span class="pl-s1">diff</span>: <span class="pl-s1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">file</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-s">`diff -- <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">filename</span><span class="pl-kos">}</span></span>\n<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">patch</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">join</span><span class="pl-kos">(</span><span class="pl-s">"\n\n"</span><span class="pl-kos">)</span></pre></div>
+<p dir="auto"><strong>Unbounded join and lowercase</strong> — <code class="notranslate">src/offlineAnalyzer.ts:55-64</code></p>
+<p dir="auto">The analyzer allocates combined and lowercase copies without a byte cap.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-kos">[</span><span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">title</span><span class="pl-kos">,</span> <span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">,</span> <span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">diff</span><span class="pl-kos">,</span> ...<span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">file</span> <span class="pl-c1">=&gt;</span> <span class="pl-s">`<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">path</span><span class="pl-kos">}</span></span>\n<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">patch</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-en">join</span><span class="pl-kos">(</span><span class="pl-s">"\n"</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toLowerCase</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
+<h4 dir="auto">Validation</h4>
+<p dir="auto">The package-interface crash is deterministic; exact GitHub-hosted maximum aggregate patch reachability was not independently established. Validation details were not recorded separately.</p>
+<p dir="auto">Validation method: real exported-function crash PoC</p>
+<p dir="auto"><strong>Duplicate aggregate</strong> — <code class="notranslate">src/github.ts:53-55</code></p>
+<p dir="auto">Each patch is retained in the files array and duplicated into diff.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate">files: <span class="pl-s1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">toChangedFile</span><span class="pl-kos">)</span><span class="pl-kos">,</span> <span class="pl-s1">diff</span>: <span class="pl-s1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">file</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-s">`diff -- <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">filename</span><span class="pl-kos">}</span></span>\n<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">patch</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">join</span><span class="pl-kos">(</span><span class="pl-s">"\n\n"</span><span class="pl-kos">)</span></pre></div>
+<p dir="auto"><strong>Unbounded join and lowercase</strong> — <code class="notranslate">src/offlineAnalyzer.ts:55-64</code></p>
+<p dir="auto">The analyzer allocates combined and lowercase copies without a byte cap.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-kos">[</span><span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">title</span><span class="pl-kos">,</span> <span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">,</span> <span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">diff</span><span class="pl-kos">,</span> ...<span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">file</span> <span class="pl-c1">=&gt;</span> <span class="pl-s">`<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">path</span><span class="pl-kos">}</span></span>\n<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">patch</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-en">join</span><span class="pl-kos">(</span><span class="pl-s">"\n"</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toLowerCase</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
+<h4 dir="auto">Dataflow</h4>
+<p dir="auto">The canonical finding records the affected path at src/github.ts:53-55, src/offlineAnalyzer.ts:55-64, but no expanded source-to-sink narrative was recorded.</p>
+<p dir="auto"><strong>Duplicate aggregate</strong> — <code class="notranslate">src/github.ts:53-55</code></p>
+<p dir="auto">Each patch is retained in the files array and duplicated into diff.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate">files: <span class="pl-s1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">toChangedFile</span><span class="pl-kos">)</span><span class="pl-kos">,</span> <span class="pl-s1">diff</span>: <span class="pl-s1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">file</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-s">`diff -- <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">filename</span><span class="pl-kos">}</span></span>\n<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">patch</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">join</span><span class="pl-kos">(</span><span class="pl-s">"\n\n"</span><span class="pl-kos">)</span></pre></div>
+<p dir="auto"><strong>Unbounded join and lowercase</strong> — <code class="notranslate">src/offlineAnalyzer.ts:55-64</code></p>
+<p dir="auto">The analyzer allocates combined and lowercase copies without a byte cap.</p>
+<div class="highlight highlight-source-ts" dir="auto"><pre class="notranslate"><span class="pl-kos">[</span><span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">title</span><span class="pl-kos">,</span> <span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">,</span> <span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">diff</span><span class="pl-kos">,</span> ...<span class="pl-s1">item</span><span class="pl-kos">.</span><span class="pl-c1">files</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">file</span> <span class="pl-c1">=&gt;</span> <span class="pl-s">`<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">path</span><span class="pl-kos">}</span></span>\n<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">file</span><span class="pl-kos">.</span><span class="pl-c1">patch</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-en">join</span><span class="pl-kos">(</span><span class="pl-s">"\n"</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toLowerCase</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
+<h4 dir="auto">Reachability</h4>
+<p dir="auto">Reachability was not recorded beyond the canonical finding summary and affected locations.</p>
+<h4 dir="auto">Severity</h4>
+<p dir="auto"><strong>Low</strong> — The real package function crashed under a bounded heap, but impact is limited to one analysis job and exact GitHub aggregate patch limits reduce confidence in remote reliability.</p>
+<p dir="auto">Raise if a normal GitHub PR reliably triggers the crash at default Action memory; lower if upstream data is always capped below the local bound.</p>
+<h4 dir="auto">Remediation</h4>
+<p dir="auto">Do not generate a duplicate aggregate diff when per-file patches exist, and cap searchable text before joining and lowercasing.</p>
+<p dir="auto">Tests:</p>
+<ul dir="auto">
+<li>src/offlineAnalyzer.test.ts large duplicated patch test</li>
+<li>post-fix 64 MiB PoC exits 0</li>
+</ul>
+<p dir="auto">Preventive controls:</p>
+<ul dir="auto">
+<li>Centralize work-item byte budgets</li>
+<li>Avoid retaining equivalent aggregate and per-file text</li>
+</ul>
+<h2 dir="auto">Reviewed Surfaces</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Surface</th>
+<th>Risk Area</th>
+<th>Outcome</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLI and Action entrypoints</td>
+<td>Credential and command boundary</td>
+<td>Rejected</td>
+<td>No command sink; token candidate lacked protected impact. Workflow hardening applied. Evidence: artifacts/02_discovery/shards/01-entry-action.md</td>
+</tr>
+<tr>
+<td>GitHub API acquisition</td>
+<td>SSRF, auth, pagination, error disclosure</td>
+<td>No issue found</td>
+<td>Fixed origin, bounded pagination, response bodies excluded from errors. Evidence: artifacts/02_discovery/shards/02-acquisition.md</td>
+</tr>
+<tr>
+<td>Model prompt and output boundary</td>
+<td>Secret exposure and prompt manipulation</td>
+<td>Reported</td>
+<td>Secret redaction-order finding reported; semantic prompt steering rejected due human-only sink. Evidence: artifacts/02_discovery/shards/03-ai-output.md, artifacts/05_findings/03-ai-output-001/validation_report.md</td>
+</tr>
+<tr>
+<td>Offline analyzer and eval</td>
+<td>Routing integrity and resource exhaustion</td>
+<td>Reported</td>
+<td>Resource exhaustion reported; routing correctness issue fixed but ignored by final security policy. Evidence: artifacts/02_discovery/shards/04-offline-eval.md, artifacts/05_findings/04-offline-eval-002/validation_report.md</td>
+</tr>
+<tr>
+<td>Output and CI log formatting</td>
+<td>Data exposure and workflow-command injection</td>
+<td>No issue found</td>
+<td>Raw fields minimized and workflow command syntax neutralized. Evidence: artifacts/02_discovery/shards/05-boundary-tests.md</td>
+</tr>
+<tr>
+<td>Build, package, and generated Action</td>
+<td>Supply chain and filesystem effects</td>
+<td>No issue found</td>
+<td>Fixed paths, no lifecycle hooks, byte-identical bundle rebuild, npm audit clean. Evidence: artifacts/02_discovery/shards/06-build-config.md, artifacts/02_discovery/shards/08-generated.md</td>
+</tr>
+<tr>
+<td>Static Web dashboard</td>
+<td>DOM XSS and unsafe URL handling</td>
+<td>Not applicable</td>
+<td>Static mock data only, no unsafe HTML or network sink. Evidence: artifacts/02_discovery/shards/07-web.md</td>
+</tr>
+<tr>
+<td>Auxiliary configuration and demo tooling</td>
+<td>File and process effects</td>
+<td>No issue found</td>
+<td>Fixed local paths and bounded static inputs. Evidence: artifacts/02_discovery/shards/09-auxiliary.md</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+
+</main></body></html>

@@ -15,7 +15,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest published `v0.1.7`.
 - Latest GitHub Release: [`v0.1.7`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.7), with the Issue #6 false-positive fix, stricter eval checks, and refreshed maintenance evidence.
 - GitHub releases: `v0.1.0` through `v0.1.7`.
-- Security evidence: initial Codex Security report, fix report, focused rescan, and full repository-wide rescan.
+- Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
@@ -121,6 +121,9 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Post-fix rescan report](docs/codex-security/rescan-report.md)
 - [Full Codex Security rescan report](docs/codex-security/full-rescan-2026-06-11.md)
 - [Full Codex Security rescan HTML](docs/codex-security/full-rescan-2026-06-11.html)
+- [2026-06-23 full Codex Security rescan report](docs/codex-security/full-rescan-2026-06-23.md)
+- [2026-06-23 full Codex Security rescan HTML](docs/codex-security/full-rescan-2026-06-23.html)
+- [2026-06-23 full rescan fix report](docs/codex-security/full-rescan-fix-report-2026-06-23.md)
 - [Publication exposure scan](docs/codex-security/publication-exposure-scan-2026-06-11.md)
 - [v0.1.3 Codex Security diff scan](docs/codex-security/v0.1.3-diff-scan-2026-06-11.md)
 - [Action hardening Codex Security diff scan](docs/codex-security/action-hardening-diff-scan-2026-06-12.md)
