@@ -1,6 +1,6 @@
 {
   "name": "maintainerops-ai",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "AI-assisted OSS maintainer workflows for PR review, issue triage, security triage, and release notes.",
   "type": "module",
   "files": [
@@ -36,6 +36,7 @@
     "dev": "vite --host 127.0.0.1",
     "preview": "vite preview --host 127.0.0.1",
     "eval": "npm run build:cli && node dist/eval/run-eval.js",
+    "prepack": "npm run build:cli && npm run build:action",
     "pack:check": "npm run build && npm pack --dry-run && publint",
     "verify": "npm run check && npm run lint && npm run format:check && npm run test:src && npm run test:ui && npm run eval && npm run pack:check && npm audit --audit-level=moderate"
   },
