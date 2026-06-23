@@ -11,11 +11,11 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai). Version `0.1.8` was published without the CLI build output and must not be used; `0.1.9` is the verified repair candidate.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest published `v0.1.7`.
-- Latest GitHub Release: [`v0.1.7`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.7), with the Issue #6 false-positive fix, stricter eval checks, and refreshed maintenance evidence.
-- GitHub releases: `v0.1.0` through `v0.1.7`.
-- Source release candidate: `v0.1.9`, adding a mandatory `prepack` build so the verified 2026-06-23 remediation is included in the npm tarball. GitHub Release and Marketplace remain on `v0.1.7` until repair publication completes.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.9`; broken `0.1.8` is deprecated.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest published `v0.1.9`.
+- Latest GitHub Release: [`v0.1.9`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.9), containing the verified security remediation and npm packaging repair.
+- GitHub releases: `v0.1.0` through `v0.1.7`, plus `v0.1.9`; `v0.1.8` was intentionally withheld from GitHub and Marketplace.
+- Source and published channels are aligned on `v0.1.9`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
@@ -182,7 +182,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.7
+      - uses: rtonf/maintainerops-ai@v0.1.9
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

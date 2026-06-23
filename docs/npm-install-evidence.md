@@ -1,52 +1,53 @@
 # npm Install Evidence
 
-This document records public registry install evidence for the Codex for Open Source application.
+This document records public registry installation evidence for MaintainerOps AI.
 
 ## Package
 
 - Package: `maintainerops-ai`
 - Registry: `https://www.npmjs.com/package/maintainerops-ai`
-- Verified version: `0.1.7`
+- Verified version: `0.1.9`
 - Dist tag: `latest`
 - Binary: `maintainerops`
+- Deprecated version: `0.1.8` because its published tarball omitted `dist/cli.js`
 
-## Install execution proof
+## Registry Evidence
 
-Registry check run on 2026-06-20:
+Registry check run on 2026-06-24:
 
 ```bash
-npm view maintainerops-ai version dist-tags time --json
+npm view maintainerops-ai version dist-tags --json
+npm view maintainerops-ai@0.1.8 deprecated
 ```
 
 Observed result:
 
 ```json
 {
-  "version": "0.1.7",
+  "version": "0.1.9",
   "dist-tags": {
-    "latest": "0.1.7"
-  },
-  "time": {
-    "created": "2026-06-09T10:56:25.010Z",
-    "modified": "2026-06-20T02:44:19.128Z",
-    "0.1.0": "2026-06-09T10:56:25.492Z",
-    "0.1.1": "2026-06-09T10:58:36.319Z",
-    "0.1.2": "2026-06-11T00:30:20.260Z",
-    "0.1.3": "2026-06-11T07:06:06.928Z",
-    "0.1.4": "2026-06-12T13:03:52.165Z",
-    "0.1.5": "2026-06-16T13:11:57.789Z",
-    "0.1.7": "2026-06-20T02:44:19.011Z"
+    "latest": "0.1.9"
   }
 }
 ```
 
-Command run on 2026-06-20:
+The registry reports `0.1.8` as deprecated with instructions to use `0.1.9` or later.
 
-```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+## Clean Installation Proof
+
+The public registry package was installed into a new temporary directory:
+
+```powershell
+$temp = "C:\tmp\maintainerops-019-registry-check"
+npm install --prefix $temp maintainerops-ai@0.1.9 --ignore-scripts
+& "$temp\node_modules\.bin\maintainerops.cmd" --help
 ```
 
-Observed result:
+Verified package contents and behavior:
+
+- `node_modules/maintainerops-ai/dist/cli.js` exists.
+- npm generated `maintainerops`, `maintainerops.cmd`, and `maintainerops.ps1` shims.
+- The installed Windows command completed successfully.
 
 ```text
 MaintainerOps AI
@@ -62,11 +63,11 @@ Options:
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.
 ```
 
-The command completed successfully from the public npm package after publishing `maintainerops-ai@0.1.7`. The package exposes a CLI that can generate maintainer review packets from fixtures or authorized GitHub pull requests/issues.
+## Publication Guard
 
-## README badge
+Version `0.1.9` adds a `prepack` script that rebuilds the CLI and Action runtime during both `npm pack` and `npm publish`. Its verified tarball contains 38 files, including `dist/cli.js`.
 
-The README includes npm version and monthly downloads badges:
+## README Badges
 
 ```markdown
 [![npm version](https://img.shields.io/npm/v/maintainerops-ai.svg)](https://www.npmjs.com/package/maintainerops-ai)

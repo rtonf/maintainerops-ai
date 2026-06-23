@@ -8,9 +8,9 @@ Public feedback discussion: https://github.com/rtonf/maintainerops-ai/discussion
 
 Current public channels:
 
-- npm latest: `maintainerops-ai@0.1.7`
-- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.7`
-- GitHub Release latest: `v0.1.7`
+- npm latest: `maintainerops-ai@0.1.9`
+- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.9`
+- GitHub Release latest: `v0.1.9`
 
 ## Copy/paste request
 
@@ -23,10 +23,11 @@ Feedback discussion: https://github.com/rtonf/maintainerops-ai/discussions/17
 GitHub Action: https://github.com/marketplace/actions/maintainerops-ai
 
 Quick check:
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm install -g maintainerops-ai@latest
+maintainerops --help
 
 Optional packet check:
-npm exec --yes --package maintainerops-ai@latest -- maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
+maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
 
 Please mention:
 - whether install/exec worked
@@ -61,7 +62,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.7
+      - uses: rtonf/maintainerops-ai@v0.1.9
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
@@ -74,13 +75,14 @@ jobs:
 From npm:
 
 ```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm install -g maintainerops-ai@latest
+maintainerops --help
 ```
 
 Then run one offline packet against a fixture:
 
 ```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
+maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
 ```
 
 Or try it from source:

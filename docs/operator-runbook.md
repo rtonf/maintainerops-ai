@@ -33,13 +33,14 @@ This runbook records the checks needed before publishing evidence for the Codex 
 
    ```bash
    npm view maintainerops-ai version dist-tags time --json
-   npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+   npm install -g maintainerops-ai@latest
+   maintainerops --help
    ```
 
 6. Verify the GitHub Release:
 
    ```bash
-   gh release view v0.1.5 --repo rtonf/maintainerops-ai --json url,tagName,name,publishedAt,isDraft,isPrerelease,targetCommitish
+   gh release view v0.1.9 --repo rtonf/maintainerops-ai --json url,tagName,name,publishedAt,isDraft,isPrerelease,targetCommitish
    ```
 
 7. Verify the GitHub Marketplace listing:

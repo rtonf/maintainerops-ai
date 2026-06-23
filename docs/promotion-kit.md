@@ -49,7 +49,8 @@ It is read-only by design, works offline for safe CI validation, and only uses t
 Try the CLI:
 
 ```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm install -g maintainerops-ai@latest
+maintainerops --help
 ```
 
 Project: https://github.com/rtonf/maintainerops-ai
@@ -65,7 +66,8 @@ It is a read-only OSS maintainer assistant that generates triage packets instead
 Quick check:
 
 ```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm install -g maintainerops-ai@latest
+maintainerops --help
 ```
 
 Optional source demo:
