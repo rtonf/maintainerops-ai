@@ -15,6 +15,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), latest published `v0.1.7`.
 - Latest GitHub Release: [`v0.1.7`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.7), with the Issue #6 false-positive fix, stricter eval checks, and refreshed maintenance evidence.
 - GitHub releases: `v0.1.0` through `v0.1.7`.
+- Source release candidate: `v0.1.8`, containing the verified 2026-06-23 security remediation; npm, GitHub Release, and Marketplace remain on `v0.1.7` until publication completes.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
@@ -143,6 +144,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [v0.1.5 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.5)
 - [v0.1.6 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.6)
 - [v0.1.7 release](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.7) and [release notes](docs/releases/v0.1.7.md)
+- [v0.1.8 release candidate notes](docs/releases/v0.1.8.md)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials
