@@ -25,6 +25,7 @@ Today's maintenance completed a full repository-wide Codex Security rescan and r
 - Merged remediation: `https://github.com/rtonf/maintainerops-ai/pull/20`
 - Release tracker: `https://github.com/rtonf/maintainerops-ai/issues/21`
 - Successful issue-triggered run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28002820413`
+- Successful pull-request-triggered run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28002857175`
 - Local verification: 26 unit tests, 1 UI smoke test, 7 deterministic eval cases, package validation, publint, and npm audit with 0 vulnerabilities
 
 ## Current Gaps
