@@ -1,7 +1,7 @@
 name: MaintainerOps AI
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review]
   issues:
     types: [opened, edited, reopened]
@@ -16,21 +16,23 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
-      - run: npm ci
-      - run: npm run build
       - name: Analyze pull request
-        if: github.event_name == 'pull_request'
-        run: node dist/cli.js analyze --repo "$GITHUB_REPOSITORY" --pull "${{ github.event.pull_request.number }}" --format markdown --offline --authorized
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event_name == 'pull_request_target'
+        uses: rtonf/maintainerops-ai@9efb9d78b37bcf81d9b7f44f5156a4c14f0da919
+        with:
+          mode: pull_request
+          repo: ${{ github.repository }}
+          number: ${{ github.event.pull_request.number }}
+          format: markdown
+          offline: true
+          authorized: true
       - name: Analyze issue
         if: github.event_name == 'issues'
-        run: node dist/cli.js analyze --repo "$GITHUB_REPOSITORY" --issue "${{ github.event.issue.number }}" --format markdown --offline --authorized
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: rtonf/maintainerops-ai@9efb9d78b37bcf81d9b7f44f5156a4c14f0da919
+        with:
+          mode: issue
+          repo: ${{ github.repository }}
+          number: ${{ github.event.issue.number }}
+          format: markdown
+          offline: true
+          authorized: true

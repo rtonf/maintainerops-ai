@@ -2,8 +2,8 @@ import { redactSecrets, truncateForModel } from "./redaction.js";
 import type { MaintainerWorkItem } from "./types.js";
 
 export function buildAssessmentPrompt(item: MaintainerWorkItem): string {
-  const payload = redactSecrets(
-    truncateForModel(
+  const payload = truncateForModel(
+    redactSecrets(
       JSON.stringify(
         {
           task: "Assess this open-source maintainer work item.",

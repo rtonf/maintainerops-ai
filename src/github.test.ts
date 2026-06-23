@@ -48,7 +48,8 @@ test("fetchPullRequestWorkItem paginates changed files", async () => {
 
   assert.equal(item.files?.length, 101);
   assert.equal(item.files?.at(-1)?.path, "src/file-100.ts");
-  assert.match(item.diff ?? "", /src\/file-100\.ts/);
+  assert.equal(item.files?.at(-1)?.patch, "@@ file 100");
+  assert.equal(item.diff, undefined);
   assert.equal(requestedUrls.filter((url) => url.includes("/files?")).length, 2);
 });
 

@@ -50,8 +50,7 @@ export async function fetchPullRequestWorkItem(repo: string, pullNumber: number)
     body: pr.body ?? "",
     url: pr.html_url,
     labels: normalizeLabels(pr.labels),
-    files: files.map(toChangedFile),
-    diff: files.map((file) => `diff -- ${file.filename}\n${file.patch ?? "[patch unavailable]"}`).join("\n\n")
+    files: files.map(toChangedFile)
   };
 }
 

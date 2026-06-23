@@ -94,8 +94,7 @@ async function fetchPullRequestWorkItem(repo, pullNumber) {
         body: pr.body ?? "",
         url: pr.html_url,
         labels: normalizeLabels(pr.labels),
-        files: files.map(toChangedFile),
-        diff: files.map((file) => `diff -- ${file.filename}\n${file.patch ?? "[patch unavailable]"}`).join("\n\n")
+        files: files.map(toChangedFile)
     };
 }
 async function fetchPullRequestFiles(repo, pullNumber) {
@@ -183,33 +182,24 @@ const actionableSecurityPatterns = [
     /\bcsrf\b/,
     /\bsql injection\b/,
     /\bprompt[- ]injection\b/,
-    /\bunauthorized\b/
+    /\bunauthorized\b/,
+    /\b(?:missing|absent|without)\b.{0,40}\b(?:auth(?:entication|orization)?|permission|validation|check)\b/,
+    /\b(?:auth(?:entication|orization)?|permission|validation|check)\b.{0,40}\b(?:missing|absent|not enforced)\b/
 ];
-const feedbackRequestTerms = [
-    "feedback",
-    "external tester",
-    "external maintainer",
-    "try",
-    "marketplace",
-    "npm",
-    "comment"
+const feedbackRequestPatterns = [
+    /\bfeedback (?:wanted|request(?:ed)?|welcome)\b/,
+    /\bexternal (?:maintainer|tester)s?\b/,
+    /\bplease (?:try|test) (?:this|the) (?:npm package|github action|cli|marketplace action)\b/,
+    /\bfound (?:this|it) (?:through|on) (?:github )?marketplace\b/
 ];
 const releaseTerms = ["breaking", "migration", "deprecated", "remove", "major", "release", "bump", "upgrade"];
 const testTerms = ["test", "spec", "__tests__", ".test.", ".spec."];
+const MAX_SEARCHABLE_CHARS = 1_000_000;
 function analyzeOffline(item) {
-    const searchable = [
-        item.title,
-        item.body,
-        item.diff,
-        ...(item.files?.map((file) => `${file.path}\n${file.patch ?? ""}`) ?? []),
-        ...(item.comments ?? [])
-    ]
-        .filter(Boolean)
-        .join("\n")
-        .toLowerCase();
+    const searchable = buildSearchableText(item);
     const touchedFiles = item.files ?? [];
     const hasRawSecuritySignal = securityTerms.some((term) => searchable.includes(term));
-    const isFeedbackRequest = item.kind === "issue" && feedbackRequestTerms.some((term) => searchable.includes(term));
+    const isFeedbackRequest = item.kind === "issue" && feedbackRequestPatterns.some((pattern) => pattern.test(searchable));
     const hasActionableSecuritySignal = actionableSecurityPatterns.some((pattern) => pattern.test(searchable));
     const hasSecuritySignal = hasRawSecuritySignal && (!isFeedbackRequest || hasActionableSecuritySignal);
     const hasReleaseSignal = !isFeedbackRequest && releaseTerms.some((term) => searchable.includes(term));
@@ -270,6 +260,25 @@ function analyzeOffline(item) {
         commentDraft: buildCommentDraft(item, hasSecuritySignal, hasTests, isFeedbackRequest),
         evidence: buildEvidence(item, hasSecuritySignal, hasTests, largeChange)
     };
+}
+function buildSearchableText(item) {
+    const parts = [
+        item.title,
+        item.body,
+        ...(item.comments ?? []),
+        ...(item.files?.flatMap((file) => [file.path, file.patch]) ?? []),
+        item.files?.some((file) => file.patch) ? undefined : item.diff
+    ];
+    const bounded = [];
+    let remaining = MAX_SEARCHABLE_CHARS;
+    for (const part of parts) {
+        if (!part || remaining <= 0)
+            continue;
+        const slice = part.slice(0, remaining);
+        bounded.push(slice);
+        remaining -= slice.length + 1;
+    }
+    return bounded.join("\n").toLowerCase();
 }
 function buildSummary(item, hasSecuritySignal, hasTests, largeChange) {
     const parts = [`${item.kind.replace("_", " ")} "${item.title}" needs maintainer review.`];
@@ -11960,7 +11969,7 @@ function truncateForModel(input, maxChars = 120_000) {
 ;// CONCATENATED MODULE: ./src/prompt.ts
 
 function buildAssessmentPrompt(item) {
-    const payload = redactSecrets(truncateForModel(JSON.stringify({
+    const payload = truncateForModel(redactSecrets(JSON.stringify({
         task: "Assess this open-source maintainer work item.",
         instructions: [
             "Act as a conservative OSS maintainer assistant.",

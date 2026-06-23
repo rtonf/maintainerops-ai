@@ -77,4 +77,31 @@ describe("analyzeOffline", () => {
     assert.equal(assessment.labels.includes("release-notes"), false);
     assert.match(assessment.commentDraft, /install or Action setup worked/);
   });
+
+  it("keeps missing-permission reports in security review despite feedback wording", () => {
+    const result = analyzeOffline({
+      kind: "issue",
+      repository: "owner/repo",
+      title: "Permission check missing",
+      body: "The route does not verify ownership. Please try this npm package and comment."
+    });
+
+    assert.equal(result.riskLevel, "high");
+    assert.equal(result.labels.includes("security-review"), true);
+    assert.equal(result.recommendedAction, "needs_security_review");
+  });
+
+  it("bounds large duplicated patch input while preserving title signals", () => {
+    const patch = "x".repeat(2_000_000);
+    const result = analyzeOffline({
+      kind: "pull_request",
+      repository: "owner/repo",
+      title: "Fix authorization bypass",
+      body: "security fix",
+      diff: patch,
+      files: [{ path: "src/large.ts", status: "modified", patch }]
+    });
+
+    assert.equal(result.labels.includes("security-review"), true);
+  });
 });
