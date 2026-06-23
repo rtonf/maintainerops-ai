@@ -21,13 +21,14 @@ Today's maintenance prepared `v0.1.8` to publish the security and reliability fi
 - Package dry run and publint: passed
 - npm audit: 0 vulnerabilities
 
-## Remaining Publication Steps
+## Publication Completion
 
-1. Merge the `v0.1.9` package repair.
-2. Publish npm `maintainerops-ai@0.1.9` with maintainer OTP.
-3. Verify the public CLI and update npm installation evidence.
-4. Create GitHub Release `v0.1.9` and publish it to GitHub Marketplace.
-5. Update the active workflow to the published `v0.1.9` commit SHA.
+- Published npm `maintainerops-ai@0.1.9` as `latest`.
+- Deprecated broken npm `0.1.8`.
+- Verified the public registry package with a clean temporary installation and installed CLI execution.
+- Published GitHub Release `v0.1.9`.
+- Confirmed GitHub Marketplace displays `v0.1.9` as `Latest`.
+- Updated the active workflow to the release commit SHA.
 
 ## npm 0.1.8 Publication Incident
 

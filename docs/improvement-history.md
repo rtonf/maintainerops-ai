@@ -114,3 +114,5 @@
 - Kept public npm, GitHub Release, and Marketplace claims on `v0.1.7` until publication can be verified.
 - Detected that the published npm `0.1.8` tarball omitted `dist/cli.js` after generated output was cleaned before publication.
 - Withheld the `v0.1.8` GitHub and Marketplace releases and prepared `v0.1.9` with a mandatory `prepack` build.
+- Published npm `0.1.9`, verified a clean registry installation, and deprecated broken npm `0.1.8`.
+- Published GitHub Release and Marketplace `v0.1.9`, then pinned the active workflow to the release commit.
