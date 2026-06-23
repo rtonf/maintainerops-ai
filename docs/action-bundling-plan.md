@@ -34,4 +34,4 @@ npm run build:action
 git diff --exit-code -- dist-action
 ```
 
-The npm package can remain `maintainerops-ai@0.1.4`; this change primarily improves the GitHub Marketplace Action channel.
+Regenerate and commit `dist-action` whenever Action runtime source changes, then publish the same verified source through npm, GitHub Releases, and GitHub Marketplace.
