@@ -13,12 +13,19 @@ Today's maintenance completed a full repository-wide Codex Security rescan and r
 - Hardened the public pull-request workflow and regenerated the committed Action bundle.
 - Ran the complete local verification gate successfully.
 - Generated public Markdown, HTML, and fix reports.
+- Merged the remediation through PR #20.
+- Opened Issue #21 to track npm, GitHub Release, and Marketplace publication for `v0.1.8`.
+- Verified the merged issue-triggered workflow on GitHub Actions.
 
 ## Evidence
 
 - Full rescan: `docs/codex-security/full-rescan-2026-06-23.md`
 - Browser-readable report: `docs/codex-security/full-rescan-2026-06-23.html`
 - Remediation report: `docs/codex-security/full-rescan-fix-report-2026-06-23.md`
+- Merged remediation: `https://github.com/rtonf/maintainerops-ai/pull/20`
+- Release tracker: `https://github.com/rtonf/maintainerops-ai/issues/21`
+- Successful issue-triggered run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28002820413`
+- Successful pull-request-triggered run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28002857175`
 - Local verification: 26 unit tests, 1 UI smoke test, 7 deterministic eval cases, package validation, publint, and npm audit with 0 vulnerabilities
 
 ## Current Gaps
@@ -28,6 +35,6 @@ Today's maintenance completed a full repository-wide Codex Security rescan and r
 
 ## Next Actions
 
-1. Merge the security remediation after GitHub Actions succeeds.
-2. Publish a patch release containing the verified fixes.
+1. Publish the verified fixes as `maintainerops-ai@0.1.8` with maintainer OTP.
+2. Create GitHub Release `v0.1.8` and refresh the Marketplace listing.
 3. Convert the first external maintainer response into a regression eval and improvement record.
