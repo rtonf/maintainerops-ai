@@ -106,3 +106,9 @@
 - Changed pull-request automation to a read-only `pull_request_target` path that executes a commit-pinned published Action without checking out contributor code.
 - Added regression tests, rebuilt `dist-action/index.js`, and passed the complete verification gate with 26 unit tests and 0 npm audit vulnerabilities.
 - Published the canonical rescan report, browser-readable HTML report, and post-fix remediation report.
+
+## 2026-06-24
+
+- Prepared source version `0.1.8` to publish the verified full-rescan remediation.
+- Added release notes covering secret-redaction ordering, bounded patch analysis, routing correctness, and read-only workflow hardening.
+- Kept public npm, GitHub Release, and Marketplace claims on `v0.1.7` until publication can be verified.
