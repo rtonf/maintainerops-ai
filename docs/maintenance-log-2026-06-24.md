@@ -29,6 +29,7 @@ Today's maintenance prepared `v0.1.8` to publish the security and reliability fi
 - Published GitHub Release `v0.1.9`.
 - Confirmed GitHub Marketplace displays `v0.1.9` as `Latest`.
 - Updated the active workflow to the release commit SHA.
+- Pinned Issue #6, refreshed Discussion #17, and added a rule-screened external community outreach plan.
 
 ## npm 0.1.8 Publication Incident
 
