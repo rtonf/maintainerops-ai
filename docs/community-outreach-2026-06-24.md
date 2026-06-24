@@ -17,6 +17,9 @@ Collect concrete installation and workflow feedback from 1-2 external OSS mainta
 - Pinned Issue #6 on the repository.
 - Updated Discussion #17 with the current install command and Action version.
 - Published npm, GitHub Release, and Marketplace `v0.1.9`.
+- Published one feedback request in the pinned r/github self-promotion megathread.
+- Prepared the r/opensource submission form with the required `Promotional` flair, leaving all copy blank for owner-authored text as required by the community rules.
+- Opened the Hacker News submission login page; owner login and owner-authored copy are required by the HN guidelines.
 
 ## Community Rule Screening
 
@@ -65,11 +68,13 @@ Feedback: https://github.com/rtonf/maintainerops-ai/issues/6
 
 ## Outreach Log
 
-| Date       | Channel                    | Status                            | Link                                                     | Replies    | Follow-up                                 |
-| ---------- | -------------------------- | --------------------------------- | -------------------------------------------------------- | ---------- | ----------------------------------------- |
-| 2026-06-24 | GitHub Issue #6            | Published and pinned              | https://github.com/rtonf/maintainerops-ai/issues/6       | 0 external | Monitor and answer within 24 hours        |
-| 2026-06-24 | GitHub Discussion #17      | Updated                           | https://github.com/rtonf/maintainerops-ai/discussions/17 | 0 external | Monitor and answer within 24 hours        |
-| 2026-06-24 | Reddit r/github megathread | Waiting for authenticated browser |                                                          |            | Post once, then engage rather than repost |
+| Date       | Channel                    | Status                 | Link                                                              | Replies    | Follow-up                                        |
+| ---------- | -------------------------- | ---------------------- | ----------------------------------------------------------------- | ---------- | ------------------------------------------------ |
+| 2026-06-24 | GitHub Issue #6            | Published and pinned   | https://github.com/rtonf/maintainerops-ai/issues/6                | 0 external | Monitor and answer within 24 hours               |
+| 2026-06-24 | GitHub Discussion #17      | Updated                | https://github.com/rtonf/maintainerops-ai/discussions/17          | 0 external | Monitor and answer within 24 hours               |
+| 2026-06-24 | Reddit r/github megathread | Published              | https://www.reddit.com/r/github/comments/1jy8rea/comment/otj6ufv/ | 0 external | Monitor and answer within 24 hours               |
+| 2026-06-24 | Reddit r/opensource        | Owner handoff prepared | https://www.reddit.com/r/opensource/submit/                       |            | Owner writes original copy and submits           |
+| 2026-06-24 | Hacker News                | Login handoff prepared | https://news.ycombinator.com/submit                               |            | Owner logs in, writes original copy, and submits |
 
 ## Response Handling
 
