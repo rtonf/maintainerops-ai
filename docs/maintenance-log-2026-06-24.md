@@ -27,7 +27,7 @@ Today's maintenance prepared `v0.1.8` to publish the security and reliability fi
 - Deprecated broken npm `0.1.8`.
 - Verified the public registry package with a clean temporary installation and installed CLI execution.
 - Published GitHub Release `v0.1.9`.
-- Confirmed GitHub Marketplace displays `v0.1.9` as `Latest`.
+- Initially recorded GitHub Marketplace `v0.1.9` as expected after release publication; the later 2026-06-26 public Marketplace check found the listing still displayed `v0.1.6`, so a Release UI Marketplace publish follow-up remains open.
 - Updated the active workflow to the release commit SHA.
 - Pinned Issue #6, refreshed Discussion #17, and added a rule-screened external community outreach plan.
 - Published a feedback request in the permitted r/github self-promotion megathread.

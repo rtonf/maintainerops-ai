@@ -2,6 +2,10 @@
 
 These notes prepare MaintainerOps AI for GitHub Marketplace publication as a GitHub Action.
 
+## Current publication status
+
+As of 2026-06-26, npm and GitHub Releases are aligned on `v0.1.9`, but the public GitHub Marketplace listing still displays `v0.1.6` as `Latest`. The `v0.1.9` action tag can be used directly from workflows, and the remaining Marketplace task is to publish the newer release through the GitHub Release UI.
+
 ## Listing name
 
 MaintainerOps AI
