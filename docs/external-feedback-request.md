@@ -9,7 +9,7 @@ Public feedback discussion: https://github.com/rtonf/maintainerops-ai/discussion
 Current public channels:
 
 - npm latest: `maintainerops-ai@0.1.9`
-- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.9`
+- GitHub Marketplace public listing: currently displays `rtonf/maintainerops-ai@v0.1.6`; use `rtonf/maintainerops-ai@v0.1.9` directly by tag until the Marketplace Release UI publish step is complete.
 - GitHub Release latest: `v0.1.9`
 
 ## Copy/paste request
