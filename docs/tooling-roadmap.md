@@ -12,8 +12,9 @@ This document tracks useful skills, APIs, and support tooling for MaintainerOps 
 
 - Dependabot version updates: `.github/dependabot.yml`
 - CodeQL code scanning workflow: `.github/workflows/codeql.yml`
+- Public npm registry pin: `.npmrc`
 
-These are intentionally low-risk additions. Dependabot opens reviewable PRs, and CodeQL reports code-scanning findings without changing runtime behavior.
+These are intentionally low-risk additions. Dependabot opens reviewable PRs, CodeQL reports code-scanning findings without changing runtime behavior, and `.npmrc` keeps npm/Dependabot pointed at the public npm registry without storing credentials.
 
 ## Highest-Value Next Additions
 
