@@ -157,6 +157,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Japanese promotion plan](docs/promotion-plan-ja.md)
 - [Japanese X post drafts](docs/x-post-ja.md)
 - [Japanese note article draft](docs/note-article-ja.md)
+- [Tooling roadmap](docs/tooling-roadmap.md)
 
 ## GitHub Action
 
