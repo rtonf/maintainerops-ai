@@ -12,10 +12,10 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 ## Current evidence snapshot
 
 - Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.9`; broken `0.1.8` is deprecated.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing currently displays `v0.1.6`; `v0.1.9` is available as a GitHub Release/action tag and needs the Marketplace Release UI publish step.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing displays `v0.1.9` as `Latest`.
 - Latest GitHub Release: [`v0.1.9`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.9), containing the verified security remediation and npm packaging repair.
 - GitHub releases: `v0.1.0` through `v0.1.7`, plus `v0.1.9`; `v0.1.8` was intentionally withheld from GitHub and Marketplace.
-- Source, npm, and GitHub Releases are aligned on `v0.1.9`; Marketplace listing refresh is the remaining publication follow-up.
+- Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.9`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
 - Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
@@ -181,7 +181,7 @@ jobs:
   review-packet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - uses: rtonf/maintainerops-ai@v0.1.9
