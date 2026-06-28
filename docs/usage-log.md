@@ -83,6 +83,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-24 | Published a rule-compliant external feedback request and prepared owner-authored submission handoffs for communities that prohibit generated text. | `https://www.reddit.com/r/github/comments/1jy8rea/comment/otj6ufv/`, `docs/community-outreach-2026-06-24.md`                                                                                                        |
 | 2026-06-26 | Rechecked npm, GitHub Release, Marketplace, Issue #6, and Actions after the `v0.1.9` repair.                                                       | npm latest `0.1.9`; GitHub Release `v0.1.9`; Marketplace still displays `v0.1.6`; `https://github.com/rtonf/maintainerops-ai/actions/runs/28214069537`                                                              |
 | 2026-06-26 | Refreshed Issue #6 with the current external tester instructions and Reddit outreach link.                                                         | `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4805970883`, `https://www.reddit.com/r/github/comments/1jy8rea/comment/otj6ufv/`                                                                   |
+| 2026-06-27 | Added CodeQL and Dependabot maintenance tooling, then fixed Dependabot npm registry configuration.                                                 | PR #30, PR #31, PR #32; CodeQL run `https://github.com/rtonf/maintainerops-ai/actions/runs/28282051442`, `docs/tooling-roadmap.md`                                                                                  |
+| 2026-06-29 | Confirmed the public GitHub Marketplace listing now displays `v0.1.9` as `Latest` and refreshed current evidence text.                             | `https://github.com/marketplace/actions/maintainerops-ai`, `docs/maintenance-log-2026-06-29.md`                                                                                                                     |
 
 ## Current metrics
 
@@ -95,8 +97,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Real public repository review packets: 5
 - GitHub releases: 9
 - npm package status: `maintainerops-ai@0.1.9` is published as `latest`; broken `0.1.8` is deprecated
-- GitHub Marketplace status: `MaintainerOps AI` public listing still displays `v0.1.6`; publish `v0.1.9` through the GitHub Release UI
-- Source version: `v0.1.9` is aligned across source, npm, and GitHub Releases; Marketplace listing refresh remains pending
+- GitHub Marketplace status: `MaintainerOps AI` public listing displays `v0.1.9` as `Latest`
+- Source version: `v0.1.9` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 
 ## Seven-day evidence plan

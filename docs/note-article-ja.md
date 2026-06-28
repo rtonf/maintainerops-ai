@@ -103,7 +103,7 @@ jobs:
   review-packet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - uses: rtonf/maintainerops-ai@v0.1.9

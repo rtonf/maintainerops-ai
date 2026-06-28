@@ -15,14 +15,7 @@ Today's maintenance focused on verifying the public state after the `v0.1.9` npm
 
 ## Marketplace Status
 
-The public GitHub Marketplace listing still displays `v0.1.6` as `Latest`, even though npm and GitHub Releases are on `v0.1.9`.
-
-Action required:
-
-- Open the GitHub Release UI for `v0.1.9`.
-- Confirm the GitHub Marketplace publication checkbox/state.
-- Publish or refresh the Marketplace release so the public listing displays `v0.1.9`.
-- Recheck `https://github.com/marketplace/actions/maintainerops-ai` and update this log after it changes.
+The 2026-06-26 public Marketplace check found that the listing still displayed `v0.1.6` even though npm and GitHub Releases were on `v0.1.9`. A later 2026-06-29 recheck confirmed that the public Marketplace listing now displays `v0.1.9` as `Latest`.
 
 ## External Feedback
 
@@ -32,6 +25,5 @@ Action required:
 
 ## Next
 
-- Refresh the Marketplace listing to `v0.1.9`.
 - Collect one external maintainer comment on Issue #6 or Discussion #17.
-- Run the next Codex Security repo-wide scan after the Marketplace state is corrected or before the next release candidate.
+- Run the next Codex Security repo-wide scan before the next release candidate.
