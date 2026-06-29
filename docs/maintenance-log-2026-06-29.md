@@ -32,6 +32,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Added a scheduled/manual OpenSSF Scorecard workflow so supply-chain health can be published without blocking every pull request.
 - Ran the initial Scorecard workflow manually and found that published Scorecard results reject global `id-token: write`; prepared a follow-up fix that scopes write permissions to the Scorecard job.
 - Re-ran OpenSSF Scorecard successfully after the permission fix and published a concise report.
+- Expanded `SECURITY.md` with supported versions, private disclosure steps, response targets, scope, and disclosure expectations.
 
 ## Verification
 
@@ -42,6 +43,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Initial Scorecard workflow run reached the Scorecard action and produced a score payload, but publishing failed because `id-token: write` was configured globally.
 - Corrected Scorecard workflow succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28353155952`.
 - Scorecard report: `docs/openssf-scorecard-2026-06-29.md`.
+- `SECURITY.md` now documents private reporting and response targets instead of only a short generic reporting note.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
@@ -51,4 +53,5 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Collect at least one external maintainer comment on Issue #6 or Discussion #17.
 - Continue reviewing Dependabot updates promptly now that both GitHub Actions and npm ecosystem updates have merged cleanly.
 - Use the Scorecard result to prioritize branch protection, clearer security policy details, and npm Trusted Publishing/provenance.
+- Re-run Scorecard after the security policy update and branch protection change land.
 - Plan the next Codex Security repo-wide scan before a `v0.1.10` release candidate.
