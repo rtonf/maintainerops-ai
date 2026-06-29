@@ -36,7 +36,7 @@ Please report suspected vulnerabilities privately instead of opening a public is
 
 Preferred path:
 
-1. Open a GitHub private vulnerability report from the repository's **Security** tab.
+1. Open a GitHub private vulnerability report from the repository's **Security** tab: <https://github.com/rtonf/maintainerops-ai/security/advisories/new>
 2. Include a concise description, affected version or commit, reproduction steps, impact, and any suggested fix.
 3. If the report involves a secret, token, or private repository content, redact the sensitive value before sending it.
 
