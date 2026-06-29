@@ -14,6 +14,7 @@ This document tracks useful skills, APIs, and support tooling for MaintainerOps 
 - CodeQL code scanning workflow: `.github/workflows/codeql.yml`
 - Public npm registry pin: `.npmrc`
 - OpenSSF Scorecard scheduled/manual workflow: `.github/workflows/scorecard.yml`
+- npm Trusted Publishing plan: `docs/npm-trusted-publishing.md`
 
 These are intentionally low-risk additions. Dependabot opens reviewable PRs, CodeQL reports code-scanning findings without changing runtime behavior, `.npmrc` keeps npm/Dependabot pointed at the public npm registry without storing credentials, and Scorecard runs on a weekly/manual cadence instead of blocking every pull request.
 
@@ -23,12 +24,12 @@ GitHub Actions in repository workflows are pinned to full commit SHAs with a sho
 
 ## Highest-Value Next Additions
 
-| Priority | Tooling                             | Why it helps                                                                 | Recommended timing                                        |
-| -------- | ----------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------- |
-| 1        | npm Trusted Publishing / provenance | Reduces OTP mistakes and strengthens package provenance.                     | Before the next npm release if account settings allow it. |
-| 2        | model-backed eval                   | Tests real OpenAI output quality, not only deterministic offline heuristics. | After external feedback creates realistic cases.          |
-| 3        | Semgrep scheduled scan              | Adds another static-analysis perspective.                                    | Manual/scheduled only at first to avoid noisy PR gates.   |
-| 4        | GitHub App auth                     | Better for organizations and private repositories.                           | After the public CLI/Action workflow proves demand.       |
+| Priority | Tooling                             | Why it helps                                                                 | Recommended timing                                                                             |
+| -------- | ----------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 1        | npm Trusted Publishing / provenance | Reduces OTP mistakes and strengthens package provenance.                     | Planned; npm package owner must configure package settings before an active workflow is added. |
+| 2        | model-backed eval                   | Tests real OpenAI output quality, not only deterministic offline heuristics. | After external feedback creates realistic cases.                                               |
+| 3        | Semgrep scheduled scan              | Adds another static-analysis perspective.                                    | Manual/scheduled only at first to avoid noisy PR gates.                                        |
+| 4        | GitHub App auth                     | Better for organizations and private repositories.                           | After the public CLI/Action workflow proves demand.                                            |
 
 ## Do Not Add Yet
 
@@ -39,4 +40,4 @@ GitHub Actions in repository workflows are pinned to full commit SHAs with a sho
 
 ## Current Decision
 
-The immediate improvement is operational and supply-chain focused: install a local Codex skill for this project, add Dependabot grouping, add CodeQL, add scheduled/manual OpenSSF Scorecard, pin workflow Actions to commit SHAs, and document the remaining tooling roadmap. The next implementation candidate should be npm Trusted Publishing/provenance before the next npm release if account settings allow it.
+The immediate improvement is operational and supply-chain focused: install a local Codex skill for this project, add Dependabot grouping, add CodeQL, add scheduled/manual OpenSSF Scorecard, pin workflow Actions to commit SHAs, and document the remaining tooling roadmap. The next implementation candidate is npm Trusted Publishing/provenance; do not add an active publish workflow until npmjs.com has a trusted publisher configured for this package.
