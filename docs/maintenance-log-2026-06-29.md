@@ -33,6 +33,8 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Ran the initial Scorecard workflow manually and found that published Scorecard results reject global `id-token: write`; prepared a follow-up fix that scopes write permissions to the Scorecard job.
 - Re-ran OpenSSF Scorecard successfully after the permission fix and published a concise report.
 - Expanded `SECURITY.md` with supported versions, private disclosure steps, response targets, scope, and disclosure expectations.
+- Enabled `main` branch protection through the GitHub API with required checks for `Analyze JavaScript and TypeScript` and `analyze`.
+- Re-ran OpenSSF Scorecard after the security policy and branch protection work; the score increased from `5.5` to `6.1`.
 
 ## Verification
 
@@ -44,6 +46,8 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Corrected Scorecard workflow succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28353155952`.
 - Scorecard report: `docs/openssf-scorecard-2026-06-29.md`.
 - `SECURITY.md` now documents private reporting and response targets instead of only a short generic reporting note.
+- Branch protection verification: `docs/branch-protection-2026-06-29.md`.
+- Follow-up Scorecard run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28353954993`.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
@@ -53,5 +57,5 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Collect at least one external maintainer comment on Issue #6 or Discussion #17.
 - Continue reviewing Dependabot updates promptly now that both GitHub Actions and npm ecosystem updates have merged cleanly.
 - Use the Scorecard result to prioritize branch protection, clearer security policy details, and npm Trusted Publishing/provenance.
-- Re-run Scorecard after the security policy update and branch protection change land.
+- Decide whether to pin GitHub Actions to full commit SHAs or keep tag-based updates with Dependabot for the early project stage.
 - Plan the next Codex Security repo-wide scan before a `v0.1.10` release candidate.
