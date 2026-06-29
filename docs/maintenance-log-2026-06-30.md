@@ -12,14 +12,15 @@ Today's maintenance focuses on continuing post-application hardening after Score
 - Confirmed Issue #6 remains the only open issue and is still the public external feedback target.
 - Researched npm Trusted Publishing and provenance from official npm documentation.
 - Added `docs/npm-trusted-publishing.md` with requirements, setup checklist, workflow guardrails, and current status.
+- Opened Issue #48 to track npm Trusted Publishing/provenance setup publicly.
 
 ## Verification
 
 - Documentation changes will be checked with `npm run format:check` and `git diff --check`.
+- Issue #48: `https://github.com/rtonf/maintainerops-ai/issues/48`.
 
 ## Next
 
-- Open a public GitHub issue tracking npm Trusted Publishing/provenance setup.
 - Configure npm package trusted publisher in npmjs.com package settings.
 - Add the active npm publishing workflow only after npm package settings are configured.
 - Continue external feedback collection through Issue #6.

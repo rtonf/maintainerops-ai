@@ -134,3 +134,4 @@
 ## 2026-06-30
 
 - Documented the npm Trusted Publishing/provenance plan, including npm package-owner setup requirements and guardrails against adding an active publish workflow before the package settings are configured.
+- Opened Issue #48 as the public tracker for npm Trusted Publishing/provenance setup.
