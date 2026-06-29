@@ -17,6 +17,10 @@ This document tracks useful skills, APIs, and support tooling for MaintainerOps 
 
 These are intentionally low-risk additions. Dependabot opens reviewable PRs, CodeQL reports code-scanning findings without changing runtime behavior, `.npmrc` keeps npm/Dependabot pointed at the public npm registry without storing credentials, and Scorecard runs on a weekly/manual cadence instead of blocking every pull request.
 
+## Workflow Pinning
+
+GitHub Actions in repository workflows are pinned to full commit SHAs with a short version comment for readability. This reduces supply-chain risk from mutable tags and directly addresses the OpenSSF Scorecard pinned-dependencies check. When Dependabot or manual review proposes an Action update, update both the SHA and the adjacent version comment.
+
 ## Highest-Value Next Additions
 
 | Priority | Tooling                             | Why it helps                                                                 | Recommended timing                                        |
@@ -35,4 +39,4 @@ These are intentionally low-risk additions. Dependabot opens reviewable PRs, Cod
 
 ## Current Decision
 
-The immediate improvement is operational and supply-chain focused: install a local Codex skill for this project, add Dependabot grouping, add CodeQL, add scheduled/manual OpenSSF Scorecard, and document the remaining tooling roadmap. The next implementation candidate should be npm Trusted Publishing/provenance before the next npm release if account settings allow it.
+The immediate improvement is operational and supply-chain focused: install a local Codex skill for this project, add Dependabot grouping, add CodeQL, add scheduled/manual OpenSSF Scorecard, pin workflow Actions to commit SHAs, and document the remaining tooling roadmap. The next implementation candidate should be npm Trusted Publishing/provenance before the next npm release if account settings allow it.

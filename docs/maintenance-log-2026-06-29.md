@@ -35,6 +35,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Expanded `SECURITY.md` with supported versions, private disclosure steps, response targets, scope, and disclosure expectations.
 - Enabled `main` branch protection through the GitHub API with required checks for `Analyze JavaScript and TypeScript` and `analyze`.
 - Re-ran OpenSSF Scorecard after the security policy and branch protection work; the score increased from `5.5` to `6.1`.
+- Pinned third-party and GitHub-owned workflow Actions to full commit SHAs while keeping version comments for reviewability.
 
 ## Verification
 
@@ -48,6 +49,10 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - `SECURITY.md` now documents private reporting and response targets instead of only a short generic reporting note.
 - Branch protection verification: `docs/branch-protection-2026-06-29.md`.
 - Follow-up Scorecard run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28353954993`.
+- Workflow Action pins:
+  - `actions/checkout` `v7` -> `9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0`
+  - `github/codeql-action` `v4` -> `411bbbe57033eedfc1a82d68c01345aa96c737d7`
+  - `ossf/scorecard-action` `v2.4.3` -> `99c09fe975337306107572b4fdf4db224cf8e2f2`
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
@@ -57,5 +62,5 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Collect at least one external maintainer comment on Issue #6 or Discussion #17.
 - Continue reviewing Dependabot updates promptly now that both GitHub Actions and npm ecosystem updates have merged cleanly.
 - Use the Scorecard result to prioritize branch protection, clearer security policy details, and npm Trusted Publishing/provenance.
-- Decide whether to pin GitHub Actions to full commit SHAs or keep tag-based updates with Dependabot for the early project stage.
+- Re-run OpenSSF Scorecard after workflow Action pinning lands.
 - Plan the next Codex Security repo-wide scan before a `v0.1.10` release candidate.
