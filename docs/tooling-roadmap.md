@@ -13,18 +13,18 @@ This document tracks useful skills, APIs, and support tooling for MaintainerOps 
 - Dependabot version updates: `.github/dependabot.yml`
 - CodeQL code scanning workflow: `.github/workflows/codeql.yml`
 - Public npm registry pin: `.npmrc`
+- OpenSSF Scorecard scheduled/manual workflow: `.github/workflows/scorecard.yml`
 
-These are intentionally low-risk additions. Dependabot opens reviewable PRs, CodeQL reports code-scanning findings without changing runtime behavior, and `.npmrc` keeps npm/Dependabot pointed at the public npm registry without storing credentials.
+These are intentionally low-risk additions. Dependabot opens reviewable PRs, CodeQL reports code-scanning findings without changing runtime behavior, `.npmrc` keeps npm/Dependabot pointed at the public npm registry without storing credentials, and Scorecard runs on a weekly/manual cadence instead of blocking every pull request.
 
 ## Highest-Value Next Additions
 
 | Priority | Tooling                             | Why it helps                                                                 | Recommended timing                                        |
 | -------- | ----------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------- |
-| 1        | OpenSSF Scorecard                   | Gives public supply-chain health evidence that OSS reviewers understand.     | After CodeQL is stable.                                   |
-| 2        | npm Trusted Publishing / provenance | Reduces OTP mistakes and strengthens package provenance.                     | Before the next npm release if account settings allow it. |
-| 3        | model-backed eval                   | Tests real OpenAI output quality, not only deterministic offline heuristics. | After external feedback creates realistic cases.          |
-| 4        | Semgrep scheduled scan              | Adds another static-analysis perspective.                                    | Manual/scheduled only at first to avoid noisy PR gates.   |
-| 5        | GitHub App auth                     | Better for organizations and private repositories.                           | After the public CLI/Action workflow proves demand.       |
+| 1        | npm Trusted Publishing / provenance | Reduces OTP mistakes and strengthens package provenance.                     | Before the next npm release if account settings allow it. |
+| 2        | model-backed eval                   | Tests real OpenAI output quality, not only deterministic offline heuristics. | After external feedback creates realistic cases.          |
+| 3        | Semgrep scheduled scan              | Adds another static-analysis perspective.                                    | Manual/scheduled only at first to avoid noisy PR gates.   |
+| 4        | GitHub App auth                     | Better for organizations and private repositories.                           | After the public CLI/Action workflow proves demand.       |
 
 ## Do Not Add Yet
 
@@ -35,4 +35,4 @@ These are intentionally low-risk additions. Dependabot opens reviewable PRs, Cod
 
 ## Current Decision
 
-The immediate improvement is operational and supply-chain focused: install a local Codex skill for this project, add Dependabot grouping, add CodeQL, and document the remaining tooling roadmap. The next implementation candidate should be OpenSSF Scorecard after the CodeQL workflow proves stable.
+The immediate improvement is operational and supply-chain focused: install a local Codex skill for this project, add Dependabot grouping, add CodeQL, add scheduled/manual OpenSSF Scorecard, and document the remaining tooling roadmap. The next implementation candidate should be npm Trusted Publishing/provenance before the next npm release if account settings allow it.

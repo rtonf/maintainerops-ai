@@ -29,6 +29,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Regenerated the bundled GitHub Action runtime with the updated toolchain.
 - Re-ran the complete verification gate after installing the updated Playwright Chromium browser.
 - Closed stale Dependabot PR #35 with a superseded note after PR #36 was merged.
+- Added a scheduled/manual OpenSSF Scorecard workflow so supply-chain health can be published without blocking every pull request.
 
 ## Verification
 
@@ -36,6 +37,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Latest MaintainerOps AI PR checks succeeded on PR #32.
 - PR #34 checks and local `npm run verify` succeeded before merge.
 - PR #36 checks, local `npm run verify`, and post-merge CodeQL push run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28352059753`.
+- Scorecard workflow syntax is docs/config only and will be manually verified after merge.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
@@ -44,4 +46,5 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Add a fresh Issue #6 comment now that npm, GitHub Release, and Marketplace all show `v0.1.9`.
 - Collect at least one external maintainer comment on Issue #6 or Discussion #17.
 - Continue reviewing Dependabot updates promptly now that both GitHub Actions and npm ecosystem updates have merged cleanly.
+- Run the new OpenSSF Scorecard workflow manually and record the result.
 - Plan the next Codex Security repo-wide scan before a `v0.1.10` release candidate.
