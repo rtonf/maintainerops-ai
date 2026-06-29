@@ -46,3 +46,13 @@ Planned model-backed evals:
 - Track false negatives where missing tests, release notes, or authorization risks were missed.
 - Require every high-risk finding to include evidence.
 - Require every suggested GitHub comment to be editable and non-accusatory.
+
+## Model-backed eval plan
+
+The first model-backed eval milestone is documented in `docs/model-backed-eval-plan.md`.
+
+Current status:
+
+- Not yet run.
+- Local environment check on 2026-06-30 found `OPENAI_API_KEY` and `OPENAI_MODEL` unset.
+- The first implementation should be manual-only and separate from deterministic `npm run eval`.

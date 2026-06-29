@@ -27,7 +27,7 @@ GitHub Actions in repository workflows are pinned to full commit SHAs with a sho
 | Priority | Tooling                             | Why it helps                                                                 | Recommended timing                                                                             |
 | -------- | ----------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | 1        | npm Trusted Publishing / provenance | Reduces OTP mistakes and strengthens package provenance.                     | Planned; npm package owner must configure package settings before an active workflow is added. |
-| 2        | model-backed eval                   | Tests real OpenAI output quality, not only deterministic offline heuristics. | After external feedback creates realistic cases.                                               |
+| 2        | model-backed eval                   | Tests real OpenAI output quality, not only deterministic offline heuristics. | Planned in `docs/model-backed-eval-plan.md`; execution requires an authorized OpenAI API key.  |
 | 3        | Semgrep scheduled scan              | Adds another static-analysis perspective.                                    | Manual/scheduled only at first to avoid noisy PR gates.                                        |
 | 4        | GitHub App auth                     | Better for organizations and private repositories.                           | After the public CLI/Action workflow proves demand.                                            |
 

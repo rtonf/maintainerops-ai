@@ -96,6 +96,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-30 | Researched npm Trusted Publishing/provenance and documented the setup plan without adding an unsafe active publish workflow.                         | `docs/npm-trusted-publishing.md`, `docs/maintenance-log-2026-06-30.md`                                                                                                                                              |
 | 2026-06-30 | Opened a public tracking issue for npm Trusted Publishing/provenance setup.                                                                          | Issue #48, `https://github.com/rtonf/maintainerops-ai/issues/48`                                                                                                                                                    |
 | 2026-06-30 | Refreshed Issue #6 with current external tester instructions and supply-chain hardening status.                                                      | `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4834421198`                                                                                                                                        |
+| 2026-06-30 | Checked model-backed eval readiness and documented the first manual milestone; live evals were not run because no OpenAI API key is present.         | `docs/model-backed-eval-plan.md`, `EVALS.md`, `docs/maintenance-log-2026-06-30.md`                                                                                                                                  |
 
 ## Current metrics
 
@@ -116,6 +117,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
 - npm Trusted Publishing status: planned; npm package settings must be configured before adding an active publish workflow
+- Model-backed eval status: planned; requires authorized `OPENAI_API_KEY`
 
 ## Seven-day evidence plan
 
