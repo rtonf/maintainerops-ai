@@ -16,6 +16,7 @@ Today's maintenance focuses on continuing post-application hardening after Score
 - Refreshed Issue #6 with current external tester instructions and supply-chain hardening status.
 - Checked model-backed eval readiness; `OPENAI_API_KEY` and `OPENAI_MODEL` are not set in the local environment.
 - Added `docs/model-backed-eval-plan.md` and updated `EVALS.md` with a manual-first model-backed eval plan.
+- Opened Issue #52 to track manual model-backed eval implementation.
 
 ## Verification
 
@@ -23,11 +24,11 @@ Today's maintenance focuses on continuing post-application hardening after Score
 - Issue #48: `https://github.com/rtonf/maintainerops-ai/issues/48`.
 - Issue #6 refresh: `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4834421198`.
 - Model-backed evals were not executed because no OpenAI API key is present in the local environment.
+- Issue #52: `https://github.com/rtonf/maintainerops-ai/issues/52`.
 
 ## Next
 
 - Configure npm package trusted publisher in npmjs.com package settings.
 - Add the active npm publishing workflow only after npm package settings are configured.
 - Continue external feedback collection through Issue #6.
-- Open a public tracking issue for model-backed eval implementation.
 - Plan the next Codex Security repo-wide scan before the next source release candidate.
