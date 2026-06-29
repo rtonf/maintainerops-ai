@@ -127,3 +127,4 @@
 - Added OpenSSF Scorecard as a weekly/manual supply-chain health workflow, fixed its initial permission-scope issue, and recorded the first successful scorecard report.
 - Expanded the public security policy with private reporting instructions, response targets, vulnerability scope, and disclosure expectations.
 - Enabled `main` branch protection with required status checks and recorded the verified configuration.
+- Pinned GitHub Actions workflow dependencies to full commit SHAs while retaining version comments for reviewability.
