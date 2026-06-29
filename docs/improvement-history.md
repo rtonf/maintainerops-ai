@@ -136,3 +136,4 @@
 - Documented the npm Trusted Publishing/provenance plan, including npm package-owner setup requirements and guardrails against adding an active publish workflow before the package settings are configured.
 - Opened Issue #48 as the public tracker for npm Trusted Publishing/provenance setup.
 - Refreshed Issue #6 with current external tester instructions and supply-chain hardening status.
+- Documented the first model-backed eval milestone and recorded that live evals require an authorized OpenAI API key.
