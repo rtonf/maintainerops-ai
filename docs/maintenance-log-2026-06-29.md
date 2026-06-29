@@ -31,6 +31,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Closed stale Dependabot PR #35 with a superseded note after PR #36 was merged.
 - Added a scheduled/manual OpenSSF Scorecard workflow so supply-chain health can be published without blocking every pull request.
 - Ran the initial Scorecard workflow manually and found that published Scorecard results reject global `id-token: write`; prepared a follow-up fix that scopes write permissions to the Scorecard job.
+- Re-ran OpenSSF Scorecard successfully after the permission fix and published a concise report.
 
 ## Verification
 
@@ -39,6 +40,8 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - PR #34 checks and local `npm run verify` succeeded before merge.
 - PR #36 checks, local `npm run verify`, and post-merge CodeQL push run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28352059753`.
 - Initial Scorecard workflow run reached the Scorecard action and produced a score payload, but publishing failed because `id-token: write` was configured globally.
+- Corrected Scorecard workflow succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28353155952`.
+- Scorecard report: `docs/openssf-scorecard-2026-06-29.md`.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
@@ -47,5 +50,5 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Add a fresh Issue #6 comment now that npm, GitHub Release, and Marketplace all show `v0.1.9`.
 - Collect at least one external maintainer comment on Issue #6 or Discussion #17.
 - Continue reviewing Dependabot updates promptly now that both GitHub Actions and npm ecosystem updates have merged cleanly.
-- Run the new OpenSSF Scorecard workflow manually and record the result.
+- Use the Scorecard result to prioritize branch protection, clearer security policy details, and npm Trusted Publishing/provenance.
 - Plan the next Codex Security repo-wide scan before a `v0.1.10` release candidate.

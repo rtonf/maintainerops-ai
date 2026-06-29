@@ -124,3 +124,4 @@
 - Reviewed and merged Dependabot's production OpenAI SDK update to `openai@6.45.0` after the full local verification gate passed.
 - Replaced a stale Dependabot development dependency PR with a clean update from current `main` to avoid reverting the production OpenAI SDK lockfile update.
 - Updated TypeScript, Vite, Playwright, ESLint, Prettier, and related development tooling, regenerated the Action bundle, and verified the result with `npm run verify` plus post-merge CodeQL.
+- Added OpenSSF Scorecard as a weekly/manual supply-chain health workflow, fixed its initial permission-scope issue, and recorded the first successful scorecard report.
