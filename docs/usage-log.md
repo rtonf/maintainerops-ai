@@ -93,6 +93,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-29 | Pinned GitHub Actions workflow dependencies to full commit SHAs and corrected the Scorecard annotated-tag pin.                                       | `.github/workflows/codeql.yml`, `.github/workflows/scorecard.yml`, `docs/tooling-roadmap.md`                                                                                                                        |
 | 2026-06-29 | Reworked Scorecard result storage to use a pinned artifact upload action compatible with Scorecard publish verification.                             | `.github/workflows/scorecard.yml`, `docs/maintenance-log-2026-06-29.md`                                                                                                                                             |
 | 2026-06-29 | Re-ran OpenSSF Scorecard successfully after workflow pinning and artifact upload fixes; score is now `6.8`.                                          | `https://github.com/rtonf/maintainerops-ai/actions/runs/28371626145`, `docs/openssf-scorecard-2026-06-29.md`                                                                                                        |
+| 2026-06-30 | Researched npm Trusted Publishing/provenance and documented the setup plan without adding an unsafe active publish workflow.                         | `docs/npm-trusted-publishing.md`, `docs/maintenance-log-2026-06-30.md`                                                                                                                                              |
 
 ## Current metrics
 
@@ -112,6 +113,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - OpenSSF Scorecard status: latest successful manual run completed on 2026-06-29 with score `6.8`
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
+- npm Trusted Publishing status: planned; npm package settings must be configured before adding an active publish workflow
 
 ## Seven-day evidence plan
 
