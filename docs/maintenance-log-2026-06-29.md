@@ -54,6 +54,8 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
   - `github/codeql-action` `v4` -> `411bbbe57033eedfc1a82d68c01345aa96c737d7`
   - `ossf/scorecard-action` `v2.4.3` -> `4eaacf0543bb3f2c246792bd56e8cdeffafb205a`
 - First SHA-pinned Scorecard run failed because `v2.4.3` is an annotated tag and the workflow initially used the tag-object SHA instead of the commit SHA.
+- Second SHA-pinned Scorecard run produced score `6.8`, but public result upload failed because Scorecard verification does not accept the `github/codeql-action/upload-sarif` subaction when pinned to the parent repository commit.
+- Replaced the Scorecard SARIF upload step with pinned `actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` (`v7.0.1`) and removed the unneeded `security-events: write` permission from the Scorecard job.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 

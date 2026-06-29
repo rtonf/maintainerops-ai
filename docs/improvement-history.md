@@ -128,3 +128,4 @@
 - Expanded the public security policy with private reporting instructions, response targets, vulnerability scope, and disclosure expectations.
 - Enabled `main` branch protection with required status checks and recorded the verified configuration.
 - Pinned GitHub Actions workflow dependencies to full commit SHAs while retaining version comments for reviewability.
+- Adjusted Scorecard result storage to avoid a pinned subaction verification failure while keeping workflow dependencies pinned.
