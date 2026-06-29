@@ -116,3 +116,11 @@
 - Withheld the `v0.1.8` GitHub and Marketplace releases and prepared `v0.1.9` with a mandatory `prepack` build.
 - Published npm `0.1.9`, verified a clean registry installation, and deprecated broken npm `0.1.8`.
 - Published GitHub Release and Marketplace `v0.1.9`, then pinned the active workflow to the release commit.
+
+## 2026-06-29
+
+- Confirmed the public GitHub Marketplace listing displays `v0.1.9` as the latest Action release.
+- Refreshed public evidence so README, Issue #6, and maintenance logs match the aligned npm, GitHub Release, and Marketplace state.
+- Reviewed and merged Dependabot's production OpenAI SDK update to `openai@6.45.0` after the full local verification gate passed.
+- Replaced a stale Dependabot development dependency PR with a clean update from current `main` to avoid reverting the production OpenAI SDK lockfile update.
+- Updated TypeScript, Vite, Playwright, ESLint, Prettier, and related development tooling, regenerated the Action bundle, and verified the result with `npm run verify` plus post-merge CodeQL.

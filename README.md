@@ -17,7 +17,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - GitHub releases: `v0.1.0` through `v0.1.7`, plus `v0.1.9`; `v0.1.8` was intentionally withheld from GitHub and Marketplace.
 - Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.9`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
-- Workflow evidence: successful manual, pull-request-triggered, and issue-triggered GitHub Actions runs, including the `v0.1.4` hardening PR and post-application maintenance checks.
+- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, and CodeQL runs, including the `v0.1.9` evidence refresh and 2026-06-29 dependency maintenance checks.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
 - Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
