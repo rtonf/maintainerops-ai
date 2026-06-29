@@ -13,11 +13,13 @@ Today's maintenance focuses on continuing post-application hardening after Score
 - Researched npm Trusted Publishing and provenance from official npm documentation.
 - Added `docs/npm-trusted-publishing.md` with requirements, setup checklist, workflow guardrails, and current status.
 - Opened Issue #48 to track npm Trusted Publishing/provenance setup publicly.
+- Refreshed Issue #6 with current external tester instructions and supply-chain hardening status.
 
 ## Verification
 
 - Documentation changes will be checked with `npm run format:check` and `git diff --check`.
 - Issue #48: `https://github.com/rtonf/maintainerops-ai/issues/48`.
+- Issue #6 refresh: `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4834421198`.
 
 ## Next
 
