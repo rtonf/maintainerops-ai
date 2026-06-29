@@ -19,7 +19,7 @@ These are intentionally low-risk additions. Dependabot opens reviewable PRs, Cod
 
 ## Workflow Pinning
 
-GitHub Actions in repository workflows are pinned to full commit SHAs with a short version comment for readability. This reduces supply-chain risk from mutable tags and directly addresses the OpenSSF Scorecard pinned-dependencies check. When Dependabot or manual review proposes an Action update, update both the SHA and the adjacent version comment.
+GitHub Actions in repository workflows are pinned to full commit SHAs with a short version comment for readability. This reduces supply-chain risk from mutable tags and directly addresses the OpenSSF Scorecard pinned-dependencies check. When Dependabot or manual review proposes an Action update, update both the SHA and the adjacent version comment. For annotated tags, pin the dereferenced commit SHA, not the tag-object SHA.
 
 ## Highest-Value Next Additions
 

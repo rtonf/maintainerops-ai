@@ -52,7 +52,8 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Workflow Action pins:
   - `actions/checkout` `v7` -> `9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0`
   - `github/codeql-action` `v4` -> `411bbbe57033eedfc1a82d68c01345aa96c737d7`
-  - `ossf/scorecard-action` `v2.4.3` -> `99c09fe975337306107572b4fdf4db224cf8e2f2`
+  - `ossf/scorecard-action` `v2.4.3` -> `4eaacf0543bb3f2c246792bd56e8cdeffafb205a`
+- First SHA-pinned Scorecard run failed because `v2.4.3` is an annotated tag and the workflow initially used the tag-object SHA instead of the commit SHA.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
