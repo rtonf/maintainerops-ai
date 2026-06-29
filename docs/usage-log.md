@@ -92,6 +92,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-29 | Enabled branch protection for `main` and re-ran OpenSSF Scorecard, improving the score to `6.1`.                                                     | `docs/branch-protection-2026-06-29.md`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28353954993`                                                                                                        |
 | 2026-06-29 | Pinned GitHub Actions workflow dependencies to full commit SHAs and corrected the Scorecard annotated-tag pin.                                       | `.github/workflows/codeql.yml`, `.github/workflows/scorecard.yml`, `docs/tooling-roadmap.md`                                                                                                                        |
 | 2026-06-29 | Reworked Scorecard result storage to use a pinned artifact upload action compatible with Scorecard publish verification.                             | `.github/workflows/scorecard.yml`, `docs/maintenance-log-2026-06-29.md`                                                                                                                                             |
+| 2026-06-29 | Re-ran OpenSSF Scorecard successfully after workflow pinning and artifact upload fixes; score is now `6.8`.                                          | `https://github.com/rtonf/maintainerops-ai/actions/runs/28371626145`, `docs/openssf-scorecard-2026-06-29.md`                                                                                                        |
 
 ## Current metrics
 
@@ -108,7 +109,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Source version: `v0.1.9` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot production and development update batches were reviewed, verified, and merged on 2026-06-29
-- OpenSSF Scorecard status: first successful manual run completed on 2026-06-29 with score `5.5`
+- OpenSSF Scorecard status: latest successful manual run completed on 2026-06-29 with score `6.8`
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
 

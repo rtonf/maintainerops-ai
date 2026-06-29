@@ -56,6 +56,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - First SHA-pinned Scorecard run failed because `v2.4.3` is an annotated tag and the workflow initially used the tag-object SHA instead of the commit SHA.
 - Second SHA-pinned Scorecard run produced score `6.8`, but public result upload failed because Scorecard verification does not accept the `github/codeql-action/upload-sarif` subaction when pinned to the parent repository commit.
 - Replaced the Scorecard SARIF upload step with pinned `actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` (`v7.0.1`) and removed the unneeded `security-events: write` permission from the Scorecard job.
+- Re-ran Scorecard successfully after the artifact upload change; latest score is `6.8` with `Security-Policy`, `Pinned-Dependencies`, `CI-Tests`, `Vulnerabilities`, and `Dangerous-Workflow` all scoring `10`.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
@@ -66,4 +67,5 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Continue reviewing Dependabot updates promptly now that both GitHub Actions and npm ecosystem updates have merged cleanly.
 - Use the Scorecard result to prioritize branch protection, clearer security policy details, and npm Trusted Publishing/provenance.
 - Re-run OpenSSF Scorecard after workflow Action pinning lands.
+- Use the latest Scorecard findings to prioritize npm Trusted Publishing/provenance and contributor feedback.
 - Plan the next Codex Security repo-wide scan before a `v0.1.10` release candidate.
