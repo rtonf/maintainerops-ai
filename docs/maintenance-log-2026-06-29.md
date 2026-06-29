@@ -30,6 +30,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Re-ran the complete verification gate after installing the updated Playwright Chromium browser.
 - Closed stale Dependabot PR #35 with a superseded note after PR #36 was merged.
 - Added a scheduled/manual OpenSSF Scorecard workflow so supply-chain health can be published without blocking every pull request.
+- Ran the initial Scorecard workflow manually and found that published Scorecard results reject global `id-token: write`; prepared a follow-up fix that scopes write permissions to the Scorecard job.
 
 ## Verification
 
@@ -37,7 +38,7 @@ Today's maintenance focused on correcting public evidence after the GitHub Marke
 - Latest MaintainerOps AI PR checks succeeded on PR #32.
 - PR #34 checks and local `npm run verify` succeeded before merge.
 - PR #36 checks, local `npm run verify`, and post-merge CodeQL push run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28352059753`.
-- Scorecard workflow syntax is docs/config only and will be manually verified after merge.
+- Initial Scorecard workflow run reached the Scorecard action and produced a score payload, but publishing failed because `id-token: write` was configured globally.
 - Open pull requests: none after closing stale PR #35.
 - Open issues: Issue #6 remains open for external maintainer feedback.
 
