@@ -129,3 +129,4 @@
 - Enabled `main` branch protection with required status checks and recorded the verified configuration.
 - Pinned GitHub Actions workflow dependencies to full commit SHAs while retaining version comments for reviewability.
 - Adjusted Scorecard result storage to avoid a pinned subaction verification failure while keeping workflow dependencies pinned.
+- Re-ran OpenSSF Scorecard successfully after the workflow pinning fixes and recorded the improved `6.8` score.

@@ -18,7 +18,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.9`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
 - Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, and CodeQL runs, including the `v0.1.9` evidence refresh and 2026-06-29 dependency maintenance checks.
-- Supply-chain evidence: OpenSSF Scorecard workflow is active; first successful manual run scored `5.5` and is documented in [`docs/openssf-scorecard-2026-06-29.md`](docs/openssf-scorecard-2026-06-29.md).
+- Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `6.8` after security policy and workflow pinning improvements, documented in [`docs/openssf-scorecard-2026-06-29.md`](docs/openssf-scorecard-2026-06-29.md).
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
 - Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
