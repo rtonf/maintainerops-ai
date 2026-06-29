@@ -33,7 +33,7 @@
 
 1. Enable branch protection for `main` after confirming the desired required checks.
 2. Decide whether to pin GitHub Actions to commit SHAs or keep semver tags with Dependabot updates for this early project stage.
-3. Expand `SECURITY.md` with clearer vulnerability disclosure, response timeline, and contact guidance.
+3. Re-run Scorecard after the expanded `SECURITY.md` lands.
 4. Evaluate npm Trusted Publishing/provenance before the next npm release.
 5. Revisit fuzzing only if parser/model-boundary logic grows enough to justify it.
 
