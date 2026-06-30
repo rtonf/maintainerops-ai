@@ -138,3 +138,4 @@
 - Refreshed Issue #6 with current external tester instructions and supply-chain hardening status.
 - Documented the first model-backed eval milestone and recorded that live evals require an authorized OpenAI API key.
 - Opened Issue #52 as the public tracker for manual model-backed eval implementation.
+- Re-ran the complete local verification gate after the 2026-06-30 maintenance updates.

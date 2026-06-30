@@ -17,6 +17,7 @@ Today's maintenance focuses on continuing post-application hardening after Score
 - Checked model-backed eval readiness; `OPENAI_API_KEY` and `OPENAI_MODEL` are not set in the local environment.
 - Added `docs/model-backed-eval-plan.md` and updated `EVALS.md` with a manual-first model-backed eval plan.
 - Opened Issue #52 to track manual model-backed eval implementation.
+- Re-ran the complete local verification gate after the 2026-06-30 maintenance updates.
 
 ## Verification
 
@@ -25,6 +26,7 @@ Today's maintenance focuses on continuing post-application hardening after Score
 - Issue #6 refresh: `https://github.com/rtonf/maintainerops-ai/issues/6#issuecomment-4834421198`.
 - Model-backed evals were not executed because no OpenAI API key is present in the local environment.
 - Issue #52: `https://github.com/rtonf/maintainerops-ai/issues/52`.
+- `npm run verify` passed on current `main`: TypeScript, ESLint, Prettier, 26 unit tests, 1 Playwright UI smoke test, 7 deterministic eval cases, package dry run, publint, and `npm audit --audit-level=moderate` with 0 vulnerabilities.
 
 ## Next
 
