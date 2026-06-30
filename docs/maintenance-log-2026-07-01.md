@@ -14,6 +14,7 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Added `npm run eval:model` as a manual-only live API eval command.
 - Verified the command fails clearly without `OPENAI_API_KEY` instead of silently falling back to offline heuristics.
 - Recorded an API-free security diff review for the label normalization and manual eval command changes.
+- Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.
 
 ## Verification
 
@@ -26,6 +27,7 @@ Today's maintenance focused on validating the first small live model-backed eval
 - `npm run eval` passed 7 deterministic offline cases.
 - `npm run eval:model` without `OPENAI_API_KEY` failed with the expected explicit credential error.
 - Security diff review found no new reportable issue in the label normalization change.
+- Model configuration was updated without making another live API call.
 
 ## Next
 

@@ -12563,7 +12563,7 @@ async function assessWorkItem(item, options) {
 }
 
 ;// CONCATENATED MODULE: ./src/defaults.ts
-const DEFAULT_OPENAI_MODEL = "gpt-5.4-mini";
+const DEFAULT_OPENAI_MODEL = "gpt-4o-mini";
 
 ;// CONCATENATED MODULE: ./src/format.ts
 

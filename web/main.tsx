@@ -237,9 +237,8 @@ function App() {
           <div className="topbar-controls">
             <label className="select-label">
               <span>Model mode</span>
-              <select defaultValue="gpt-5.5">
-                <option value="gpt-5.5">OpenAI GPT-5.5</option>
-                <option value="gpt-5.4-mini">GPT-5.4 mini</option>
+              <select defaultValue="gpt-4o-mini">
+                <option value="gpt-4o-mini">GPT-4o mini</option>
                 <option value="offline">Offline heuristic</option>
               </select>
             </label>
