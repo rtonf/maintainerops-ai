@@ -15,6 +15,7 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Verified the command fails clearly without `OPENAI_API_KEY` instead of silently falling back to offline heuristics.
 - Recorded an API-free security diff review for the label normalization and manual eval command changes.
 - Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.
+- Re-ran the OpenSSF Scorecard workflow manually after the model eval maintenance PRs.
 
 ## Verification
 
@@ -28,6 +29,7 @@ Today's maintenance focused on validating the first small live model-backed eval
 - `npm run eval:model` without `OPENAI_API_KEY` failed with the expected explicit credential error.
 - Security diff review found no new reportable issue in the label normalization change.
 - Model configuration was updated without making another live API call.
+- OpenSSF Scorecard workflow run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28457339237`.
 
 ## Next
 

@@ -103,6 +103,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-01 | Implemented model-backed label normalization and added `npm run eval:model` as a manual-only command without making additional API calls.            | `src/labels.ts`, `src/eval/run-model-eval.ts`; `npm test`, `npm run eval`, expected no-key failure for `npm run eval:model`                                                                                         |
 | 2026-07-01 | Recorded an API-free security diff review for the model-backed label normalization change.                                                           | `docs/codex-security/model-eval-label-normalization-diff-scan-2026-07-01.md`                                                                                                                                        |
 | 2026-07-01 | Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.                   | `src/defaults.ts`, `web/main.tsx`, `docs/openai-alignment.md`, `docs/model-support.md`                                                                                                                              |
+| 2026-07-01 | Re-ran OpenSSF Scorecard manually after the model eval maintenance PRs.                                                                              | Successful workflow run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28457339237`                                                                                                                       |
 
 ## Current metrics
 
@@ -119,7 +120,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Source version: `v0.1.9` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot production and development update batches were reviewed, verified, and merged on 2026-06-29
-- OpenSSF Scorecard status: latest successful manual run completed on 2026-06-29 with score `6.8`
+- OpenSSF Scorecard status: latest successful manual run completed on 2026-07-01; last recorded score is `6.8` from 2026-06-29
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
 - npm Trusted Publishing status: planned; npm package settings must be configured before adding an active publish workflow
