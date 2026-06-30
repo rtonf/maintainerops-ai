@@ -148,3 +148,4 @@
 - Implemented model-backed label normalization and added a manual-only `npm run eval:model` command without making additional API calls.
 - Recorded an API-free security diff review for the model-backed label normalization change.
 - Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.
+- Re-ran OpenSSF Scorecard manually after the model eval maintenance PRs and recorded the successful workflow run.
