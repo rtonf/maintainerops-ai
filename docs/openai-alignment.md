@@ -31,8 +31,8 @@ The tool is not a general-purpose scanner. It is a maintainer cockpit for reposi
 
 MaintainerOps AI uses the OpenAI API for structured review and triage output:
 
-- `gpt-5.4-mini` for routine issue and PR triage.
-- `gpt-5.5` for security-sensitive pull requests and release risk assessment.
+- `gpt-4o-mini` as the current verified default for routine issue and PR triage.
+- Operator-selected models through `OPENAI_MODEL` or `--model` when a maintainer has verified availability in their OpenAI organization.
 - JSON Schema structured output for predictable downstream behavior.
 - Offline heuristics for local demos, CI smoke tests, and cost control.
 

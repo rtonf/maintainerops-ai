@@ -4,6 +4,8 @@ MaintainerOps AI accepts a model through the `--model` flag or `OPENAI_MODEL` en
 
 If neither is provided, the CLI uses the built-in default from `src/defaults.ts`.
 
+The current verified default is `gpt-4o-mini`, based on the 2026-07-01 manual model-backed eval run.
+
 ```bash
 set OPENAI_MODEL=<supported-openai-model>
 node dist/cli.js analyze --fixture examples/fixtures/pull_request.json --format markdown
