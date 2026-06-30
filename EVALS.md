@@ -39,7 +39,15 @@ The latest local run is expected to pass 7 deterministic offline cases, includin
 npm run eval
 ```
 
-Planned model-backed evals:
+Manual model-backed evals:
+
+```bash
+npm run eval:model
+```
+
+`npm run eval:model` requires `OPENAI_API_KEY` and is intentionally separate from CI so it cannot spend API credits during routine checks.
+
+Model-backed eval goals:
 
 - Compare model output against maintainer-labeled historical issues.
 - Track false positives for security-sensitive PRs.
@@ -53,6 +61,7 @@ The first model-backed eval milestone is documented in `docs/model-backed-eval-p
 
 Current status:
 
-- Not yet run.
-- Local environment check on 2026-06-30 found `OPENAI_API_KEY` and `OPENAI_MODEL` unset.
-- The first implementation should be manual-only and separate from deterministic `npm run eval`.
+- First 2-case manual run completed on 2026-07-01 with `gpt-4o-mini`.
+- The first run passed schema validation but exposed label vocabulary drift.
+- Label normalization is implemented for model-backed output.
+- Model-backed evals remain manual-only and separate from deterministic `npm run eval`.
