@@ -88,6 +88,7 @@ npm run eval:model
 ```
 
 `npm run eval:model` is intentionally not part of CI because it performs live API calls and may incur usage charges.
+For bounded manual runs, pass `--budget-usd`, `--max-cases`, and `--max-output-tokens`.
 
 ## What the AI returns
 

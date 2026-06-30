@@ -104,12 +104,13 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-01 | Recorded an API-free security diff review for the model-backed label normalization change.                                                           | `docs/codex-security/model-eval-label-normalization-diff-scan-2026-07-01.md`                                                                                                                                        |
 | 2026-07-01 | Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.                   | `src/defaults.ts`, `web/main.tsx`, `docs/openai-alignment.md`, `docs/model-support.md`                                                                                                                              |
 | 2026-07-01 | Re-ran OpenSSF Scorecard manually after the model eval maintenance PRs.                                                                              | Successful workflow run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28457339237`                                                                                                                       |
+| 2026-07-01 | Added budget controls to `npm run eval:model` and re-ran the 2-case live eval within the approved `$0.50` ceiling.                                   | `npm run eval:model -- --budget-usd 0.5 --max-cases 2 --max-output-tokens 1200`; passed 2 cases; successful-run estimate `$0.000320`                                                                                |
 
 ## Current metrics
 
 - Public triage fixtures: 1
 - Offline eval cases: 7
-- Unit tests: 29
+- Unit tests: 32
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 10
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
@@ -124,7 +125,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
 - npm Trusted Publishing status: planned; npm package settings must be configured before adding an active publish workflow
-- Model-backed eval status: first 2-case manual run completed; label normalization implemented; manual re-run requires explicit API-spend approval
+- Model-backed eval status: first 2-case manual run passed after label normalization; live evals remain manual-only and budget-gated
 
 ## Seven-day evidence plan
 

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { normalizeAssessmentLabels, normalizeLabel } from "./labels.js";
+import { normalizeAssessmentForWorkItem, normalizeAssessmentLabels, normalizeLabel } from "./labels.js";
 import type { MaintainerAssessment } from "./types.js";
 
 const assessment: MaintainerAssessment = {
@@ -38,5 +38,59 @@ describe("normalizeAssessmentLabels", () => {
       }).labels,
       ["security-review", "tests-needed"]
     );
+  });
+});
+
+describe("normalizeAssessmentForWorkItem", () => {
+  it("adds canonical missing-test labels for pull requests without test files", () => {
+    const result = normalizeAssessmentForWorkItem(
+      {
+        kind: "pull_request",
+        repository: "owner/repo",
+        title: "Fix token permission bypass",
+        files: [{ path: "src/auth/session.ts", status: "modified" }]
+      },
+      { ...assessment, labels: ["security", "authorization"] }
+    );
+
+    assert.equal(result.labels.includes("maintainer-review"), true);
+    assert.equal(result.labels.includes("security-review"), true);
+    assert.equal(result.labels.includes("tests-needed"), true);
+  });
+
+  it("suppresses security and release labels for low-risk external feedback requests", () => {
+    const result = normalizeAssessmentForWorkItem(
+      {
+        kind: "issue",
+        repository: "owner/repo",
+        title: "External maintainer feedback wanted",
+        body: "Please try the Marketplace Action and comment on the security review packet."
+      },
+      { ...assessment, labels: ["feedback", "security-review", "release-notes"], riskLevel: "low" }
+    );
+
+    assert.equal(result.labels.includes("needs-triage"), true);
+    assert.equal(result.labels.includes("security-review"), false);
+    assert.equal(result.labels.includes("release-notes"), false);
+  });
+
+  it("caps non-security feedback requests at low risk", () => {
+    const result = normalizeAssessmentForWorkItem(
+      {
+        kind: "issue",
+        repository: "owner/repo",
+        title: "External maintainer feedback wanted",
+        body: "Please try the Marketplace Action and comment on the security review packet."
+      },
+      {
+        ...assessment,
+        labels: ["needs-triage", "security-review"],
+        riskLevel: "medium",
+        recommendedAction: "needs_more_info"
+      }
+    );
+
+    assert.equal(result.riskLevel, "low");
+    assert.equal(result.labels.includes("security-review"), false);
   });
 });

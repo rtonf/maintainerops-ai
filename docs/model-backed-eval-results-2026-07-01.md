@@ -35,4 +35,21 @@ This was the first small live OpenAI model-backed eval pass for MaintainerOps AI
 - Added canonical label normalization for OpenAI model-backed output.
 - Added `npm run eval:model` as a manual-only command.
 - Confirmed the command fails clearly without `OPENAI_API_KEY`, avoiding silent fallback or accidental offline success.
-- Did not re-run the live API eval in this follow-up pass to avoid additional API spend.
+- Added `--budget-usd`, `--max-cases`, and `--max-output-tokens` controls to the manual model-backed eval command.
+- Re-ran the same 2-case live eval after explicit approval to spend up to `$0.50`.
+
+## Follow-Up Result
+
+Command:
+
+```bash
+npm run eval:model -- --budget-usd 0.5 --max-cases 2 --max-output-tokens 1200
+```
+
+Result:
+
+- Passed 2 cases.
+- Estimated successful-run cost: `$0.000320`.
+- Approximate cumulative cost for the failed and passing retry attempts in this maintenance pass: `$0.000968`, well below the approved `$0.50` ceiling.
+- The security-sensitive PR received `security-review` and `tests-needed`.
+- The external feedback issue stayed `low` risk, received `needs-triage`, and did not receive forbidden `security-review` or `release-notes` labels.
