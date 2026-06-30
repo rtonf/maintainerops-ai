@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { assessmentJsonSchema, assertAssessment } from "./schema.js";
 import { buildAssessmentPrompt } from "./prompt.js";
+import { normalizeAssessmentLabels } from "./labels.js";
 import type { MaintainerAssessment, MaintainerWorkItem } from "./types.js";
 
 export async function analyzeWithOpenAI(item: MaintainerWorkItem, model: string): Promise<MaintainerAssessment> {
@@ -33,5 +34,5 @@ export async function analyzeWithOpenAI(item: MaintainerWorkItem, model: string)
     throw new Error("OpenAI response did not include output_text.");
   }
 
-  return assertAssessment(JSON.parse(output));
+  return normalizeAssessmentLabels(assertAssessment(JSON.parse(output)));
 }

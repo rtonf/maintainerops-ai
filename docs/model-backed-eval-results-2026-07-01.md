@@ -26,6 +26,13 @@ This was the first small live OpenAI model-backed eval pass for MaintainerOps AI
 
 ## Follow-Up
 
-1. Add a canonical label mapping layer for model-backed output.
+1. Add a canonical label mapping layer for model-backed output. Completed in the follow-up implementation.
 2. Update model prompts to prefer existing project labels such as `needs-triage`, `security-review`, and `tests-needed`.
-3. Keep model-backed evals manual-only until label normalization is implemented and re-tested.
+3. Keep model-backed evals manual-only until the normalized output is re-tested with a live API run.
+
+## Follow-Up Implementation
+
+- Added canonical label normalization for OpenAI model-backed output.
+- Added `npm run eval:model` as a manual-only command.
+- Confirmed the command fails clearly without `OPENAI_API_KEY`, avoiding silent fallback or accidental offline success.
+- Did not re-run the live API eval in this follow-up pass to avoid additional API spend.

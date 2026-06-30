@@ -145,3 +145,5 @@
 - Ran the first 2-case manual model-backed eval with `gpt-4o-mini`.
 - Confirmed the live OpenAI Responses API path returns schema-valid maintainer packets.
 - Identified label vocabulary normalization as the next blocker before model-backed evals can become reliable.
+- Implemented model-backed label normalization and added a manual-only `npm run eval:model` command without making additional API calls.
+- Recorded an API-free security diff review for the model-backed label normalization change.
