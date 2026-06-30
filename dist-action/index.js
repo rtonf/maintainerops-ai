@@ -12489,6 +12489,30 @@ function normalizeAssessmentLabels(assessment) {
         labels: [...new Set(labels)]
     };
 }
+function normalizeAssessmentForWorkItem(item, assessment) {
+    const normalized = normalizeAssessmentLabels(assessment);
+    const labels = new Set(normalized.labels);
+    labels.add(item.kind === "issue" ? "needs-triage" : "maintainer-review");
+    if (item.kind === "pull_request" && !hasTestLikeFile(item)) {
+        labels.add("tests-needed");
+    }
+    if (item.kind === "issue" && isFeedbackRequest(item) && normalized.riskLevel === "low") {
+        labels.delete("security-review");
+        labels.delete("release-notes");
+    }
+    const riskLevel = item.kind === "issue" && isFeedbackRequest(item) && normalized.recommendedAction !== "needs_security_review"
+        ? "low"
+        : normalized.riskLevel;
+    if (riskLevel === "low" && item.kind === "issue" && isFeedbackRequest(item)) {
+        labels.delete("security-review");
+        labels.delete("release-notes");
+    }
+    return {
+        ...normalized,
+        riskLevel,
+        labels: [...labels]
+    };
+}
 function normalizeLabel(label) {
     const normalized = label.trim().toLowerCase().replace(/\s+/g, " ");
     if (!normalized)
@@ -12502,16 +12526,33 @@ function normalizeLabel(label) {
         return [underscoreAlias];
     return [normalized.replace(/\s+/g, "-").replace(/_+/g, "-")];
 }
+function hasTestLikeFile(item) {
+    return (item.files ?? []).some((file) => {
+        const path = file.path.toLowerCase();
+        return path.includes("test") || path.includes("spec") || path.includes("__tests__");
+    });
+}
+function isFeedbackRequest(item) {
+    const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
+    return (/\bfeedback (?:wanted|request(?:ed)?|welcome)\b/.test(text) ||
+        /\bexternal (?:maintainer|tester)s?\b/.test(text) ||
+        /\bplease (?:try|test) (?:this|the) (?:npm package|github action|cli|marketplace action)\b/.test(text));
+}
 
 ;// CONCATENATED MODULE: ./src/openaiAssessment.ts
 
 
 
 
-async function analyzeWithOpenAI(item, model) {
+async function analyzeWithOpenAI(item, model, options = {}) {
+    const result = await analyzeWithOpenAIResult(item, model, options);
+    return result.assessment;
+}
+async function analyzeWithOpenAIResult(item, model, options = {}) {
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const response = await client.responses.create({
         model,
+        max_output_tokens: options.maxOutputTokens,
         input: [
             {
                 role: "system",
@@ -12535,7 +12576,14 @@ async function analyzeWithOpenAI(item, model) {
     if (!output) {
         throw new Error("OpenAI response did not include output_text.");
     }
-    return normalizeAssessmentLabels(assertAssessment(JSON.parse(output)));
+    return {
+        assessment: normalizeAssessmentForWorkItem(item, assertAssessment(JSON.parse(output))),
+        usage: {
+            inputTokens: response.usage?.input_tokens,
+            outputTokens: response.usage?.output_tokens,
+            totalTokens: response.usage?.total_tokens
+        }
+    };
 }
 
 ;// CONCATENATED MODULE: ./src/analyze.ts

@@ -10,6 +10,8 @@ This document defines the first model-backed eval milestone for MaintainerOps AI
 - A first 2-case manual model-backed eval was run on 2026-07-01 with `gpt-4o-mini`; both cases passed schema validation, but strict label expectations failed because model labels were not normalized to the project's canonical label vocabulary.
 - Label normalization for model-backed output is now implemented.
 - `npm run eval:model` is available as a manual-only command and fails clearly when `OPENAI_API_KEY` is not set.
+- `npm run eval:model` supports `--budget-usd`, `--max-cases`, and `--max-output-tokens` controls.
+- A 2-case live re-run passed on 2026-07-01 within the approved `$0.50` ceiling.
 
 ## Why This Matters
 
@@ -56,4 +58,4 @@ If `OPENAI_API_KEY` is missing, the script should fail clearly without falling b
 
 ## Current Next Step
 
-Re-run the 2-case manual model-backed eval only when spending API credits is explicitly approved, then expand the case set if normalized labels pass.
+Expand the manual case set only after each live eval run has an explicit budget and maintainer approval.

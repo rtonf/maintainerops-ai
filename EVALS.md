@@ -46,6 +46,7 @@ npm run eval:model
 ```
 
 `npm run eval:model` requires `OPENAI_API_KEY` and is intentionally separate from CI so it cannot spend API credits during routine checks.
+Use `--budget-usd`, `--max-cases`, and `--max-output-tokens` to keep manual runs bounded.
 
 Model-backed eval goals:
 
@@ -64,4 +65,5 @@ Current status:
 - First 2-case manual run completed on 2026-07-01 with `gpt-4o-mini`.
 - The first run passed schema validation but exposed label vocabulary drift.
 - Label normalization is implemented for model-backed output.
+- A follow-up 2-case live eval passed after label normalization with an estimated successful-run cost of `$0.000320`.
 - Model-backed evals remain manual-only and separate from deterministic `npm run eval`.

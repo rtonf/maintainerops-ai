@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { analyzeWithOpenAI } from "../openaiAssessment.js";
+import { analyzeWithOpenAIResult } from "../openaiAssessment.js";
 import { DEFAULT_OPENAI_MODEL } from "../defaults.js";
 import type { MaintainerWorkItem, RiskLevel } from "../types.js";
 
@@ -15,6 +15,10 @@ const defaultCaseNames = [
   "security-sensitive pull request without tests",
   "external feedback issue mentions security evidence"
 ];
+const gpt4oMiniPricing = {
+  inputPerMillion: 0.15,
+  outputPerMillion: 0.6
+};
 const riskOrder: RiskLevel[] = ["low", "medium", "high", "critical"];
 
 async function main(): Promise<void> {
@@ -24,12 +28,20 @@ async function main(): Promise<void> {
 
   const raw = await readFile("examples/evals/golden.json", "utf8");
   const cases = JSON.parse(raw) as ModelEvalCase[];
-  const selected = cases.filter((evalCase) => defaultCaseNames.includes(evalCase.name));
+  const args = parseArgs(process.argv.slice(2));
+  const selected = cases.filter((evalCase) => defaultCaseNames.includes(evalCase.name)).slice(0, args.maxCases);
   const model = process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL;
   const failures: string[] = [];
+  let estimatedCostUsd = 0;
 
   for (const evalCase of selected) {
-    const result = await analyzeWithOpenAI(evalCase.item, model);
+    const { assessment: result, usage } = await analyzeWithOpenAIResult(evalCase.item, model, {
+      maxOutputTokens: args.maxOutputTokens
+    });
+    const caseCostUsd = estimateCostUsd(model, usage.inputTokens, usage.outputTokens);
+    if (caseCostUsd !== undefined) {
+      estimatedCostUsd += caseCostUsd;
+    }
 
     for (const label of evalCase.expectedLabels) {
       if (!result.labels.includes(label)) {
@@ -53,9 +65,18 @@ async function main(): Promise<void> {
         model,
         riskLevel: result.riskLevel,
         recommendedAction: result.recommendedAction,
-        labels: result.labels
+        labels: result.labels,
+        usage,
+        estimatedCostUsd: caseCostUsd
       }) + "\n"
     );
+
+    if (estimatedCostUsd > args.budgetUsd) {
+      failures.push(
+        `${evalCase.name}: estimated cost ${formatUsd(estimatedCostUsd)} exceeded budget ${formatUsd(args.budgetUsd)}`
+      );
+      break;
+    }
   }
 
   if (failures.length > 0) {
@@ -64,7 +85,82 @@ async function main(): Promise<void> {
     return;
   }
 
-  process.stdout.write(`model eval passed: ${selected.length} cases\n`);
+  process.stdout.write(`model eval passed: ${selected.length} cases; estimated cost ${formatUsd(estimatedCostUsd)}\n`);
+}
+
+interface ModelEvalArgs {
+  budgetUsd: number;
+  maxCases: number;
+  maxOutputTokens: number;
+}
+
+function parseArgs(argv: string[]): ModelEvalArgs {
+  const args: ModelEvalArgs = {
+    budgetUsd: 0.5,
+    maxCases: 2,
+    maxOutputTokens: 1200
+  };
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const token = argv[index];
+    const next = argv[index + 1];
+
+    switch (token) {
+      case "--budget-usd":
+        args.budgetUsd = parsePositiveNumber(token, next);
+        index += 1;
+        break;
+      case "--max-cases":
+        args.maxCases = parsePositiveInteger(token, next);
+        index += 1;
+        break;
+      case "--max-output-tokens":
+        args.maxOutputTokens = parsePositiveInteger(token, next);
+        index += 1;
+        break;
+      default:
+        throw new Error(`Unknown option: ${token}`);
+    }
+  }
+
+  return args;
+}
+
+function parsePositiveNumber(flag: string, value?: string): number {
+  if (!value || value.startsWith("--")) {
+    throw new Error(`${flag} requires a value.`);
+  }
+
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    throw new Error(`${flag} requires a positive number.`);
+  }
+
+  return parsed;
+}
+
+function parsePositiveInteger(flag: string, value?: string): number {
+  const parsed = parsePositiveNumber(flag, value);
+  if (!Number.isInteger(parsed)) {
+    throw new Error(`${flag} requires a positive integer.`);
+  }
+
+  return parsed;
+}
+
+function estimateCostUsd(model: string, inputTokens?: number, outputTokens?: number): number | undefined {
+  if (model !== "gpt-4o-mini" || inputTokens === undefined || outputTokens === undefined) {
+    return undefined;
+  }
+
+  return (
+    (inputTokens / 1_000_000) * gpt4oMiniPricing.inputPerMillion +
+    (outputTokens / 1_000_000) * gpt4oMiniPricing.outputPerMillion
+  );
+}
+
+function formatUsd(value: number): string {
+  return `$${value.toFixed(6)}`;
 }
 
 main().catch((error: unknown) => {

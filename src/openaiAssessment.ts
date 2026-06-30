@@ -1,13 +1,42 @@
 import OpenAI from "openai";
 import { assessmentJsonSchema, assertAssessment } from "./schema.js";
 import { buildAssessmentPrompt } from "./prompt.js";
-import { normalizeAssessmentLabels } from "./labels.js";
+import { normalizeAssessmentForWorkItem } from "./labels.js";
 import type { MaintainerAssessment, MaintainerWorkItem } from "./types.js";
 
-export async function analyzeWithOpenAI(item: MaintainerWorkItem, model: string): Promise<MaintainerAssessment> {
+export interface OpenAIAssessmentUsage {
+  inputTokens?: number;
+  outputTokens?: number;
+  totalTokens?: number;
+}
+
+export interface OpenAIAssessmentResult {
+  assessment: MaintainerAssessment;
+  usage: OpenAIAssessmentUsage;
+}
+
+export interface OpenAIAssessmentOptions {
+  maxOutputTokens?: number;
+}
+
+export async function analyzeWithOpenAI(
+  item: MaintainerWorkItem,
+  model: string,
+  options: OpenAIAssessmentOptions = {}
+): Promise<MaintainerAssessment> {
+  const result = await analyzeWithOpenAIResult(item, model, options);
+  return result.assessment;
+}
+
+export async function analyzeWithOpenAIResult(
+  item: MaintainerWorkItem,
+  model: string,
+  options: OpenAIAssessmentOptions = {}
+): Promise<OpenAIAssessmentResult> {
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const response = await client.responses.create({
     model,
+    max_output_tokens: options.maxOutputTokens,
     input: [
       {
         role: "system",
@@ -34,5 +63,12 @@ export async function analyzeWithOpenAI(item: MaintainerWorkItem, model: string)
     throw new Error("OpenAI response did not include output_text.");
   }
 
-  return normalizeAssessmentLabels(assertAssessment(JSON.parse(output)));
+  return {
+    assessment: normalizeAssessmentForWorkItem(item, assertAssessment(JSON.parse(output))),
+    usage: {
+      inputTokens: response.usage?.input_tokens,
+      outputTokens: response.usage?.output_tokens,
+      totalTokens: response.usage?.total_tokens
+    }
+  };
 }

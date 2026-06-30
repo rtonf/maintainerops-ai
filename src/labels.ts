@@ -1,4 +1,4 @@
-import type { MaintainerAssessment } from "./types.js";
+import type { MaintainerAssessment, MaintainerWorkItem } from "./types.js";
 
 const canonicalLabels = new Set([
   "needs-triage",
@@ -44,6 +44,41 @@ export function normalizeAssessmentLabels(assessment: MaintainerAssessment): Mai
   };
 }
 
+export function normalizeAssessmentForWorkItem(
+  item: MaintainerWorkItem,
+  assessment: MaintainerAssessment
+): MaintainerAssessment {
+  const normalized = normalizeAssessmentLabels(assessment);
+  const labels = new Set(normalized.labels);
+
+  labels.add(item.kind === "issue" ? "needs-triage" : "maintainer-review");
+
+  if (item.kind === "pull_request" && !hasTestLikeFile(item)) {
+    labels.add("tests-needed");
+  }
+
+  if (item.kind === "issue" && isFeedbackRequest(item) && normalized.riskLevel === "low") {
+    labels.delete("security-review");
+    labels.delete("release-notes");
+  }
+
+  const riskLevel =
+    item.kind === "issue" && isFeedbackRequest(item) && normalized.recommendedAction !== "needs_security_review"
+      ? "low"
+      : normalized.riskLevel;
+
+  if (riskLevel === "low" && item.kind === "issue" && isFeedbackRequest(item)) {
+    labels.delete("security-review");
+    labels.delete("release-notes");
+  }
+
+  return {
+    ...normalized,
+    riskLevel,
+    labels: [...labels]
+  };
+}
+
 export function normalizeLabel(label: string): string[] {
   const normalized = label.trim().toLowerCase().replace(/\s+/g, " ");
   if (!normalized) return [];
@@ -56,4 +91,20 @@ export function normalizeLabel(label: string): string[] {
   if (underscoreAlias) return [underscoreAlias];
 
   return [normalized.replace(/\s+/g, "-").replace(/_+/g, "-")];
+}
+
+function hasTestLikeFile(item: MaintainerWorkItem): boolean {
+  return (item.files ?? []).some((file) => {
+    const path = file.path.toLowerCase();
+    return path.includes("test") || path.includes("spec") || path.includes("__tests__");
+  });
+}
+
+function isFeedbackRequest(item: MaintainerWorkItem): boolean {
+  const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
+  return (
+    /\bfeedback (?:wanted|request(?:ed)?|welcome)\b/.test(text) ||
+    /\bexternal (?:maintainer|tester)s?\b/.test(text) ||
+    /\bplease (?:try|test) (?:this|the) (?:npm package|github action|cli|marketplace action)\b/.test(text)
+  );
 }
