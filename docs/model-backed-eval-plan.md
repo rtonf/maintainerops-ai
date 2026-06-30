@@ -7,6 +7,7 @@ This document defines the first model-backed eval milestone for MaintainerOps AI
 - Deterministic offline evals are active and run with `npm run eval`.
 - Model-backed evals are not yet executed in CI.
 - Local environment check on 2026-06-30 found `OPENAI_API_KEY` and `OPENAI_MODEL` unset, so live model evals were not run.
+- A first 2-case manual model-backed eval was run on 2026-07-01 with `gpt-4o-mini`; both cases passed schema validation, but strict label expectations failed because model labels were not normalized to the project's canonical label vocabulary.
 
 ## Why This Matters
 
@@ -53,4 +54,4 @@ If `OPENAI_API_KEY` is missing, the script should fail clearly without falling b
 
 ## Current Next Step
 
-Open a public tracking issue and implement the script after an authorized OpenAI API key is available in the local environment or a safe manual GitHub Actions workflow.
+Implement label normalization and then re-run the 2-case manual model-backed eval before expanding the case set or enabling any CI gate.

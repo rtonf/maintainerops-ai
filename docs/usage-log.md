@@ -99,6 +99,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-06-30 | Checked model-backed eval readiness and documented the first manual milestone; live evals were not run because no OpenAI API key is present.         | `docs/model-backed-eval-plan.md`, `EVALS.md`, `docs/maintenance-log-2026-06-30.md`                                                                                                                                  |
 | 2026-06-30 | Opened a public tracking issue for manual model-backed eval implementation.                                                                          | Issue #52, `https://github.com/rtonf/maintainerops-ai/issues/52`                                                                                                                                                    |
 | 2026-06-30 | Re-ran the complete local verification gate after the 2026-06-30 maintenance updates.                                                                | `npm run verify`; 26 unit tests, 1 Playwright UI smoke test, 7 deterministic eval cases, package dry run, publint, and 0 npm audit vulnerabilities                                                                  |
+| 2026-07-01 | Ran the first 2-case manual model-backed eval with `gpt-4o-mini`; schema validation passed, but strict label matching exposed a normalization gap.   | `docs/model-backed-eval-results-2026-07-01.md`, `docs/maintenance-log-2026-07-01.md`                                                                                                                                |
 
 ## Current metrics
 
@@ -119,7 +120,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
 - npm Trusted Publishing status: planned; npm package settings must be configured before adding an active publish workflow
-- Model-backed eval status: planned; requires authorized `OPENAI_API_KEY`
+- Model-backed eval status: first 2-case manual run completed; label normalization needed before CI
 
 ## Seven-day evidence plan
 

@@ -139,3 +139,9 @@
 - Documented the first model-backed eval milestone and recorded that live evals require an authorized OpenAI API key.
 - Opened Issue #52 as the public tracker for manual model-backed eval implementation.
 - Re-ran the complete local verification gate after the 2026-06-30 maintenance updates.
+
+## 2026-07-01
+
+- Ran the first 2-case manual model-backed eval with `gpt-4o-mini`.
+- Confirmed the live OpenAI Responses API path returns schema-valid maintainer packets.
+- Identified label vocabulary normalization as the next blocker before model-backed evals can become reliable.
