@@ -79,4 +79,6 @@ npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 - Status: repository workflow prepared for review.
 - npm package-owner setup: reported complete by the maintainer on 2026-07-01.
 - Active workflow candidate: `.github/workflows/npm-publish.yml`.
-- Next step: merge the workflow, publish the `v0.1.10` GitHub Release, confirm the trusted npm publish job succeeds, then refresh npm install evidence.
+- First release-triggered run: failed before checkout because the `actions/setup-node` pin pointed at a non-existent v7 SHA.
+- Current fix: workflow updated to the verified `actions/setup-node` v6 tag SHA.
+- Next step: re-run the workflow manually with `tag=v0.1.10`, confirm the trusted npm publish job succeeds, then refresh npm install evidence.
