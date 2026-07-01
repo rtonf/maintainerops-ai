@@ -155,3 +155,5 @@
 - Bumped the source package to `0.1.10` and added release-candidate notes for the next GitHub/npm/Marketplace publication.
 - Expanded the manual model-backed eval pass to 5 selected cases and passed it with an estimated cost of `$0.000803`, below the approved `$0.50` ceiling.
 - Reconfirmed public evidence before publication: npm latest `0.1.9`, Marketplace latest `v0.1.9`, and 343 npm downloads for 2026-06-22 through 2026-06-28.
+- Published `v0.1.11` through npm Trusted Publishing with provenance after fixing the publish workflow pin, Playwright browser setup, and package repository metadata.
+- Verified `maintainerops-ai@0.1.11` as npm `latest` and confirmed public CLI execution from the registry.

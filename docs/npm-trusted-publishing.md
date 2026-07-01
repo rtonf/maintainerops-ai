@@ -85,4 +85,6 @@ npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 - Current fix: workflow installs Playwright Chromium before the verification gate.
 - Third manual run: reached provenance signing but npm rejected the package because `package.json` was missing `repository.url`.
 - Current fix: prepare `v0.1.11` with `repository.url` set to `https://github.com/rtonf/maintainerops-ai`.
-- Next step: publish `v0.1.11`, confirm the trusted npm publish job succeeds, then refresh npm install evidence.
+- Successful release: `v0.1.11` published `maintainerops-ai@0.1.11` through npm Trusted Publishing on 2026-07-01.
+- Evidence: `https://github.com/rtonf/maintainerops-ai/actions/runs/28500922757`.
+- Next step: keep Trusted Publishing as the default npm release path and refresh Marketplace after each GitHub Action release.
