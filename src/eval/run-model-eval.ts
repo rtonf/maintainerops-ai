@@ -13,6 +13,9 @@ interface ModelEvalCase {
 
 const defaultCaseNames = [
   "security-sensitive pull request without tests",
+  "ordinary issue",
+  "prompt-injection-safe issue triage",
+  "release readiness issue",
   "external feedback issue mentions security evidence"
 ];
 const gpt4oMiniPricing = {

@@ -34,7 +34,7 @@ Sources:
 
 ## Proposed Workflow Shape
 
-Do not add an active publishing workflow until the npm package settings are configured.
+The package owner reported that the npm package Trusted Publisher setting has been saved for `rtonf/maintainerops-ai` with workflow filename `npm-publish.yml`. The repository can now add the active workflow without storing an `NPM_TOKEN`.
 
 When ready, the workflow should:
 
@@ -76,6 +76,7 @@ npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 
 ## Current Status
 
-- Status: planned, not enabled.
-- Reason: npm package settings must be configured by the package owner before an active workflow is added.
-- Next step: create a public tracking issue and complete the npm package settings step.
+- Status: repository workflow prepared for review.
+- npm package-owner setup: reported complete by the maintainer on 2026-07-01.
+- Active workflow candidate: `.github/workflows/npm-publish.yml`.
+- Next step: merge the workflow, publish the `v0.1.10` GitHub Release, confirm the trusted npm publish job succeeds, then refresh npm install evidence.
