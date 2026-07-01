@@ -1,0 +1,43 @@
+name: Publish npm package
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish, for example v0.1.10"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish with npm Trusted Publishing
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: startsWith(github.event.release.tag_name || inputs.tag, 'v')
+    steps:
+      - name: Checkout release ref
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@fe1a5d2d86f1c2bd426a4c40374c0c99f3278cf1 # v7.0.0
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify package
+        run: npm run verify
+
+      - name: Publish package
+        run: npm publish --access public

@@ -107,12 +107,16 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-01 | Added budget controls to `npm run eval:model` and re-ran the 2-case live eval within the approved `$0.50` ceiling.                                   | `npm run eval:model -- --budget-usd 0.5 --max-cases 2 --max-output-tokens 1200`; passed 2 cases; successful-run estimate `$0.000320`                                                                                |
 | 2026-07-01 | Closed the first model-backed eval milestone and opened a follow-up issue for expanded cases.                                                        | Closed Issue #52; opened Issue #60, `https://github.com/rtonf/maintainerops-ai/issues/60`                                                                                                                           |
 | 2026-07-01 | Added the `v0.1.10` release plan for the merged model-backed eval hardening work.                                                                    | `docs/release-plan-v0.1.10.md`                                                                                                                                                                                      |
+| 2026-07-01 | Prepared npm Trusted Publishing workflow and bumped the source package to `0.1.10` after package-owner setup was reported complete.                  | `.github/workflows/npm-publish.yml`, `package.json`, `docs/npm-trusted-publishing.md`, Issue #48                                                                                                                    |
+| 2026-07-01 | Expanded the manual model-backed eval release-candidate pass to 5 cases within the approved `$0.50` ceiling.                                         | `npm run eval:model -- --budget-usd 0.5 --max-cases 5 --max-output-tokens 1200`; passed 5 cases; estimated cost `$0.000803`                                                                                         |
+| 2026-07-01 | Reconfirmed public publication evidence before `v0.1.10`: npm latest `0.1.9`, Marketplace latest `v0.1.9`, and 343 npm downloads for the last week.  | npm registry latest, npm downloads API for 2026-06-22 through 2026-06-28, `https://github.com/marketplace/actions/maintainerops-ai`                                                                                 |
+| 2026-07-01 | Re-ran the complete local verification gate for the `v0.1.10` release candidate.                                                                     | `npm run verify`; 35 unit tests, 1 Playwright UI smoke test, 7 deterministic eval cases, package dry run, publint, and 0 npm audit vulnerabilities                                                                  |
 
 ## Current metrics
 
 - Public triage fixtures: 1
 - Offline eval cases: 7
-- Unit tests: 32
+- Unit tests: 35
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 10
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
@@ -126,8 +130,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - OpenSSF Scorecard status: latest successful manual run completed on 2026-07-01; last recorded score is `6.8` from 2026-06-29
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
-- npm Trusted Publishing status: planned; npm package settings must be configured before adding an active publish workflow
-- Model-backed eval status: first 2-case manual run passed after label normalization; Issue #52 closed, Issue #60 tracks expanded cases; live evals remain manual-only and budget-gated
+- npm Trusted Publishing status: package-owner setup reported complete; `.github/workflows/npm-publish.yml` is prepared for `v0.1.10`
+- Model-backed eval status: first 5-case release-candidate run passed after label normalization; Issue #52 closed, Issue #60 tracks continuing expansion; live evals remain manual-only and budget-gated
 
 ## Seven-day evidence plan
 

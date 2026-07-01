@@ -151,3 +151,7 @@
 - Re-ran OpenSSF Scorecard manually after the model eval maintenance PRs and recorded the successful workflow run.
 - Added budget controls to `npm run eval:model` and passed the 2-case live eval within the approved `$0.50` ceiling.
 - Closed Issue #52, opened Issue #60 for expanded model-backed eval cases, and added the `v0.1.10` release plan.
+- Prepared npm Trusted Publishing workflow after the package-owner setup was reported complete, without adding any `NPM_TOKEN`.
+- Bumped the source package to `0.1.10` and added release-candidate notes for the next GitHub/npm/Marketplace publication.
+- Expanded the manual model-backed eval pass to 5 selected cases and passed it with an estimated cost of `$0.000803`, below the approved `$0.50` ceiling.
+- Reconfirmed public evidence before publication: npm latest `0.1.9`, Marketplace latest `v0.1.9`, and 343 npm downloads for 2026-06-22 through 2026-06-28.

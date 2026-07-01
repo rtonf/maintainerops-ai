@@ -57,13 +57,21 @@ export function normalizeAssessmentForWorkItem(
     labels.add("tests-needed");
   }
 
+  if (hasReleaseReadinessSignal(item)) {
+    labels.add("release-notes");
+  }
+
+  if (hasActionableSecurityIssueSignal(item)) {
+    labels.add("security-review");
+  }
+
   if (item.kind === "issue" && isFeedbackRequest(item) && normalized.riskLevel === "low") {
     labels.delete("security-review");
     labels.delete("release-notes");
   }
 
   const riskLevel =
-    item.kind === "issue" && isFeedbackRequest(item) && normalized.recommendedAction !== "needs_security_review"
+    shouldCapIssueRisk(item, normalized) && normalized.recommendedAction !== "needs_security_review"
       ? "low"
       : normalized.riskLevel;
 
@@ -106,5 +114,36 @@ function isFeedbackRequest(item: MaintainerWorkItem): boolean {
     /\bfeedback (?:wanted|request(?:ed)?|welcome)\b/.test(text) ||
     /\bexternal (?:maintainer|tester)s?\b/.test(text) ||
     /\bplease (?:try|test) (?:this|the) (?:npm package|github action|cli|marketplace action)\b/.test(text)
+  );
+}
+
+function hasReleaseReadinessSignal(item: MaintainerWorkItem): boolean {
+  const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
+  return (
+    item.kind === "issue" &&
+    (/\brelease readiness\b/.test(text) ||
+      /\brelease notes?\b/.test(text) ||
+      /\bprepare release\b/.test(text) ||
+      /\bmaintainer checklist\b/.test(text))
+  );
+}
+
+function hasActionableSecurityIssueSignal(item: MaintainerWorkItem): boolean {
+  const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
+  return (
+    item.kind === "issue" &&
+    !isFeedbackRequest(item) &&
+    (/\bprompt[- ]injection\b/.test(text) ||
+      /\breveal secrets?\b/.test(text) ||
+      /\bexecute unauthorized actions?\b/.test(text) ||
+      /\bsecurity\b/.test(text))
+  );
+}
+
+function shouldCapIssueRisk(item: MaintainerWorkItem, assessment: MaintainerAssessment): boolean {
+  return (
+    item.kind === "issue" &&
+    (isFeedbackRequest(item) || (hasReleaseReadinessSignal(item) && !hasActionableSecurityIssueSignal(item))) &&
+    assessment.recommendedAction !== "needs_security_review"
   );
 }

@@ -66,4 +66,5 @@ Current status:
 - The first run passed schema validation but exposed label vocabulary drift.
 - Label normalization is implemented for model-backed output.
 - A follow-up 2-case live eval passed after label normalization with an estimated successful-run cost of `$0.000320`.
+- The `v0.1.10` release candidate expands the selected manual model-backed case set from 2 to 5 cases: security-sensitive PR, ordinary issue, prompt-injection issue, release readiness issue, and external feedback issue.
 - Model-backed evals remain manual-only and separate from deterministic `npm run eval`.

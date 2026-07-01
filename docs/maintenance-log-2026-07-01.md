@@ -21,6 +21,10 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Closed Issue #52 as the completed first manual model-backed eval milestone.
 - Opened Issue #60 to track expanded model-backed eval cases.
 - Added the `v0.1.10` release plan.
+- Prepared `.github/workflows/npm-publish.yml` for npm Trusted Publishing after the package-owner setup was reported complete.
+- Bumped the source package version to `0.1.10` for the next release candidate.
+- Expanded the selected manual model-backed eval set to 5 cases.
+- Recorded current public package evidence: npm latest `0.1.9`, Marketplace latest `v0.1.9`, and 343 npm downloads for 2026-06-22 through 2026-06-28.
 
 ## Verification
 
@@ -33,15 +37,19 @@ Today's maintenance focused on validating the first small live model-backed eval
 - `npm run eval` passed 7 deterministic offline cases.
 - `npm run eval:model` without `OPENAI_API_KEY` failed with the expected explicit credential error.
 - `npm run eval:model -- --budget-usd 0.5 --max-cases 2 --max-output-tokens 1200` passed 2 live cases.
+- `npm run eval:model -- --budget-usd 0.5 --max-cases 5 --max-output-tokens 1200` passed 5 live cases.
 - Successful live eval estimated cost was `$0.000320`; approximate cumulative cost for failed and passing retry attempts in this pass was `$0.000968`, below the approved `$0.50` ceiling.
+- The expanded 5-case live eval estimated cost was `$0.000803`, below the approved `$0.50` ceiling.
 - Security diff review found no new reportable issue in the label normalization change.
 - Model configuration was updated without making another live API call.
 - OpenSSF Scorecard workflow run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28457339237`.
 - Issue #52 closed as completed: `https://github.com/rtonf/maintainerops-ai/issues/52`.
 - Issue #60 opened for eval expansion: `https://github.com/rtonf/maintainerops-ai/issues/60`.
+- `npm run verify` passed for the `v0.1.10` release-candidate changes with 35 unit tests, 1 Playwright UI smoke test, 7 deterministic eval cases, package dry run, publint, and 0 npm audit vulnerabilities.
 
 ## Next
 
 - Keep model-backed evals manual-only and budget-gated.
-- Expand the case set only after explicit approval for additional API spend.
-- Prepare `v0.1.10` release artifacts when ready to publish the merged eval hardening work.
+- Publish the `v0.1.10` GitHub Release after PR checks pass.
+- Confirm the npm Trusted Publishing workflow publishes `maintainerops-ai@0.1.10`.
+- Refresh npm install evidence, README evidence, Issue #48, and Issue #6 after publication.
