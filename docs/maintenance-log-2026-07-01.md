@@ -46,10 +46,13 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Issue #52 closed as completed: `https://github.com/rtonf/maintainerops-ai/issues/52`.
 - Issue #60 opened for eval expansion: `https://github.com/rtonf/maintainerops-ai/issues/60`.
 - `npm run verify` passed for the `v0.1.10` release-candidate changes with 35 unit tests, 1 Playwright UI smoke test, 7 deterministic eval cases, package dry run, publint, and 0 npm audit vulnerabilities.
+- Published the `v0.1.10` GitHub Release.
+- The first npm Trusted Publishing run failed before checkout because the `actions/setup-node` pin pointed at a non-existent v7 SHA.
+- Corrected the publish workflow to the verified `actions/setup-node` v6 tag SHA.
 
 ## Next
 
 - Keep model-backed evals manual-only and budget-gated.
-- Publish the `v0.1.10` GitHub Release after PR checks pass.
+- Re-run the `Publish npm package` workflow manually with `tag=v0.1.10`.
 - Confirm the npm Trusted Publishing workflow publishes `maintainerops-ai@0.1.10`.
 - Refresh npm install evidence, README evidence, Issue #48, and Issue #6 after publication.
