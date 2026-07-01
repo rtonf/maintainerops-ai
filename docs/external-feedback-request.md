@@ -8,9 +8,9 @@ Public feedback discussion: https://github.com/rtonf/maintainerops-ai/discussion
 
 Current public channels:
 
-- npm latest: `maintainerops-ai@0.1.9`
-- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.9`
-- GitHub Release latest: `v0.1.9`
+- npm latest: `maintainerops-ai@0.1.11`
+- GitHub Release latest: `v0.1.11`
+- GitHub Marketplace latest: public listing still displays `rtonf/maintainerops-ai@v0.1.9` until the Marketplace channel is refreshed
 
 ## Copy/paste request
 
@@ -23,8 +23,7 @@ Feedback discussion: https://github.com/rtonf/maintainerops-ai/discussions/17
 GitHub Action: https://github.com/marketplace/actions/maintainerops-ai
 
 Quick check:
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 
 Optional packet check:
 maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
@@ -62,7 +61,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.9
+      - uses: rtonf/maintainerops-ai@v0.1.11
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
@@ -75,8 +74,7 @@ jobs:
 From npm:
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 ```
 
 Then run one offline packet against a fixture:

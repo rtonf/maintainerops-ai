@@ -56,9 +56,15 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Published GitHub Release `v0.1.11`.
 - Confirmed npm Trusted Publishing succeeded for `maintainerops-ai@0.1.11`.
 - Verified public registry execution with `npm exec --yes --package maintainerops-ai@latest -- maintainerops --help`.
+- Refreshed repository positioning around read-only review packets for overloaded OSS maintainers.
+- Added `CODE_OF_CONDUCT.md` and replaced the short license notice with the full Apache-2.0 license text.
+- Updated external feedback, Marketplace, operator runbook, roadmap, and Japanese article material for `v0.1.11`.
+- Added GitHub topics for Trusted Publishing, provenance, and supply-chain positioning.
+- Opened Issue #67 to track the remaining GitHub Marketplace refresh to `v0.1.11`.
 
 ## Next
 
 - Keep model-backed evals manual-only and budget-gated.
 - Refresh Issue #48 and Issue #6 after publication.
 - Refresh the GitHub Marketplace listing so the public Action page moves from `v0.1.9` to the latest release.
+- Collect external maintainer feedback and convert it into Issue #60 eval cases.

@@ -17,30 +17,29 @@ This runbook records the checks needed before publishing evidence for the Codex 
    git diff --exit-code -- dist-action
    ```
 
-3. Confirm npm authentication before publishing:
+3. Confirm npm Trusted Publishing configuration before publishing:
 
    ```bash
-   npm whoami
+   gh workflow view npm-publish.yml --repo rtonf/maintainerops-ai
    ```
 
-4. Publish the package from the repository root:
+4. Publish a GitHub Release to trigger npm Trusted Publishing:
 
    ```bash
-   npm publish --access public
+   gh release create vX.Y.Z --repo rtonf/maintainerops-ai --target main --title "vX.Y.Z" --notes-file docs/releases/vX.Y.Z.md
    ```
 
 5. Verify npm latest and CLI execution:
 
    ```bash
    npm view maintainerops-ai version dist-tags time --json
-   npm install -g maintainerops-ai@latest
-   maintainerops --help
+   npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
    ```
 
 6. Verify the GitHub Release:
 
    ```bash
-   gh release view v0.1.9 --repo rtonf/maintainerops-ai --json url,tagName,name,publishedAt,isDraft,isPrerelease,targetCommitish
+   gh release view vX.Y.Z --repo rtonf/maintainerops-ai --json url,tagName,name,publishedAt,isDraft,isPrerelease,targetCommitish
    ```
 
 7. Verify the GitHub Marketplace listing:
@@ -51,7 +50,7 @@ This runbook records the checks needed before publishing evidence for the Codex 
 
    The page should show:
    - Name: `MaintainerOps AI`
-   - Version: the release tag, for example `v0.1.5`
+   - Version: the latest intended Action release tag
    - Status: `Latest`
    - Publisher: `rtonf`
 
@@ -64,16 +63,21 @@ This runbook records the checks needed before publishing evidence for the Codex 
 
 ## Common Failure Recovery
 
-### npm `E401 Unauthorized`
+### npm Trusted Publishing Failure
 
-Run:
+Inspect the failed workflow first:
 
 ```bash
-npm login
-npm whoami
+gh run list --repo rtonf/maintainerops-ai --workflow npm-publish.yml --limit 5
+gh run view <run-id> --repo rtonf/maintainerops-ai --log-failed
 ```
 
-Only retry `npm publish --access public` after `npm whoami` returns the expected npm account.
+Known recovery checks:
+
+- `actions/setup-node` must point to an existing pinned tag SHA.
+- The workflow must install Playwright Chromium before `npm run verify`.
+- `package.json` must contain `repository.url` matching the GitHub provenance repository.
+- Do not add `NPM_TOKEN`; the package should publish through npm Trusted Publishing.
 
 ### Prettier Fails Only On Line Endings
 

@@ -157,3 +157,5 @@
 - Reconfirmed public evidence before publication: npm latest `0.1.9`, Marketplace latest `v0.1.9`, and 343 npm downloads for 2026-06-22 through 2026-06-28.
 - Published `v0.1.11` through npm Trusted Publishing with provenance after fixing the publish workflow pin, Playwright browser setup, and package repository metadata.
 - Verified `maintainerops-ai@0.1.11` as npm `latest` and confirmed public CLI execution from the registry.
+- Refreshed public positioning around "read-only review packets for overloaded OSS maintainers."
+- Added a Code of Conduct, replaced the short license notice with the full Apache-2.0 license text, repaired the Japanese note article draft, and updated external feedback material to `v0.1.11`.
