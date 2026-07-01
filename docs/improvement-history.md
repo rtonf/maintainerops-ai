@@ -150,3 +150,4 @@
 - Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.
 - Re-ran OpenSSF Scorecard manually after the model eval maintenance PRs and recorded the successful workflow run.
 - Added budget controls to `npm run eval:model` and passed the 2-case live eval within the approved `$0.50` ceiling.
+- Closed Issue #52, opened Issue #60 for expanded model-backed eval cases, and added the `v0.1.10` release plan.
