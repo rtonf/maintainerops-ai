@@ -83,4 +83,6 @@ npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 - Current fix: workflow updated to the verified `actions/setup-node` v6 tag SHA.
 - Second manual run: reached `npm run verify` but failed because the GitHub runner did not have Playwright Chromium installed.
 - Current fix: workflow installs Playwright Chromium before the verification gate.
-- Next step: re-run the workflow manually with `tag=v0.1.10`, confirm the trusted npm publish job succeeds, then refresh npm install evidence.
+- Third manual run: reached provenance signing but npm rejected the package because `package.json` was missing `repository.url`.
+- Current fix: prepare `v0.1.11` with `repository.url` set to `https://github.com/rtonf/maintainerops-ai`.
+- Next step: publish `v0.1.11`, confirm the trusted npm publish job succeeds, then refresh npm install evidence.

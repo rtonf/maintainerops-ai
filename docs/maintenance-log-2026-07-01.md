@@ -51,10 +51,12 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Corrected the publish workflow to the verified `actions/setup-node` v6 tag SHA.
 - The second npm Trusted Publishing run reached verification but failed because the GitHub runner did not have the Playwright Chromium browser installed.
 - Added an explicit Playwright Chromium install step before `npm run verify` in the publish workflow.
+- The third npm Trusted Publishing run reached npm provenance signing, then failed because `package.json` was missing `repository.url`.
+- Prepared `v0.1.11` as a publishing metadata repair release with `repository.url` set to `https://github.com/rtonf/maintainerops-ai`.
 
 ## Next
 
 - Keep model-backed evals manual-only and budget-gated.
-- Re-run the `Publish npm package` workflow manually with `tag=v0.1.10`.
-- Confirm the npm Trusted Publishing workflow publishes `maintainerops-ai@0.1.10`.
+- Publish `v0.1.11` as the provenance metadata repair release.
+- Confirm the npm Trusted Publishing workflow publishes `maintainerops-ai@0.1.11`.
 - Refresh npm install evidence, README evidence, Issue #48, and Issue #6 after publication.
