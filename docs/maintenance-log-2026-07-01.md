@@ -49,6 +49,8 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Published the `v0.1.10` GitHub Release.
 - The first npm Trusted Publishing run failed before checkout because the `actions/setup-node` pin pointed at a non-existent v7 SHA.
 - Corrected the publish workflow to the verified `actions/setup-node` v6 tag SHA.
+- The second npm Trusted Publishing run reached verification but failed because the GitHub runner did not have the Playwright Chromium browser installed.
+- Added an explicit Playwright Chromium install step before `npm run verify` in the publish workflow.
 
 ## Next
 
