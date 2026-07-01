@@ -114,6 +114,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-01 | Published GitHub Release `v0.1.10`, then diagnosed and fixed the first npm Trusted Publishing workflow failure.                                      | Failed run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28500139101`; fixed invalid `actions/setup-node` pin to verified v6 tag SHA                                                                     |
 | 2026-07-01 | Diagnosed the second npm Trusted Publishing workflow failure and added explicit Playwright browser installation.                                     | Failed run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28500495511`; added `npx playwright install --with-deps chromium` before `npm run verify`                                                       |
 | 2026-07-01 | Diagnosed npm provenance validation failure and prepared `v0.1.11` as a publishing metadata repair.                                                  | Failed run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28500658390`; added `package.json` `repository.url` for provenance verification                                                                 |
+| 2026-07-01 | Published `v0.1.11` through npm Trusted Publishing and verified the public CLI from the registry.                                                    | `https://github.com/rtonf/maintainerops-ai/actions/runs/28500922757`, `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.11`, `docs/npm-install-evidence.md`                                              |
 
 ## Current metrics
 
@@ -125,15 +126,15 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 5
 - GitHub releases: 9
-- npm package status: `maintainerops-ai@0.1.9` is published as `latest`; broken `0.1.8` is deprecated
-- GitHub Marketplace status: `MaintainerOps AI` public listing displays `v0.1.9` as `Latest`
-- Source version: `v0.1.9` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
+- npm package status: `maintainerops-ai@0.1.11` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
+- GitHub Marketplace status: `MaintainerOps AI` public listing still displays `v0.1.9` as `Latest`
+- Source version: `v0.1.11` is aligned across source, npm, and GitHub Releases; GitHub Marketplace still needs a latest Action release refresh
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot production and development update batches were reviewed, verified, and merged on 2026-06-29
 - OpenSSF Scorecard status: latest successful manual run completed on 2026-07-01; last recorded score is `6.8` from 2026-06-29
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
-- npm Trusted Publishing status: package-owner setup reported complete; `v0.1.11` publishing metadata repair is prepared after the `v0.1.10` provenance validation failure
+- npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.11` on 2026-07-01
 - Model-backed eval status: first 5-case release-candidate run passed after label normalization; Issue #52 closed, Issue #60 tracks continuing expansion; live evals remain manual-only and budget-gated
 
 ## Seven-day evidence plan
