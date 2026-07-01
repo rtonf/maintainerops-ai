@@ -5,6 +5,12 @@
 
 MaintainerOps AI is a GitHub-aware CLI and GitHub Action for open-source maintainers. It turns pull requests, issues, and fixture-based security or release inputs into structured review packets that a maintainer can accept, edit, or ignore.
 
+Try it in 30 seconds without an API key:
+
+```bash
+npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+```
+
 OSS ecosystems rely on a small number of maintainers making high-quality decisions under constant backlog pressure. MaintainerOps AI makes that work easier to audit and repeat: it converts noisy issues, PRs, dependency updates, and release tasks into review packets that preserve maintainer control while improving security, code quality, and response time.
 
 The project is intentionally human-in-the-loop. It does not merge pull requests, close issues, publish releases, or run security scans against repositories you do not own or administer.
@@ -17,7 +23,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - GitHub releases: `v0.1.0` through `v0.1.7`, plus `v0.1.9`, `v0.1.10`, and `v0.1.11`; `v0.1.8` was intentionally withheld from GitHub and Marketplace.
 - Source, npm, and GitHub Releases are aligned on `v0.1.11`; GitHub Marketplace still needs the latest Action release refresh.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
-- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, and CodeQL runs, including the `v0.1.9` evidence refresh and 2026-06-29 dependency maintenance checks.
+- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.11` publication evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `6.8` after security policy and workflow pinning improvements, documented in [`docs/openssf-scorecard-2026-06-29.md`](docs/openssf-scorecard-2026-06-29.md).
 - Model-backed eval evidence: first budget-gated 2-case live run passed on 2026-07-01 with `gpt-4o-mini`; `v0.1.10` expands the manual default case set to 5 selected cases while keeping API spend explicit and budget-gated.
 - Supply-chain release work: npm Trusted Publishing is active for `v0.1.11` and published without `NPM_TOKEN`.
@@ -174,6 +180,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Japanese promotion plan](docs/promotion-plan-ja.md)
 - [Japanese X post drafts](docs/x-post-ja.md)
 - [Japanese note article draft](docs/note-article-ja.md)
+- [Strategy roadmap](docs/strategy-roadmap-2026-07-01.md)
 - [Tooling roadmap](docs/tooling-roadmap.md)
 
 ## GitHub Action

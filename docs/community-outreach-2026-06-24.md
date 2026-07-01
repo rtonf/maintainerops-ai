@@ -66,6 +66,23 @@ Project: https://github.com/rtonf/maintainerops-ai
 
 Feedback: https://github.com/rtonf/maintainerops-ai/issues/6
 
+## Current v0.1.11 Update
+
+Use this shorter current request after the npm Trusted Publishing release:
+
+```text
+Looking for 1-2 OSS maintainers to test MaintainerOps AI.
+
+It creates read-only PR/issue review packets with risk, labels, review checks, security notes, release hints, and a draft response. It does not merge, close, label, comment, or publish automatically.
+
+Quick check:
+npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+
+npm latest: maintainerops-ai@0.1.11
+Project: https://github.com/rtonf/maintainerops-ai
+Feedback: https://github.com/rtonf/maintainerops-ai/issues/6
+```
+
 ## Outreach Log
 
 | Date       | Channel                    | Status                 | Link                                                              | Replies    | Follow-up                                        |
