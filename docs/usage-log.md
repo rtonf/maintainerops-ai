@@ -105,6 +105,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-01 | Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.                   | `src/defaults.ts`, `web/main.tsx`, `docs/openai-alignment.md`, `docs/model-support.md`                                                                                                                              |
 | 2026-07-01 | Re-ran OpenSSF Scorecard manually after the model eval maintenance PRs.                                                                              | Successful workflow run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28457339237`                                                                                                                       |
 | 2026-07-01 | Added budget controls to `npm run eval:model` and re-ran the 2-case live eval within the approved `$0.50` ceiling.                                   | `npm run eval:model -- --budget-usd 0.5 --max-cases 2 --max-output-tokens 1200`; passed 2 cases; successful-run estimate `$0.000320`                                                                                |
+| 2026-07-01 | Closed the first model-backed eval milestone and opened a follow-up issue for expanded cases.                                                        | Closed Issue #52; opened Issue #60, `https://github.com/rtonf/maintainerops-ai/issues/60`                                                                                                                           |
+| 2026-07-01 | Added the `v0.1.10` release plan for the merged model-backed eval hardening work.                                                                    | `docs/release-plan-v0.1.10.md`                                                                                                                                                                                      |
 
 ## Current metrics
 
@@ -125,7 +127,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
 - npm Trusted Publishing status: planned; npm package settings must be configured before adding an active publish workflow
-- Model-backed eval status: first 2-case manual run passed after label normalization; live evals remain manual-only and budget-gated
+- Model-backed eval status: first 2-case manual run passed after label normalization; Issue #52 closed, Issue #60 tracks expanded cases; live evals remain manual-only and budget-gated
 
 ## Seven-day evidence plan
 

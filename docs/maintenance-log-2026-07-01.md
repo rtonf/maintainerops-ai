@@ -18,6 +18,9 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Replaced stale unverified model names with the verified `gpt-4o-mini` default in CLI defaults, UI copy, and OpenAI alignment docs.
 - Re-ran the OpenSSF Scorecard workflow manually after the model eval maintenance PRs.
 - Re-ran the 2-case live model-backed eval after explicit approval to spend up to `$0.50`.
+- Closed Issue #52 as the completed first manual model-backed eval milestone.
+- Opened Issue #60 to track expanded model-backed eval cases.
+- Added the `v0.1.10` release plan.
 
 ## Verification
 
@@ -34,8 +37,11 @@ Today's maintenance focused on validating the first small live model-backed eval
 - Security diff review found no new reportable issue in the label normalization change.
 - Model configuration was updated without making another live API call.
 - OpenSSF Scorecard workflow run succeeded: `https://github.com/rtonf/maintainerops-ai/actions/runs/28457339237`.
+- Issue #52 closed as completed: `https://github.com/rtonf/maintainerops-ai/issues/52`.
+- Issue #60 opened for eval expansion: `https://github.com/rtonf/maintainerops-ai/issues/60`.
 
 ## Next
 
 - Keep model-backed evals manual-only and budget-gated.
 - Expand the case set only after explicit approval for additional API spend.
+- Prepare `v0.1.10` release artifacts when ready to publish the merged eval hardening work.
