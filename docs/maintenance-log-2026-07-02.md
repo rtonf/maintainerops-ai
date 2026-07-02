@@ -12,18 +12,18 @@ Today's maintenance focused on closing the Marketplace refresh loop, improving p
 - Re-ran OpenSSF Scorecard through `workflow_dispatch`; run `28580654645` passed and reported aggregate score `7.1`.
 - Added a new offline review packet for Issue #67.
 - Prepared a no-API Issue #60 model-backed eval expansion plan for the next release cycle.
+- After merge, confirmed GitHub now detects `Apache-2.0` and closed Issue #69.
 
 ## Current State
 
 - Community profile health: `100%`.
 - GitHub license API before this maintenance branch: `Other / NOASSERTION`.
+- GitHub license API after merge: `Apache-2.0`.
 - Marketplace, npm, and GitHub Releases are aligned on `v0.1.11`.
 - Issue #6 remains the main external feedback collection point.
 - Issue #60 remains open for expanding model-backed eval cases.
 
 ## Next
 
-- Merge the canonical license update and recheck GitHub license detection.
-- If GitHub reports `Apache-2.0`, close Issue #69.
 - Add one or more Issue #60 eval cases from real maintainer feedback once Issue #6 receives external comments.
 - Consider OpenSSF Best Practices Badge registration as the next Scorecard improvement.
