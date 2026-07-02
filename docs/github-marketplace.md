@@ -4,7 +4,7 @@ These notes prepare MaintainerOps AI for GitHub Marketplace publication as a Git
 
 ## Current publication status
 
-As of 2026-07-01, npm and GitHub Releases are aligned on `v0.1.11`. The public GitHub Marketplace listing still displays `v0.1.9` until the Marketplace channel is refreshed from the GitHub Release UI. Follow-up: https://github.com/rtonf/maintainerops-ai/issues/67
+As of 2026-07-02, npm, GitHub Releases, and the public GitHub Marketplace listing are aligned on `v0.1.11`. Follow-up issue https://github.com/rtonf/maintainerops-ai/issues/67 was closed after the Marketplace page showed `v0.1.11` as the latest Action release.
 
 ## Listing name
 

@@ -68,3 +68,4 @@ Current status:
 - A follow-up 2-case live eval passed after label normalization with an estimated successful-run cost of `$0.000320`.
 - The `v0.1.10` release candidate expands the selected manual model-backed case set from 2 to 5 cases: security-sensitive PR, ordinary issue, prompt-injection issue, release readiness issue, and external feedback issue.
 - Model-backed evals remain manual-only and separate from deterministic `npm run eval`.
+- The next no-API preparation queue is documented in `docs/model-backed-eval-expansion-plan-v0.1.12.md`; live execution remains manual and budget-gated.

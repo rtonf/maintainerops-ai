@@ -10,7 +10,7 @@ Current public channels:
 
 - npm latest: `maintainerops-ai@0.1.11`
 - GitHub Release latest: `v0.1.11`
-- GitHub Marketplace latest: public listing still displays `rtonf/maintainerops-ai@v0.1.9` until the Marketplace channel is refreshed
+- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.11`
 
 ## Copy/paste request
 
