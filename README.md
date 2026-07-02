@@ -18,13 +18,13 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 ## Current evidence snapshot
 
 - Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.11` through npm Trusted Publishing with provenance; npm downloads API reported 343 downloads for 2026-06-22 through 2026-06-28; broken `0.1.8` is deprecated.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing still displays `v0.1.9` as `Latest` until the Marketplace channel is refreshed.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing displays `v0.1.11` as the latest Action release.
 - Latest GitHub Release: [`v0.1.11`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.11), containing the npm provenance metadata repair after `v0.1.10` reached Trusted Publishing validation.
 - GitHub releases: `v0.1.0` through `v0.1.7`, plus `v0.1.9`, `v0.1.10`, and `v0.1.11`; `v0.1.8` was intentionally withheld from GitHub and Marketplace.
-- Source, npm, and GitHub Releases are aligned on `v0.1.11`; GitHub Marketplace still needs the latest Action release refresh.
+- Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.11`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
 - Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.11` publication evidence.
-- Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `6.8` after security policy and workflow pinning improvements, documented in [`docs/openssf-scorecard-2026-06-29.md`](docs/openssf-scorecard-2026-06-29.md).
+- Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
 - Model-backed eval evidence: first budget-gated 2-case live run passed on 2026-07-01 with `gpt-4o-mini`; `v0.1.10` expands the manual default case set to 5 selected cases while keeping API spend explicit and budget-gated.
 - Supply-chain release work: npm Trusted Publishing is active for `v0.1.11` and published without `NPM_TOKEN`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
