@@ -1,0 +1,184 @@
+[
+  {
+    "name": "security-sensitive pull request without tests",
+    "suite": "smoke",
+    "expectedLabels": ["security-review", "tests-needed"],
+    "expectedRecommendedAction": "needs_security_review",
+    "minRisk": "medium",
+    "item": {
+      "kind": "pull_request",
+      "repository": "example/repo",
+      "number": 1,
+      "title": "Fix token permission bypass",
+      "body": "Updates authorization checks.",
+      "files": [
+        {
+          "path": "src/auth/session.ts",
+          "status": "modified",
+          "additions": 20,
+          "deletions": 5
+        }
+      ]
+    }
+  },
+  {
+    "name": "ordinary issue",
+    "suite": "smoke",
+    "expectedLabels": ["needs-triage"],
+    "expectedRecommendedAction": "needs_more_info",
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "example/repo",
+      "number": 2,
+      "title": "Documentation typo in install guide",
+      "body": "The Windows command has a typo."
+    }
+  },
+  {
+    "name": "prompt-injection-safe issue triage",
+    "suite": "smoke",
+    "expectedLabels": ["needs-triage", "security-review"],
+    "expectedRecommendedAction": "needs_security_review",
+    "minRisk": "medium",
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 3,
+      "title": "Triage example: prompt-injection safe comment draft",
+      "body": "Validate that untrusted issue text cannot force a maintainer bot to reveal secrets, ignore policy, or execute unauthorized actions."
+    }
+  },
+  {
+    "name": "release readiness issue",
+    "suite": "smoke",
+    "expectedLabels": ["needs-triage", "release-notes"],
+    "expectedRecommendedAction": "needs_more_info",
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 2,
+      "title": "Triage example: release readiness packet for v0.1.0",
+      "body": "Prepare release notes and maintainer checklist for the initial public release."
+    }
+  },
+  {
+    "name": "external feedback issue mentions security evidence",
+    "suite": "smoke",
+    "expectedLabels": ["needs-triage"],
+    "forbiddenLabels": ["security-review", "release-notes"],
+    "expectedRecommendedAction": "needs_more_info",
+    "forbiddenRecommendedActions": ["needs_security_review", "needs_release_manager"],
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 6,
+      "title": "External maintainer feedback wanted",
+      "body": "Please try the GitHub Marketplace Action or npm CLI and comment on whether the security review packet helps real PR or issue triage."
+    }
+  },
+  {
+    "name": "gradle wrapper dependency update without tests",
+    "suite": "expanded",
+    "expectedLabels": ["maintainer-review", "security-review", "release-notes", "tests-needed"],
+    "expectedRecommendedAction": "needs_security_review",
+    "minRisk": "medium",
+    "item": {
+      "kind": "pull_request",
+      "repository": "rtonf/daily-hub-diary-app",
+      "number": 1,
+      "title": "Bump gradle-wrapper from 9.4.1 to 9.5.1 in /android",
+      "body": "Dependency update touching Gradle wrapper files in the Android project.",
+      "files": [
+        {
+          "path": "android/gradle/wrapper/gradle-wrapper.properties",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 1
+        },
+        {
+          "path": "android/gradlew",
+          "status": "modified",
+          "additions": 12,
+          "deletions": 7
+        }
+      ]
+    }
+  },
+  {
+    "name": "capacitor runtime dependency update without tests",
+    "suite": "expanded",
+    "expectedLabels": ["maintainer-review", "security-review", "release-notes", "tests-needed"],
+    "expectedRecommendedAction": "needs_security_review",
+    "minRisk": "medium",
+    "item": {
+      "kind": "pull_request",
+      "repository": "rtonf/daily-hub-diary-app",
+      "number": 2,
+      "title": "Bump @capacitor/core from 8.3.4 to 8.4.0",
+      "body": "Dependency update for the Capacitor runtime used by the Android application.",
+      "files": [
+        {
+          "path": "package.json",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 1
+        },
+        {
+          "path": "package-lock.json",
+          "status": "modified",
+          "additions": 8,
+          "deletions": 8
+        }
+      ]
+    }
+  },
+  {
+    "name": "marketplace release refresh issue",
+    "suite": "expanded",
+    "expectedLabels": ["needs-triage", "release-notes"],
+    "expectedRecommendedAction": "needs_more_info",
+    "forbiddenLabels": ["security-review"],
+    "forbiddenRecommendedActions": ["needs_security_review"],
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 67,
+      "title": "Refresh GitHub Marketplace to v0.1.11",
+      "body": "Refresh the public GitHub Marketplace Action listing so it displays the latest intended Action release after npm and GitHub Releases moved to v0.1.11."
+    }
+  },
+  {
+    "name": "license detection metadata issue",
+    "suite": "expanded",
+    "expectedLabels": ["needs-triage"],
+    "forbiddenLabels": ["security-review", "release-notes"],
+    "expectedRecommendedAction": "needs_more_info",
+    "forbiddenRecommendedActions": ["needs_security_review", "needs_release_manager"],
+    "maxRisk": "low",
+    "item": {
+      "kind": "issue",
+      "repository": "rtonf/maintainerops-ai",
+      "number": 69,
+      "title": "Verify GitHub Apache license detection",
+      "body": "The repository contains Apache-2.0 license text and package.json declares Apache-2.0, but GitHub licenseInfo still reports Other / NOASSERTION immediately after merge. Recheck after GitHub re-indexes."
+    }
+  },
+  {
+    "name": "missing authorization check issue",
+    "suite": "expanded",
+    "expectedLabels": ["needs-triage", "security-review"],
+    "expectedRecommendedAction": "needs_security_review",
+    "minRisk": "medium",
+    "item": {
+      "kind": "issue",
+      "repository": "example/repo",
+      "number": 70,
+      "title": "Missing permission check on admin export endpoint",
+      "body": "A user without admin permission can call the export endpoint and download project data. Expected: the endpoint should enforce the same authorization policy as the admin dashboard."
+    }
+  }
+]
