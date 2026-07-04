@@ -8,9 +8,9 @@ Public feedback discussion: https://github.com/rtonf/maintainerops-ai/discussion
 
 Current public channels:
 
-- npm latest: `maintainerops-ai@0.1.11`
-- GitHub Release latest: `v0.1.11`
-- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.11`
+- npm latest: `maintainerops-ai@0.1.12`
+- GitHub Release latest: `v0.1.12`
+- GitHub Marketplace latest observed: `rtonf/maintainerops-ai@v0.1.11`; Issue #76 tracks the Marketplace refresh to `v0.1.12`
 
 ## Copy/paste request
 
@@ -61,7 +61,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.11
+      - uses: rtonf/maintainerops-ai@v0.1.12
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

@@ -17,18 +17,18 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.11` through npm Trusted Publishing with provenance; npm downloads API reported 343 downloads for 2026-06-22 through 2026-06-28; broken `0.1.8` is deprecated.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing displays `v0.1.11` as the latest Action release.
-- Latest GitHub Release: [`v0.1.11`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.11), containing the npm provenance metadata repair after `v0.1.10` reached Trusted Publishing validation.
-- GitHub releases: `v0.1.0` through `v0.1.7`, plus `v0.1.9`, `v0.1.10`, and `v0.1.11`; `v0.1.8` was intentionally withheld from GitHub and Marketplace.
-- Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.11`.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.12` through npm Trusted Publishing with provenance; npm downloads API reported 343 downloads for 2026-06-22 through 2026-06-28; broken `0.1.8` is deprecated.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing was last observed displaying `v0.1.11`; Issue #76 tracks the manual Marketplace refresh to `v0.1.12`.
+- Latest GitHub Release: [`v0.1.12`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.12), containing the passing 10-case live model-backed eval evidence and normalization fixes.
+- GitHub releases: 12 public releases from `v0.1.0` through `v0.1.12`, excluding intentionally withheld `v0.1.8`.
+- Source, npm, and GitHub Releases are aligned on `v0.1.12`; GitHub Marketplace is pending refresh from `v0.1.11`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
-- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.11` publication evidence.
+- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.12` publication evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
 - Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
-- Supply-chain release work: npm Trusted Publishing is active for `v0.1.11` and published without `NPM_TOKEN`.
+- Supply-chain release work: npm Trusted Publishing is active for `v0.1.12` and published without `NPM_TOKEN`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
-- Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), and [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md) track the model-backed eval hardening, Trusted Publishing, and provenance metadata repair releases.
+- Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md), and [`docs/releases/v0.1.12.md`](docs/releases/v0.1.12.md) track model-backed eval hardening, Trusted Publishing, provenance metadata repair, and 10-case live eval publication.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
 - Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
 
@@ -175,6 +175,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [v0.1.9 package repair notes](docs/releases/v0.1.9.md)
 - [v0.1.10 model eval and Trusted Publishing release notes](docs/releases/v0.1.10.md)
 - [v0.1.11 provenance metadata repair notes](docs/releases/v0.1.11.md)
+- [v0.1.12 10-case live model-backed eval notes](docs/releases/v0.1.12.md)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials
@@ -213,7 +214,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.11
+      - uses: rtonf/maintainerops-ai@v0.1.12
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
