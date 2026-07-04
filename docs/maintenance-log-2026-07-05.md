@@ -19,6 +19,9 @@ Today's maintenance focused on API-backed eval readiness without making new API 
 - Merged PR #72 after required checks passed.
 - Closed Issue #60 as complete after the 10-case expansion landed.
 - Opened Issue #73 for the remaining explicitly approved live 10-case model-backed eval run.
+- Ran the Issue #73 live 10-case model-backed eval after explicit API approval.
+- Fixed normalization gaps found by the live eval: dependency update labels, metadata risk capping, equivalent issue actions, and direct security-boundary actions.
+- Re-ran the 10-case model-backed eval successfully.
 
 ## Verification
 
@@ -31,12 +34,19 @@ Today's maintenance focused on API-backed eval readiness without making new API 
 - Security diff review: `docs/codex-security/model-backed-eval-expansion-diff-review-2026-07-05.md`
 - PR #72 checks passed before merge.
 - Post-merge CodeQL run passed on `main`.
+- `npm run eval:model -- --suite all --budget-usd 0.5 --max-cases 10 --max-output-tokens 1200 --summary-json`; passed 10 cases.
 
 ## API Usage
 
-No OpenAI API calls were made in this maintenance pass.
+Initial work in this maintenance pass made no OpenAI API calls.
+
+Later in this maintenance pass, explicit API execution was approved for Issue #73:
+
+- Successful-run estimated cost: `$0.001724`.
+- Cumulative estimate across failed/adjusted/passing runs: `$0.005114`.
+- Approved ceiling: `$0.50`.
 
 ## Next
 
-- If explicit API spend is approved, run the Issue #73 10-case model-backed eval pass with `--suite all --budget-usd 0.5 --max-cases 10 --max-output-tokens 1200 --summary-json`.
-- Prepare the v0.1.12 release only after the live eval is approved/run or explicitly deferred.
+- Prepare and publish the v0.1.12 release.
+- Refresh GitHub Marketplace after the release is published.

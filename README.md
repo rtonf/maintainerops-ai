@@ -25,7 +25,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
 - Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.11` publication evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
-- Model-backed eval evidence: first budget-gated 2-case live run passed on 2026-07-01 with `gpt-4o-mini`; `v0.1.10` expands the manual default case set to 5 selected cases while keeping API spend explicit and budget-gated.
+- Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
 - Supply-chain release work: npm Trusted Publishing is active for `v0.1.11` and published without `NPM_TOKEN`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
 - Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), and [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md) track the model-backed eval hardening, Trusted Publishing, and provenance metadata repair releases.

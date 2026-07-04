@@ -143,4 +143,67 @@ describe("normalizeAssessmentForWorkItem", () => {
     assert.equal(result.labels.includes("needs-triage"), true);
     assert.equal(result.labels.includes("security-review"), true);
   });
+
+  it("adds release and security review labels for dependency update pull requests", () => {
+    const result = normalizeAssessmentForWorkItem(
+      {
+        kind: "pull_request",
+        repository: "owner/repo",
+        title: "Bump @capacitor/core from 8.3.4 to 8.4.0",
+        body: "Dependency update for runtime package.",
+        files: [
+          { path: "package.json", status: "modified" },
+          { path: "package-lock.json", status: "modified" }
+        ]
+      },
+      { ...assessment, labels: ["maintainer-review"], recommendedAction: "needs_human_review" }
+    );
+
+    assert.equal(result.labels.includes("security-review"), true);
+    assert.equal(result.labels.includes("release-notes"), true);
+    assert.equal(result.labels.includes("tests-needed"), true);
+  });
+
+  it("caps license metadata maintenance issues at low risk", () => {
+    const result = normalizeAssessmentForWorkItem(
+      {
+        kind: "issue",
+        repository: "owner/repo",
+        title: "Verify GitHub Apache license detection",
+        body: "GitHub licenseInfo still reports Other / NOASSERTION after metadata updates."
+      },
+      { ...assessment, labels: ["license"], riskLevel: "medium", recommendedAction: "needs_human_review" }
+    );
+
+    assert.equal(result.riskLevel, "low");
+    assert.equal(result.labels.includes("needs-triage"), true);
+  });
+
+  it("normalizes issue-only merge/change actions to human review", () => {
+    const result = normalizeAssessmentForWorkItem(
+      {
+        kind: "issue",
+        repository: "owner/repo",
+        title: "Documentation typo in install guide"
+      },
+      { ...assessment, recommendedAction: "ready_to_merge" }
+    );
+
+    assert.equal(result.recommendedAction, "needs_human_review");
+  });
+
+  it("promotes direct security boundary signals to security review action", () => {
+    const result = normalizeAssessmentForWorkItem(
+      {
+        kind: "pull_request",
+        repository: "owner/repo",
+        title: "Fix token permission bypass",
+        body: "Updates authorization checks.",
+        files: [{ path: "src/auth/session.ts", status: "modified" }]
+      },
+      { ...assessment, labels: ["security-review"], recommendedAction: "needs_human_review" }
+    );
+
+    assert.equal(result.recommendedAction, "needs_security_review");
+  });
 });
