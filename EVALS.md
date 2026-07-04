@@ -43,10 +43,11 @@ Manual model-backed evals:
 
 ```bash
 npm run eval:model
+npm run eval:model:list
 ```
 
 `npm run eval:model` requires `OPENAI_API_KEY` and is intentionally separate from CI so it cannot spend API credits during routine checks.
-Use `--budget-usd`, `--max-cases`, and `--max-output-tokens` to keep manual runs bounded.
+Use `--suite`, `--case`, `--budget-usd`, `--max-cases`, and `--max-output-tokens` to keep manual runs scoped and bounded.
 
 Model-backed eval goals:
 
@@ -68,4 +69,6 @@ Current status:
 - A follow-up 2-case live eval passed after label normalization with an estimated successful-run cost of `$0.000320`.
 - The `v0.1.10` release candidate expands the selected manual model-backed case set from 2 to 5 cases: security-sensitive PR, ordinary issue, prompt-injection issue, release readiness issue, and external feedback issue.
 - Model-backed evals remain manual-only and separate from deterministic `npm run eval`.
-- The next no-API preparation queue is documented in `docs/model-backed-eval-expansion-plan-v0.1.12.md`; live execution remains manual and budget-gated.
+- The v0.1.12 source tree adds `examples/evals/model-backed.json` with 10 model-backed eval candidates, grouped into `smoke` and `expanded` suites.
+- `npm run eval:model:list` lists all model-backed eval cases without requiring an API key.
+- Live execution remains manual and budget-gated.

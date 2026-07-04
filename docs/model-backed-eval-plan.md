@@ -12,6 +12,7 @@ This document defines the first model-backed eval milestone for MaintainerOps AI
 - `npm run eval:model` is available as a manual-only command and fails clearly when `OPENAI_API_KEY` is not set.
 - `npm run eval:model` supports `--budget-usd`, `--max-cases`, and `--max-output-tokens` controls.
 - A 2-case live re-run passed on 2026-07-01 within the approved `$0.50` ceiling.
+- The v0.1.12 source tree adds a dedicated model-backed case file at `examples/evals/model-backed.json`, a no-key case lister, suite selection, explicit case selection, recommended-action checks, and risk lower-bound checks.
 
 ## Why This Matters
 
@@ -52,10 +53,13 @@ The first implementation can be a separate script so it does not affect the exis
 
 ```bash
 npm run eval:model
+npm run eval:model -- --suite expanded --budget-usd 0.5 --max-cases 5 --max-output-tokens 1200
+npm run eval:model -- --case "missing authorization check issue" --budget-usd 0.05
+npm run eval:model:list
 ```
 
 If `OPENAI_API_KEY` is missing, the script should fail clearly without falling back silently to offline heuristics.
 
 ## Current Next Step
 
-Expand the manual case set only after each live eval run has an explicit budget and maintainer approval.
+Run the 10-case suite only after explicit API spend approval. Until then, keep using `npm run eval:model:list`, unit tests, and deterministic offline evals as API-free readiness checks.
