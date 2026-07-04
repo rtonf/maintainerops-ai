@@ -61,6 +61,11 @@ export function normalizeAssessmentForWorkItem(
     labels.add("release-notes");
   }
 
+  if (hasDependencyReviewSignal(item)) {
+    labels.add("security-review");
+    labels.add("release-notes");
+  }
+
   if (hasActionableSecurityIssueSignal(item)) {
     labels.add("security-review");
   }
@@ -71,9 +76,12 @@ export function normalizeAssessmentForWorkItem(
   }
 
   const riskLevel =
-    shouldCapIssueRisk(item, normalized) && normalized.recommendedAction !== "needs_security_review"
+    (shouldCapIssueRisk(item, normalized) || isMetadataMaintenanceIssue(item)) &&
+    normalized.recommendedAction !== "needs_security_review"
       ? "low"
       : normalized.riskLevel;
+
+  const recommendedAction = normalizeRecommendedActionForWorkItem(item, normalized.recommendedAction);
 
   if (riskLevel === "low" && item.kind === "issue" && isFeedbackRequest(item)) {
     labels.delete("security-review");
@@ -83,6 +91,7 @@ export function normalizeAssessmentForWorkItem(
   return {
     ...normalized,
     riskLevel,
+    recommendedAction,
     labels: [...labels]
   };
 }
@@ -120,11 +129,27 @@ function isFeedbackRequest(item: MaintainerWorkItem): boolean {
 function hasReleaseReadinessSignal(item: MaintainerWorkItem): boolean {
   const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
   return (
-    item.kind === "issue" &&
-    (/\brelease readiness\b/.test(text) ||
-      /\brelease notes?\b/.test(text) ||
-      /\bprepare release\b/.test(text) ||
-      /\bmaintainer checklist\b/.test(text))
+    /\brelease readiness\b/.test(text) ||
+    /\brelease notes?\b/.test(text) ||
+    /\bprepare release\b/.test(text) ||
+    /\bmaintainer checklist\b/.test(text) ||
+    /\blatest intended action release\b/.test(text) ||
+    /\bmarketplace action listing\b/.test(text)
+  );
+}
+
+function hasDependencyReviewSignal(item: MaintainerWorkItem): boolean {
+  if (item.kind !== "pull_request") return false;
+  const text =
+    `${item.title}\n${item.body ?? ""}\n${(item.files ?? []).map((file) => file.path).join("\n")}`.toLowerCase();
+  return (
+    /\bdependency update\b/.test(text) ||
+    /\bbump\b/.test(text) ||
+    /\bupgrade\b/.test(text) ||
+    text.includes("package-lock.json") ||
+    text.includes("package.json") ||
+    text.includes("gradle-wrapper") ||
+    text.includes("gradlew")
   );
 }
 
@@ -145,5 +170,36 @@ function shouldCapIssueRisk(item: MaintainerWorkItem, assessment: MaintainerAsse
     item.kind === "issue" &&
     (isFeedbackRequest(item) || (hasReleaseReadinessSignal(item) && !hasActionableSecurityIssueSignal(item))) &&
     assessment.recommendedAction !== "needs_security_review"
+  );
+}
+
+function isMetadataMaintenanceIssue(item: MaintainerWorkItem): boolean {
+  const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
+  return (
+    item.kind === "issue" && /\blicense detection\b/.test(text) && /\bmetadata\b|\bspdx\b|\bnoassertion\b/.test(text)
+  );
+}
+
+function normalizeRecommendedActionForWorkItem(
+  item: MaintainerWorkItem,
+  action: MaintainerAssessment["recommendedAction"]
+): MaintainerAssessment["recommendedAction"] {
+  if (hasDirectSecurityReviewSignal(item)) {
+    return "needs_security_review";
+  }
+
+  if (item.kind === "issue" && (action === "ready_to_merge" || action === "request_changes")) {
+    return "needs_human_review";
+  }
+
+  return action;
+}
+
+function hasDirectSecurityReviewSignal(item: MaintainerWorkItem): boolean {
+  const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
+  return (
+    /\bbypass\b/.test(text) ||
+    /\bmissing\b.{0,40}\b(?:auth|authorization|permission|check)\b/.test(text) ||
+    /\b(?:auth|authorization|permission|token)\b.{0,40}\b(?:bypass|missing|not enforced)\b/.test(text)
   );
 }

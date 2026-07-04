@@ -11,6 +11,7 @@ export interface ModelEvalCase {
   expectedLabels: string[];
   forbiddenLabels?: string[];
   expectedRecommendedAction?: MaintainerAssessment["recommendedAction"];
+  acceptableRecommendedActions?: MaintainerAssessment["recommendedAction"][];
   forbiddenRecommendedActions?: MaintainerAssessment["recommendedAction"][];
   minRisk?: RiskLevel;
   maxRisk?: RiskLevel;
@@ -224,9 +225,13 @@ export function evaluateCaseResult(evalCase: ModelEvalCase, result: MaintainerAs
     }
   }
 
-  if (evalCase.expectedRecommendedAction && result.recommendedAction !== evalCase.expectedRecommendedAction) {
+  const acceptableActions = new Set([
+    ...(evalCase.expectedRecommendedAction ? [evalCase.expectedRecommendedAction] : []),
+    ...(evalCase.acceptableRecommendedActions ?? [])
+  ]);
+  if (acceptableActions.size > 0 && !acceptableActions.has(result.recommendedAction)) {
     failures.push(
-      `${evalCase.name}: expected recommendedAction ${evalCase.expectedRecommendedAction}, got ${result.recommendedAction}`
+      `${evalCase.name}: expected recommendedAction ${[...acceptableActions].join(" or ")}, got ${result.recommendedAction}`
     );
   }
 

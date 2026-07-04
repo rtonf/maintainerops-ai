@@ -71,4 +71,5 @@ Current status:
 - Model-backed evals remain manual-only and separate from deterministic `npm run eval`.
 - The v0.1.12 source tree adds `examples/evals/model-backed.json` with 10 model-backed eval candidates, grouped into `smoke` and `expanded` suites.
 - `npm run eval:model:list` lists all model-backed eval cases without requiring an API key.
+- The first 10-case live v0.1.12 run passed on 2026-07-05 with estimated successful-run cost `$0.001724`.
 - Live execution remains manual and budget-gated.

@@ -110,6 +110,22 @@ describe("evaluateCaseResult", () => {
     );
   });
 
+  it("accepts equivalent maintainer actions", () => {
+    assert.deepEqual(
+      evaluateCaseResult(
+        {
+          name: "feedback",
+          expectedLabels: ["security-review"],
+          expectedRecommendedAction: "needs_more_info",
+          acceptableRecommendedActions: ["needs_security_review"],
+          item: minimalIssue("feedback")
+        },
+        assessment
+      ),
+      []
+    );
+  });
+
   it("reports forbidden labels and action/risk mismatches", () => {
     const failures = evaluateCaseResult(
       {
