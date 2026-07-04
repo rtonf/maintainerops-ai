@@ -121,27 +121,28 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-05 | Expanded model-backed eval readiness without API spend: dedicated 10-case file, suite/case selection, stricter action/risk checks, API-free listing, tests, and v0.1.12 planning docs. | `examples/evals/model-backed.json`, `src/eval/run-model-eval.ts`, `src/eval/run-model-eval.test.ts`, `docs/model-backed-eval-methodology.md`, `docs/release-plan-v0.1.12.md`, `docs/codex-security/model-backed-eval-expansion-diff-review-2026-07-05.md`, `npm run verify`, `npm run eval:model:list`, PR #72 |
 | 2026-07-05 | Closed Issue #60 after the 10-case expansion landed and opened Issue #73 for the remaining explicitly approved live 10-case model-backed eval run.                                     | `https://github.com/rtonf/maintainerops-ai/issues/60`, `https://github.com/rtonf/maintainerops-ai/issues/73`                                                                                                                                                                                                   |
 | 2026-07-05 | Ran the approved 10-case live model-backed eval, fixed normalization gaps from failed attempts, and reached a passing 10-case run within budget.                                       | `docs/model-backed-eval-results/2026-07-05.md`, successful-run estimate `$0.001724`, cumulative estimate `$0.005114`                                                                                                                                                                                           |
+| 2026-07-05 | Published `v0.1.12`, verified npm Trusted Publishing and public CLI install, closed Issue #73, and opened Issue #76 for the Marketplace refresh.                                       | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.12`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28712720794`, `https://github.com/rtonf/maintainerops-ai/issues/73`, `https://github.com/rtonf/maintainerops-ai/issues/76`                                                           |
 
 ## Current metrics
 
 - Public triage fixtures: 1
 - Offline eval cases: 7
-- Unit tests: 42
+- Unit tests: 47
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 10
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 6
-- GitHub releases: 9
-- npm package status: `maintainerops-ai@0.1.11` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
-- GitHub Marketplace status: `MaintainerOps AI` public listing displays `v0.1.11` as `Latest`
-- Source version: `v0.1.11` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
+- GitHub releases: 12
+- npm package status: `maintainerops-ai@0.1.12` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
+- GitHub Marketplace status: `MaintainerOps AI` public listing was last observed displaying `v0.1.11`; Issue #76 tracks refresh to `v0.1.12`
+- Source version: `v0.1.12` is aligned across source, npm, and GitHub Releases; GitHub Marketplace is pending refresh
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot production and development update batches were reviewed, verified, and merged on 2026-06-29
 - OpenSSF Scorecard status: latest successful manual run completed on 2026-07-02; last recorded score is `7.1`
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
-- npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.11` on 2026-07-01
-- Model-backed eval status: 2-case, 5-case, and 10-case live runs have passed after label/action normalization; Issue #52 and Issue #60 are closed; Issue #73 tracks the approved 10-case live run evidence; live evals remain manual-only and budget-gated
+- npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.12` on 2026-07-05
+- Model-backed eval status: 2-case, 5-case, and 10-case live runs have passed after label/action normalization; Issue #52, Issue #60, and Issue #73 are closed; live evals remain manual-only and budget-gated
 
 ## Seven-day evidence plan
 
