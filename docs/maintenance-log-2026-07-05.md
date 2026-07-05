@@ -31,6 +31,10 @@ Today's maintenance focused on API-backed eval readiness, then used explicitly a
 - Rechecked GitHub Marketplace and confirmed the public listing now displays `v0.1.12` as `Latest`.
 - Prepared `v0.1.13` with `maintainerops demo`, a no-key packet command for external feedback.
 - Added an API-free security diff review for the no-key demo command.
+- Merged PR #79, published GitHub Release `v0.1.13`, and confirmed npm Trusted Publishing succeeded.
+- Verified public npm `maintainerops-ai@0.1.13` and `npm exec --yes --package maintainerops-ai@latest -- maintainerops demo`.
+- Closed Issue #76 after the Marketplace page displayed `v0.1.12`.
+- Opened Issue #80 to track the Marketplace refresh from `v0.1.12` to `v0.1.13`.
 
 ## Verification
 
@@ -51,6 +55,9 @@ Today's maintenance focused on API-backed eval readiness, then used explicitly a
 - `node dist/cli.js demo --format markdown`
 - `node dist/cli.js demo --format json`
 - Expected demo guard failures: `node dist/cli.js demo --model gpt-4o-mini` and `node dist/cli.js demo --repo owner/repo`
+- npm Trusted Publishing run for `v0.1.13`: `https://github.com/rtonf/maintainerops-ai/actions/runs/28727350922`
+- GitHub Release `v0.1.13`: `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.13`
+- Public npm demo command: `npm exec --yes --package maintainerops-ai@latest -- maintainerops demo`
 
 ## API Usage
 
@@ -64,5 +71,5 @@ Later in this maintenance pass, explicit API execution was approved for Issue #7
 
 ## Next
 
-- Release `v0.1.13` after verification so Marketplace and npm expose the no-key demo command.
+- Refresh GitHub Marketplace to `v0.1.13`.
 - Continue collecting external maintainer feedback on Issue #6.
