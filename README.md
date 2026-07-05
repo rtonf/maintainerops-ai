@@ -17,16 +17,16 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.12` through npm Trusted Publishing with provenance; npm downloads API reported 343 downloads for 2026-06-22 through 2026-06-28; broken `0.1.8` is deprecated.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing displays `v0.1.12` as the latest Action release.
-- Latest GitHub Release: [`v0.1.12`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.12), containing the passing 10-case live model-backed eval evidence and normalization fixes.
-- GitHub releases: 12 public releases from `v0.1.0` through `v0.1.12`, excluding intentionally withheld `v0.1.8`.
-- Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.12`; the source tree is preparing `v0.1.13` with a no-key demo command for external feedback.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.13` through npm Trusted Publishing with provenance; npm downloads API reported 343 downloads for 2026-06-22 through 2026-06-28; broken `0.1.8` is deprecated.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing was last observed displaying `v0.1.12`; Issue #80 tracks the manual Marketplace refresh to `v0.1.13`.
+- Latest GitHub Release: [`v0.1.13`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.13), adding the no-key `maintainerops demo` packet path for external feedback.
+- GitHub releases: 13 public releases from `v0.1.0` through `v0.1.13`, excluding intentionally withheld `v0.1.8`.
+- Source, npm, and GitHub Releases are aligned on `v0.1.13`; GitHub Marketplace is pending refresh from `v0.1.12`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
-- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.12` publication evidence.
+- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.13` publication evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
 - Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
-- Supply-chain release work: npm Trusted Publishing is active for `v0.1.12` and published without `NPM_TOKEN`.
+- Supply-chain release work: npm Trusted Publishing is active for `v0.1.13` and published without `NPM_TOKEN`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
 - Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md), [`docs/releases/v0.1.12.md`](docs/releases/v0.1.12.md), and [`docs/releases/v0.1.13.md`](docs/releases/v0.1.13.md) track model-backed eval hardening, Trusted Publishing, provenance metadata repair, 10-case live eval publication, and the no-key demo path.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).

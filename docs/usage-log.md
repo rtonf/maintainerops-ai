@@ -123,6 +123,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-05 | Ran the approved 10-case live model-backed eval, fixed normalization gaps from failed attempts, and reached a passing 10-case run within budget.                                       | `docs/model-backed-eval-results/2026-07-05.md`, successful-run estimate `$0.001724`, cumulative estimate `$0.005114`                                                                                                                                                                                           |
 | 2026-07-05 | Published `v0.1.12`, verified npm Trusted Publishing and public CLI install, closed Issue #73, and opened Issue #76 for the Marketplace refresh.                                       | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.12`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28712720794`, `https://github.com/rtonf/maintainerops-ai/issues/73`, `https://github.com/rtonf/maintainerops-ai/issues/76`                                                           |
 | 2026-07-05 | Confirmed GitHub Marketplace now displays `v0.1.12` and prepared `v0.1.13` with a no-key `maintainerops demo` packet command for external feedback.                                    | `https://github.com/marketplace/actions/maintainerops-ai`, `src/cli.ts`, `src/fixture.ts`, README, `docs/external-feedback-request.md`, `docs/codex-security/no-key-demo-diff-review-2026-07-05.md`                                                                                                            |
+| 2026-07-05 | Published `v0.1.13`, verified npm Trusted Publishing and public `maintainerops demo`, closed Issue #76, and opened Issue #80 for the Marketplace refresh.                              | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.13`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28727350922`, `https://github.com/rtonf/maintainerops-ai/issues/76`, `https://github.com/rtonf/maintainerops-ai/issues/80`                                                           |
 
 ## Current metrics
 
@@ -133,16 +134,16 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Codex Security reportable findings fixed: 10
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 6
-- GitHub releases: 12
-- npm package status: `maintainerops-ai@0.1.12` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
-- GitHub Marketplace status: `MaintainerOps AI` public listing displays `v0.1.12` as `Latest`
-- Source version: `v0.1.13` is in preparation; latest public npm, GitHub Release, and GitHub Marketplace versions are aligned on `v0.1.12`
+- GitHub releases: 13
+- npm package status: `maintainerops-ai@0.1.13` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
+- GitHub Marketplace status: `MaintainerOps AI` public listing was last observed displaying `v0.1.12`; Issue #80 tracks refresh to `v0.1.13`
+- Source version: `v0.1.13` is aligned across source, npm, and GitHub Releases; GitHub Marketplace is pending refresh
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot production and development update batches were reviewed, verified, and merged on 2026-06-29
 - OpenSSF Scorecard status: latest successful manual run completed on 2026-07-02; last recorded score is `7.1`
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
-- npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.12` on 2026-07-05
+- npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.13` on 2026-07-05
 - Model-backed eval status: 2-case, 5-case, and 10-case live runs have passed after label/action normalization; Issue #52, Issue #60, and Issue #73 are closed; live evals remain manual-only and budget-gated
 
 ## Seven-day evidence plan

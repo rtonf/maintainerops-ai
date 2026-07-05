@@ -8,10 +8,10 @@ Public feedback discussion: https://github.com/rtonf/maintainerops-ai/discussion
 
 Current public channels:
 
-- npm latest: `maintainerops-ai@0.1.12`
-- GitHub Release latest: `v0.1.12`
-- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.12`
-- Next release candidate: `v0.1.13` adds `maintainerops demo` for a no-key packet check without a fixture file
+- npm latest: `maintainerops-ai@0.1.13`
+- GitHub Release latest: `v0.1.13`
+- GitHub Marketplace latest observed: `rtonf/maintainerops-ai@v0.1.12`; Issue #80 tracks the Marketplace refresh to `v0.1.13`
+- Best current test path: npm `maintainerops demo`, which needs no API key, GitHub token, fixture file, or repository access
 
 ## Copy/paste request
 
@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.12
+      - uses: rtonf/maintainerops-ai@v0.1.13
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
