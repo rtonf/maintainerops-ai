@@ -10,7 +10,8 @@ Current public channels:
 
 - npm latest: `maintainerops-ai@0.1.12`
 - GitHub Release latest: `v0.1.12`
-- GitHub Marketplace latest observed: `rtonf/maintainerops-ai@v0.1.11`; Issue #76 tracks the Marketplace refresh to `v0.1.12`
+- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.12`
+- Next release candidate: `v0.1.13` adds `maintainerops demo` for a no-key packet check without a fixture file
 
 ## Copy/paste request
 
@@ -23,10 +24,10 @@ Feedback discussion: https://github.com/rtonf/maintainerops-ai/discussions/17
 GitHub Action: https://github.com/marketplace/actions/maintainerops-ai
 
 Quick check:
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 
-Optional packet check:
-maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
+Fallback help check:
+npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 
 Please mention:
 - whether install/exec worked
@@ -74,13 +75,13 @@ jobs:
 From npm:
 
 ```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
-Then run one offline packet against a fixture:
+Fallback help check:
 
 ```bash
-maintainerops analyze --fixture examples/fixtures/pull_request.json --format markdown --offline
+npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 ```
 
 Or try it from source:

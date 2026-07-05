@@ -67,7 +67,7 @@ export interface AnalyzeOptions {
 }
 
 export interface CliArgs {
-  command: "analyze" | "help";
+  command: "analyze" | "demo" | "help";
   fixture?: string;
   repo?: string;
   pull?: number;

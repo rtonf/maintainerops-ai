@@ -1,6 +1,6 @@
 {
   "name": "maintainerops-ai",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "AI-assisted OSS maintainer workflows for PR review, issue triage, security triage, and release notes.",
   "type": "module",
   "files": [
@@ -32,7 +32,7 @@
     "test:src": "npm run build && npm test",
     "test:ui": "playwright test",
     "demo:gif": "node scripts/generate-demo-gif.mjs",
-    "demo": "npm run build:cli && node dist/cli.js analyze --fixture examples/fixtures/pull_request.json --format markdown",
+    "demo": "npm run build:cli && node dist/cli.js demo --format markdown",
     "dev": "vite --host 127.0.0.1",
     "preview": "vite preview --host 127.0.0.1",
     "eval": "npm run build:cli && node dist/eval/run-eval.js",

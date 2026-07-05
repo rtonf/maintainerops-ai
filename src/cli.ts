@@ -2,6 +2,7 @@
 import { pathToFileURL } from "node:url";
 import { assessWorkItem, resolveWorkItem } from "./analyze.js";
 import { DEFAULT_OPENAI_MODEL } from "./defaults.js";
+import { loadDemoFixture } from "./fixture.js";
 import { formatAssessment } from "./format.js";
 import type { CliArgs } from "./types.js";
 
@@ -13,16 +14,19 @@ export async function runCli(argv: string[]): Promise<void> {
     return;
   }
 
-  const item = await resolveWorkItem({
-    fixture: args.fixture,
-    repo: args.repo,
-    pull: args.pull,
-    issue: args.issue
-  });
+  const item =
+    args.command === "demo"
+      ? loadDemoFixture()
+      : await resolveWorkItem({
+          fixture: args.fixture,
+          repo: args.repo,
+          pull: args.pull,
+          issue: args.issue
+        });
 
   const assessment = await assessWorkItem(item, {
     format: args.format,
-    offline: args.offline,
+    offline: args.command === "demo" ? true : args.offline,
     model: args.model ?? process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL
   });
 
@@ -35,7 +39,7 @@ export function parseArgs(argv: string[]): CliArgs {
   }
 
   const [command, ...rest] = argv;
-  if (command !== "analyze") {
+  if (command !== "analyze" && command !== "demo") {
     throw new Error(`Unknown command: ${command}`);
   }
 
@@ -45,6 +49,27 @@ export function parseArgs(argv: string[]): CliArgs {
     offline: false,
     authorized: process.env.MAINTAINEROPS_AUTHORIZED === "true"
   };
+
+  if (command === "demo") {
+    args.offline = true;
+    for (let index = 0; index < rest.length; index += 1) {
+      const token = rest[index];
+      const next = rest[index + 1];
+
+      switch (token) {
+        case "--format":
+          args.format = parseFormat(requireValue(token, next));
+          index += 1;
+          break;
+        case "--offline":
+          args.offline = true;
+          break;
+        default:
+          throw new Error(`Unknown option for demo: ${token}`);
+      }
+    }
+    return args;
+  }
 
   for (let index = 0; index < rest.length; index += 1) {
     const token = rest[index];
@@ -125,11 +150,13 @@ function printHelp(): void {
   process.stdout.write(`MaintainerOps AI
 
 Usage:
+  maintainerops demo [--format markdown|json]
   maintainerops analyze --fixture examples/fixtures/pull_request.json [--format markdown|json]
   maintainerops analyze --repo owner/name --pull 123 [--format markdown|json]
   maintainerops analyze --repo owner/name --issue 456 [--format markdown|json]
 
 Options:
+  demo             Print an offline sample review packet with no API key or fixture file.
   --offline        Force deterministic offline analysis.
   --authorized     Confirm you own, maintain, or have permission to review the target repo.
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.
