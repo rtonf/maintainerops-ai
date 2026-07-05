@@ -11,6 +11,17 @@ describe("parseArgs", () => {
     assert.equal(args.offline, true);
   });
 
+  it("parses no-key demo mode", () => {
+    const args = parseArgs(["demo", "--format", "json"]);
+    assert.equal(args.command, "demo");
+    assert.equal(args.format, "json");
+    assert.equal(args.offline, true);
+  });
+
+  it("rejects live inputs for demo mode", () => {
+    assert.throws(() => parseArgs(["demo", "--repo", "owner/repo"]));
+  });
+
   it("rejects pull and issue together", () => {
     assert.throws(() => parseArgs(["analyze", "--repo", "owner/repo", "--pull", "1", "--issue", "2"]));
   });

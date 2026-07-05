@@ -50,11 +50,13 @@ Verified package contents and behavior:
 MaintainerOps AI
 
 Usage:
+  maintainerops demo [--format markdown|json]
   maintainerops analyze --fixture examples/fixtures/pull_request.json [--format markdown|json]
   maintainerops analyze --repo owner/name --pull 123 [--format markdown|json]
   maintainerops analyze --repo owner/name --issue 456 [--format markdown|json]
 
 Options:
+  demo             Print an offline sample review packet with no API key or fixture file.
   --offline        Force deterministic offline analysis.
   --authorized     Confirm you own, maintain, or have permission to review the target repo.
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.

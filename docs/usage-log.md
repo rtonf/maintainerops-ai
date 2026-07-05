@@ -122,20 +122,21 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-05 | Closed Issue #60 after the 10-case expansion landed and opened Issue #73 for the remaining explicitly approved live 10-case model-backed eval run.                                     | `https://github.com/rtonf/maintainerops-ai/issues/60`, `https://github.com/rtonf/maintainerops-ai/issues/73`                                                                                                                                                                                                   |
 | 2026-07-05 | Ran the approved 10-case live model-backed eval, fixed normalization gaps from failed attempts, and reached a passing 10-case run within budget.                                       | `docs/model-backed-eval-results/2026-07-05.md`, successful-run estimate `$0.001724`, cumulative estimate `$0.005114`                                                                                                                                                                                           |
 | 2026-07-05 | Published `v0.1.12`, verified npm Trusted Publishing and public CLI install, closed Issue #73, and opened Issue #76 for the Marketplace refresh.                                       | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.12`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28712720794`, `https://github.com/rtonf/maintainerops-ai/issues/73`, `https://github.com/rtonf/maintainerops-ai/issues/76`                                                           |
+| 2026-07-05 | Confirmed GitHub Marketplace now displays `v0.1.12` and prepared `v0.1.13` with a no-key `maintainerops demo` packet command for external feedback.                                    | `https://github.com/marketplace/actions/maintainerops-ai`, `src/cli.ts`, `src/fixture.ts`, README, `docs/external-feedback-request.md`, `docs/codex-security/no-key-demo-diff-review-2026-07-05.md`                                                                                                            |
 
 ## Current metrics
 
 - Public triage fixtures: 1
 - Offline eval cases: 7
-- Unit tests: 47
+- Unit tests: 49
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 10
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 6
 - GitHub releases: 12
 - npm package status: `maintainerops-ai@0.1.12` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
-- GitHub Marketplace status: `MaintainerOps AI` public listing was last observed displaying `v0.1.11`; Issue #76 tracks refresh to `v0.1.12`
-- Source version: `v0.1.12` is aligned across source, npm, and GitHub Releases; GitHub Marketplace is pending refresh
+- GitHub Marketplace status: `MaintainerOps AI` public listing displays `v0.1.12` as `Latest`
+- Source version: `v0.1.13` is in preparation; latest public npm, GitHub Release, and GitHub Marketplace versions are aligned on `v0.1.12`
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot production and development update batches were reviewed, verified, and merged on 2026-06-29
 - OpenSSF Scorecard status: latest successful manual run completed on 2026-07-02; last recorded score is `7.1`

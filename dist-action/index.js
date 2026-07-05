@@ -49,11 +49,52 @@ const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(impor
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
 ;// CONCATENATED MODULE: ./src/fixture.ts
 
+const DEMO_WORK_ITEM = {
+    kind: "pull_request",
+    repository: "example/critical-oss-package",
+    number: 1287,
+    title: "Harden plugin loader path validation",
+    author: "contributor-42",
+    body: "This PR rejects plugin paths that traverse outside the configured plugin directory. It also updates the loader error messages.",
+    url: "https://github.com/example/critical-oss-package/pull/1287",
+    labels: ["bugfix"],
+    files: [
+        {
+            path: "src/plugins/loader.ts",
+            status: "modified",
+            additions: 34,
+            deletions: 12,
+            patch: "- const resolved = path.resolve(root, requested);\n+ const resolved = safeResolveWithin(root, requested);\n+ if (!resolved.startsWith(root)) throw new Error('invalid plugin path');"
+        },
+        {
+            path: "src/plugins/safe-resolve.ts",
+            status: "added",
+            additions: 52,
+            deletions: 0,
+            patch: "+ export function safeResolveWithin(root: string, requested: string) {\n+   return path.resolve(root, requested);\n+ }"
+        }
+    ],
+    checks: [
+        {
+            name: "test",
+            status: "completed",
+            conclusion: "success"
+        }
+    ]
+};
 async function loadFixture(path) {
     const raw = await (0,promises_namespaceObject.readFile)(path, "utf8");
     const parsed = JSON.parse(raw);
     validateWorkItem(parsed);
     return parsed;
+}
+function loadDemoFixture() {
+    return {
+        ...DEMO_WORK_ITEM,
+        labels: [...(DEMO_WORK_ITEM.labels ?? [])],
+        files: DEMO_WORK_ITEM.files?.map((file) => ({ ...file })),
+        checks: DEMO_WORK_ITEM.checks?.map((check) => ({ ...check }))
+    };
 }
 function validateWorkItem(item) {
     if (!item.kind || !["pull_request", "issue", "release"].includes(item.kind)) {
@@ -12786,21 +12827,24 @@ function safeInline(value) {
 
 
 
+
 async function runCli(argv) {
     const args = parseArgs(argv);
     if (args.command === "help") {
         printHelp();
         return;
     }
-    const item = await resolveWorkItem({
-        fixture: args.fixture,
-        repo: args.repo,
-        pull: args.pull,
-        issue: args.issue
-    });
+    const item = args.command === "demo"
+        ? loadDemoFixture()
+        : await resolveWorkItem({
+            fixture: args.fixture,
+            repo: args.repo,
+            pull: args.pull,
+            issue: args.issue
+        });
     const assessment = await assessWorkItem(item, {
         format: args.format,
-        offline: args.offline,
+        offline: args.command === "demo" ? true : args.offline,
         model: args.model ?? process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL
     });
     process.stdout.write(`${formatAssessment(item, assessment, args.format)}\n`);
@@ -12810,7 +12854,7 @@ function parseArgs(argv) {
         return { command: "help", format: "markdown", offline: false, authorized: false };
     }
     const [command, ...rest] = argv;
-    if (command !== "analyze") {
+    if (command !== "analyze" && command !== "demo") {
         throw new Error(`Unknown command: ${command}`);
     }
     const args = {
@@ -12819,6 +12863,25 @@ function parseArgs(argv) {
         offline: false,
         authorized: process.env.MAINTAINEROPS_AUTHORIZED === "true"
     };
+    if (command === "demo") {
+        args.offline = true;
+        for (let index = 0; index < rest.length; index += 1) {
+            const token = rest[index];
+            const next = rest[index + 1];
+            switch (token) {
+                case "--format":
+                    args.format = parseFormat(requireValue(token, next));
+                    index += 1;
+                    break;
+                case "--offline":
+                    args.offline = true;
+                    break;
+                default:
+                    throw new Error(`Unknown option for demo: ${token}`);
+            }
+        }
+        return args;
+    }
     for (let index = 0; index < rest.length; index += 1) {
         const token = rest[index];
         const next = rest[index + 1];
@@ -12888,11 +12951,13 @@ function printHelp() {
     process.stdout.write(`MaintainerOps AI
 
 Usage:
+  maintainerops demo [--format markdown|json]
   maintainerops analyze --fixture examples/fixtures/pull_request.json [--format markdown|json]
   maintainerops analyze --repo owner/name --pull 123 [--format markdown|json]
   maintainerops analyze --repo owner/name --issue 456 [--format markdown|json]
 
 Options:
+  demo             Print an offline sample review packet with no API key or fixture file.
   --offline        Force deterministic offline analysis.
   --authorized     Confirm you own, maintain, or have permission to review the target repo.
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.
