@@ -4,7 +4,7 @@ These notes prepare MaintainerOps AI for GitHub Marketplace publication as a Git
 
 ## Current publication status
 
-As of 2026-07-07, npm, GitHub Releases, and the public GitHub Marketplace listing are aligned on `v0.1.13`. Follow-up issue https://github.com/rtonf/maintainerops-ai/issues/80 was closed after the Marketplace page displayed `v0.1.13` as the latest Action release.
+As of 2026-07-07, npm, GitHub Releases, and the public GitHub Marketplace listing are aligned on `v0.1.14`. Follow-up issue https://github.com/rtonf/maintainerops-ai/issues/85 tracked the metadata consistency release and Marketplace refresh verification.
 
 ## Listing name
 
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.13
+      - uses: rtonf/maintainerops-ai@v0.1.14
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

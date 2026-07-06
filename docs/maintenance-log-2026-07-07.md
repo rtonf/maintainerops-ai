@@ -17,6 +17,12 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 - Prepared the `v0.1.14` consistency release to fix npm package repository metadata and the stale Marketplace README Action example.
 - Added an API-free security diff review for the `v0.1.14` consistency release.
 - Opened Issue #85 to track the `v0.1.14` publication and post-release evidence update.
+- Merged PR #86 and published GitHub Release `v0.1.14`.
+- Verified npm Trusted Publishing succeeded for `maintainerops-ai@0.1.14`.
+- Verified `npm exec --yes --package maintainerops-ai@latest -- maintainerops demo --format markdown` prints the no-key review packet from the public registry package.
+- Confirmed the public GitHub Marketplace listing displays `v0.1.14` as `Latest`.
+- Opened Issue #87 to evaluate external SBOM/OSV dependency scanning feedback separately from the `v0.1.14` metadata release.
+- Refreshed Issue #6 with the current `v0.1.14` npm, GitHub Release, Marketplace, and no-key demo test path.
 
 ## Verification
 
@@ -27,6 +33,9 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 - PR #83 checks passed before merge.
 - Security diff review: `docs/codex-security/dependabot-maintenance-diff-review-2026-07-07.md`
 - Security diff review: `docs/codex-security/v0.1.14-consistency-diff-review-2026-07-07.md`
+- GitHub Release `v0.1.14`: `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.14`
+- npm Trusted Publishing run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28830553903`
+- GitHub Marketplace public listing: `https://github.com/marketplace/actions/maintainerops-ai`
 
 `npm run verify` passed with:
 
@@ -43,10 +52,11 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 ## Notes
 
 - The `publint` repository URL suggestion is addressed in the prepared `v0.1.14` consistency release.
-- The remaining open public issue is Issue #6 for external maintainer feedback.
+- The remaining open public issues are Issue #6 for external maintainer feedback and Issue #87 for SBOM/OSV scanner evaluation.
 
 ## Next
 
 - Keep Issue #6 current and continue seeking external maintainer feedback.
-- Publish `v0.1.14`, verify npm Trusted Publishing and public CLI execution, then refresh public evidence docs to claim `v0.1.14`.
+- Keep the v0.1.14 evidence docs aligned after the Marketplace cache refresh.
+- Evaluate Issue #87 without adding a new dependency scanner until the maintenance value and supply-chain risk are clear.
 - Run a Codex Security diff scan before the next code-bearing release.

@@ -17,16 +17,16 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 
 ## Current evidence snapshot
 
-- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.13` through npm Trusted Publishing with provenance; npm downloads API reported 343 downloads for 2026-06-22 through 2026-06-28; broken `0.1.8` is deprecated.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing displays `v0.1.13` as the latest Action release.
-- Latest GitHub Release: [`v0.1.13`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.13), adding the no-key `maintainerops demo` packet path for external feedback.
-- GitHub releases: 13 public releases from `v0.1.0` through `v0.1.13`, excluding intentionally withheld `v0.1.8`.
-- Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.13`.
+- Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.14` through npm Trusted Publishing with provenance; npm downloads API reported 506 downloads for 2026-06-30 through 2026-07-06; broken `0.1.8` is deprecated.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing displays `v0.1.14` as the latest Action release.
+- Latest GitHub Release: [`v0.1.14`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.14), aligning package metadata and Marketplace-facing examples.
+- GitHub releases: 14 public releases from `v0.1.0` through `v0.1.14`, excluding intentionally withheld `v0.1.8`.
+- Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.14`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
-- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.13` publication and 2026-07-07 dependency maintenance evidence.
+- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.14` publication and 2026-07-07 dependency maintenance evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
 - Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
-- Supply-chain release work: npm Trusted Publishing is active for `v0.1.13` and published without `NPM_TOKEN`.
+- Supply-chain release work: npm Trusted Publishing is active for `v0.1.14` and published without `NPM_TOKEN`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
 - Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md), [`docs/releases/v0.1.12.md`](docs/releases/v0.1.12.md), [`docs/releases/v0.1.13.md`](docs/releases/v0.1.13.md), and [`docs/releases/v0.1.14.md`](docs/releases/v0.1.14.md) track model-backed eval hardening, Trusted Publishing, provenance metadata repair, 10-case live eval publication, the no-key demo path, and package metadata consistency.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
@@ -217,7 +217,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.13
+      - uses: rtonf/maintainerops-ai@v0.1.14
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
