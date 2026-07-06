@@ -14,6 +14,9 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 - Re-ran `npm run verify` after `npm ci`.
 - Regenerated `dist-action/index.js` with the lockfile-resolved `@vercel/ncc@0.44.1`.
 - Added an API-free security diff review for the Dependabot maintenance batch.
+- Prepared the `v0.1.14` consistency release to fix npm package repository metadata and the stale Marketplace README Action example.
+- Added an API-free security diff review for the `v0.1.14` consistency release.
+- Opened Issue #85 to track the `v0.1.14` publication and post-release evidence update.
 
 ## Verification
 
@@ -23,6 +26,7 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 - PR #82 checks passed before merge.
 - PR #83 checks passed before merge.
 - Security diff review: `docs/codex-security/dependabot-maintenance-diff-review-2026-07-07.md`
+- Security diff review: `docs/codex-security/v0.1.14-consistency-diff-review-2026-07-07.md`
 
 `npm run verify` passed with:
 
@@ -38,11 +42,11 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 
 ## Notes
 
-- `publint` still suggests changing `pkg.repository.url` to a full `git+https://...git` URL. This is informational and does not block packaging.
+- The `publint` repository URL suggestion is addressed in the prepared `v0.1.14` consistency release.
 - The remaining open public issue is Issue #6 for external maintainer feedback.
 
 ## Next
 
 - Keep Issue #6 current and continue seeking external maintainer feedback.
-- Consider a small follow-up PR for the `publint` repository URL suggestion.
+- Publish `v0.1.14`, verify npm Trusted Publishing and public CLI execution, then refresh public evidence docs to claim `v0.1.14`.
 - Run a Codex Security diff scan before the next code-bearing release.
