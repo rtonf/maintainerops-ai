@@ -18,12 +18,12 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 ## Current evidence snapshot
 
 - Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.13` through npm Trusted Publishing with provenance; npm downloads API reported 343 downloads for 2026-06-22 through 2026-06-28; broken `0.1.8` is deprecated.
-- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing was last observed displaying `v0.1.12`; Issue #80 tracks the manual Marketplace refresh to `v0.1.13`.
+- GitHub Marketplace Action: [`MaintainerOps AI`](https://github.com/marketplace/actions/maintainerops-ai), public listing displays `v0.1.13` as the latest Action release.
 - Latest GitHub Release: [`v0.1.13`](https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.13), adding the no-key `maintainerops demo` packet path for external feedback.
 - GitHub releases: 13 public releases from `v0.1.0` through `v0.1.13`, excluding intentionally withheld `v0.1.8`.
-- Source, npm, and GitHub Releases are aligned on `v0.1.13`; GitHub Marketplace is pending refresh from `v0.1.12`.
+- Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.13`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
-- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.13` publication evidence.
+- Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.13` publication and 2026-07-07 dependency maintenance evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
 - Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
 - Supply-chain release work: npm Trusted Publishing is active for `v0.1.13` and published without `NPM_TOKEN`.
