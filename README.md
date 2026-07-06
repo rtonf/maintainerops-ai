@@ -28,7 +28,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
 - Supply-chain release work: npm Trusted Publishing is active for `v0.1.13` and published without `NPM_TOKEN`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
-- Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md), [`docs/releases/v0.1.12.md`](docs/releases/v0.1.12.md), and [`docs/releases/v0.1.13.md`](docs/releases/v0.1.13.md) track model-backed eval hardening, Trusted Publishing, provenance metadata repair, 10-case live eval publication, and the no-key demo path.
+- Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md), [`docs/releases/v0.1.12.md`](docs/releases/v0.1.12.md), [`docs/releases/v0.1.13.md`](docs/releases/v0.1.13.md), and [`docs/releases/v0.1.14.md`](docs/releases/v0.1.14.md) track model-backed eval hardening, Trusted Publishing, provenance metadata repair, 10-case live eval publication, the no-key demo path, and package metadata consistency.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
 - Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
 
@@ -155,6 +155,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [v0.1.3 Codex Security diff scan](docs/codex-security/v0.1.3-diff-scan-2026-06-11.md)
 - [Action hardening Codex Security diff scan](docs/codex-security/action-hardening-diff-scan-2026-06-12.md)
 - [Release alignment Codex Security diff review](docs/codex-security/release-alignment-diff-scan-2026-06-18.md)
+- [v0.1.14 consistency diff review](docs/codex-security/v0.1.14-consistency-diff-review-2026-07-07.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)
@@ -177,6 +178,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [v0.1.11 provenance metadata repair notes](docs/releases/v0.1.11.md)
 - [v0.1.12 10-case live model-backed eval notes](docs/releases/v0.1.12.md)
 - [v0.1.13 no-key demo release notes](docs/releases/v0.1.13.md)
+- [v0.1.14 package metadata and Marketplace snapshot notes](docs/releases/v0.1.14.md)
 - [npm package](https://www.npmjs.com/package/maintainerops-ai)
 
 ## Application materials
@@ -215,7 +217,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.12
+      - uses: rtonf/maintainerops-ai@v0.1.13
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}

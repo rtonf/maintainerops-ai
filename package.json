@@ -1,6 +1,6 @@
 {
   "name": "maintainerops-ai",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "AI-assisted OSS maintainer workflows for PR review, issue triage, security triage, and release notes.",
   "type": "module",
   "files": [
@@ -54,7 +54,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rtonf/maintainerops-ai"
+    "url": "git+https://github.com/rtonf/maintainerops-ai.git"
   },
   "engines": {
     "node": ">=20.11"
