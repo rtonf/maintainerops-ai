@@ -126,6 +126,7 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-05 | Published `v0.1.13`, verified npm Trusted Publishing and public `maintainerops demo`, closed Issue #76, and opened Issue #80 for the Marketplace refresh.                              | `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.13`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28727350922`, `https://github.com/rtonf/maintainerops-ai/issues/76`, `https://github.com/rtonf/maintainerops-ai/issues/80`                                                           |
 | 2026-07-07 | Confirmed Marketplace `v0.1.13` and merged Dependabot maintenance.                                                                                                                     | Issue #80 closed, PR #82, PR #83, `npm ci`, `npm run verify`, `docs/maintenance-log-2026-07-07.md`, `docs/codex-security/dependabot-maintenance-diff-review-2026-07-07.md`                                                                                                                                     |
 | 2026-07-07 | Prepared the `v0.1.14` consistency release for npm repository metadata and Marketplace README Action example cleanup.                                                                  | Issue #85, `package.json`, `README.md`, `docs/releases/v0.1.14.md`, `docs/codex-security/v0.1.14-consistency-diff-review-2026-07-07.md`                                                                                                                                                                        |
+| 2026-07-07 | Published `v0.1.14`, verified npm Trusted Publishing, public no-key CLI execution, and GitHub Marketplace `v0.1.14`; split external SBOM/OSV feedback into a follow-up issue.          | PR #86, Issue #85, Issue #87, `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.14`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28830553903`, `https://github.com/marketplace/actions/maintainerops-ai`, `docs/npm-install-evidence.md`                                                |
 
 ## Current metrics
 
@@ -136,16 +137,16 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Codex Security reportable findings fixed: 10
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
 - Real public repository review packets: 6
-- GitHub releases: 13
-- npm package status: `maintainerops-ai@0.1.13` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
-- GitHub Marketplace status: `MaintainerOps AI` public listing displays `v0.1.13` as `Latest`
-- Source version: `v0.1.13` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
+- GitHub releases: 14
+- npm package status: `maintainerops-ai@0.1.14` is published as `latest` through npm Trusted Publishing; broken `0.1.8` is deprecated
+- GitHub Marketplace status: `MaintainerOps AI` public listing displays `v0.1.14` as `Latest`
+- Source version: `v0.1.14` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot npm-development and GitHub Actions update batches were reviewed, verified, and merged on 2026-07-07
 - OpenSSF Scorecard status: latest successful manual run completed on 2026-07-02; last recorded score is `7.1`
 - Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; force push and deletion are disabled
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
-- npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.13` on 2026-07-05
+- npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.14` on 2026-07-07
 - Model-backed eval status: 2-case, 5-case, and 10-case live runs have passed after label/action normalization; Issue #52, Issue #60, and Issue #73 are closed; live evals remain manual-only and budget-gated
 
 ## Seven-day evidence plan
