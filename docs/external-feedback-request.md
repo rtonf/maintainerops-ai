@@ -10,7 +10,7 @@ Current public channels:
 
 - npm latest: `maintainerops-ai@0.1.13`
 - GitHub Release latest: `v0.1.13`
-- GitHub Marketplace latest observed: `rtonf/maintainerops-ai@v0.1.12`; Issue #80 tracks the Marketplace refresh to `v0.1.13`
+- GitHub Marketplace latest: `rtonf/maintainerops-ai@v0.1.13`
 - Best current test path: npm `maintainerops demo`, which needs no API key, GitHub token, fixture file, or repository access
 
 ## Copy/paste request
