@@ -10,8 +10,10 @@ The project should not present itself as a general GitHub bot or autonomous main
 
 ## Current Strengths
 
-- npm `maintainerops-ai@0.1.11` is published through npm Trusted Publishing with provenance.
-- GitHub Release `v0.1.11` is public.
+- npm `maintainerops-ai@0.1.14` is published through npm Trusted Publishing with provenance.
+- GitHub Release `v0.1.14` is public.
+- GitHub Marketplace displays `v0.1.14` as the latest Action release.
+- The no-key `maintainerops demo` path gives external testers a packet without `OPENAI_API_KEY`, `GITHUB_TOKEN`, local fixtures, or repository access.
 - The repository includes SECURITY, EVALS, Codex Security reports, usage logs, review packets, release notes, and npm install evidence.
 - The Action and CLI are read-only by design and avoid auto-merge, auto-close, auto-label, and auto-release behavior.
 - Deterministic offline evals and manual model-backed evals are both present.
@@ -20,20 +22,19 @@ The project should not present itself as a general GitHub bot or autonomous main
 ## Current Gaps
 
 - External maintainer feedback is still the largest adoption gap.
-- GitHub Marketplace still needs to be refreshed from `v0.1.9` to the latest Action release.
-- Some outreach material needed version refresh after the `v0.1.11` Trusted Publishing release.
+- Some older outreach material still needs cleanup or archiving so the no-key demo is the only current first-run CTA.
 - The project has very low stars and forks despite stronger clone traffic.
-- GitHub's community profile is strong but can improve with a Code of Conduct and clearer license detection.
+- Code scanning includes stale or residual OpenSSF Scorecard alerts that need triage.
 
 ## Near-Term Priorities
 
-1. Refresh GitHub Marketplace to the latest release.
-2. Keep all external feedback material on npm `0.1.11` and Action `v0.1.11`.
-3. Ask 10 maintainers for concrete feedback and capture responses on Issue #6.
-4. Convert any real feedback into issues, eval cases, and review-packet examples.
-5. Expand model-backed evals to 8-10 maintainer-labeled cases while keeping API use manual and budget-gated.
+1. Collect 5-10 concrete maintainer feedback reports on Issue #6 or Discussion #17.
+2. Convert real feedback into issues, eval cases, review-packet examples, or onboarding changes.
+3. Require the new `npm run verify` CI check in branch protection after its first successful GitHub run.
+4. Triage open Code Scanning / Scorecard alerts and separate stale alerts from true residual work.
+5. Evaluate SBOM/OSV scanning in Issue #87 without adding noisy PR blockers by default.
 6. Add one new review packet from an authorized public repository.
-7. Add Code of Conduct and verify GitHub community profile improvements.
+7. Keep model-backed evals manual, budget-gated, and fail-closed for unknown pricing.
 
 ## Product Direction
 

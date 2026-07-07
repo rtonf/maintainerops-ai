@@ -9,16 +9,16 @@ MaintainerOps AI helps open-source maintainers turn pull requests and issues int
 ## What To Promote
 
 - **Maintainer control:** It suggests summaries, risk level, labels, review checks, security notes, release-note hints, and draft responses without merging, closing, labeling, or publishing automatically.
-- **Low-friction trial:** Maintainers can try the npm CLI with an offline fixture before adding anything to a repository.
+- **Low-friction trial:** Maintainers can run the no-key npm demo before adding anything to a repository.
 - **GitHub Action path:** Repositories can generate review packets from pull request and issue events with read-only permissions.
 - **Security posture:** The project includes redaction, stdout neutralization, runtime validation, evals, and public security review evidence.
 - **Real examples:** Public review packet examples show what maintainers can expect before installing.
 
 ## Priority Actions
 
-1. Publish or confirm the GitHub Marketplace listing is on the latest Action release.
-2. Pin a short repository issue asking maintainers for early feedback.
-3. Share the npm one-command trial in maintainer communities.
+1. Keep the GitHub Marketplace listing on the latest Action release.
+2. Keep Issue #6 and Discussion #17 on the current no-key demo request.
+3. Share the npm one-command demo in maintainer communities.
 4. Add the Action to one or two owned public repositories and link to generated packets.
 5. Post a concise launch note on GitHub, LinkedIn, X, Mastodon, and relevant OSS/security communities.
 6. Ask 10 maintainers directly for feedback using the email/DM copy below.
@@ -49,8 +49,7 @@ It is read-only by design, works offline for safe CI validation, and only uses t
 Try the CLI:
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 Project: https://github.com/rtonf/maintainerops-ai
@@ -66,8 +65,7 @@ It is a read-only OSS maintainer assistant that generates triage packets instead
 Quick check:
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 Optional source demo:
@@ -83,7 +81,9 @@ Feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 
 I am especially looking for:
 
-- whether the install worked
+- whether install/exec worked
+- command or workflow used
+- repository or fixture used, if any
 - whether the packet would help real PR or issue triage
 - what felt noisy, unclear, or missing
 - whether you would run it as a read-only Action on an OSS repo
@@ -122,7 +122,7 @@ Use this table to track direct maintainer feedback requests.
 - [ ] Confirm npm version and GitHub Action release expectations are clearly explained.
 - [ ] Confirm Marketplace listing points to the latest Action release.
 - [ ] Confirm README quick start works on a clean machine.
-- [ ] Confirm `docs/review-packets/README.md` links to useful examples.
+- [ ] Confirm `docs/review-packets/README.md` links to useful clean UTF-8 examples.
 - [ ] Confirm demo GIF renders in GitHub README.
 - [ ] Confirm Issue #6 is open and linked from README, Marketplace notes, and launch posts.
 - [ ] Add at least one new real review packet from an owned public repository.

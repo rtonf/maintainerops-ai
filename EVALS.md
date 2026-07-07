@@ -73,3 +73,4 @@ Current status:
 - `npm run eval:model:list` lists all model-backed eval cases without requiring an API key.
 - The first 10-case live v0.1.12 run passed on 2026-07-05 with estimated successful-run cost `$0.001724`.
 - Live execution remains manual and budget-gated.
+- The model-backed eval runner fails closed when the selected model does not have explicit pricing in `src/eval/run-model-eval.ts`, so unknown models are not treated as `$0` spend.

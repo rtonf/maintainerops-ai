@@ -6,6 +6,8 @@ Public feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 
 Public feedback discussion: https://github.com/rtonf/maintainerops-ai/discussions/17
 
+Current feedback goal: collect 5-10 concrete maintainer reports from people who try the no-key demo, npm CLI, or GitHub Marketplace Action. Owner-authored status updates do not count toward this goal.
+
 Current public channels:
 
 - npm latest: `maintainerops-ai@0.1.14`
@@ -23,7 +25,7 @@ Feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 Feedback discussion: https://github.com/rtonf/maintainerops-ai/discussions/17
 GitHub Action: https://github.com/marketplace/actions/maintainerops-ai
 
-Quick check:
+Quick no-key check:
 npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 
 Fallback help check:
@@ -31,6 +33,8 @@ npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
 
 Please mention:
 - whether install/exec worked
+- command or workflow used
+- repository or fixture used, if any
 - whether Marketplace Action setup worked, if you tried it
 - whether the packet would help PR or issue triage
 - what was noisy, unclear, or missing
@@ -110,3 +114,13 @@ Please comment on Issue #6 with:
 - What was useful
 - What was wrong or missing
 - Whether you would use it again
+
+## Maintainer feedback target
+
+Useful public feedback should be concrete enough to convert into one of:
+
+- an eval case
+- a review packet example
+- a bug report
+- a product decision
+- a docs or onboarding improvement
