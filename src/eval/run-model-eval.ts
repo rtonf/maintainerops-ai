@@ -17,10 +17,12 @@ export interface ModelEvalCase {
   maxRisk?: RiskLevel;
 }
 
-const gpt4oMiniPricing = {
-  inputPerMillion: 0.15,
-  outputPerMillion: 0.6
-};
+const modelPricingUsdPerMillion = {
+  "gpt-4o-mini": {
+    input: 0.15,
+    output: 0.6
+  }
+} as const;
 const riskOrder: RiskLevel[] = ["low", "medium", "high", "critical"];
 const defaultCasesFile = "examples/evals/model-backed.json";
 
@@ -42,6 +44,7 @@ async function main(): Promise<void> {
 
   const selected = selectCases(cases, args);
   const model = process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL;
+  assertKnownPricedModel(model);
   const failures: string[] = [];
   let estimatedCostUsd = 0;
   const results: ModelEvalCaseResult[] = [];
@@ -51,9 +54,7 @@ async function main(): Promise<void> {
       maxOutputTokens: args.maxOutputTokens
     });
     const caseCostUsd = estimateCostUsd(model, usage.inputTokens, usage.outputTokens);
-    if (caseCostUsd !== undefined) {
-      estimatedCostUsd += caseCostUsd;
-    }
+    estimatedCostUsd += caseCostUsd;
 
     failures.push(...evaluateCaseResult(evalCase, result));
     results.push({
@@ -127,7 +128,7 @@ interface ModelEvalCaseResult {
     inputTokens?: number;
     outputTokens?: number;
   };
-  estimatedCostUsd?: number;
+  estimatedCostUsd: number;
 }
 
 export interface ModelEvalArgs {
@@ -290,15 +291,23 @@ function parsePositiveInteger(flag: string, value?: string): number {
   return parsed;
 }
 
-function estimateCostUsd(model: string, inputTokens?: number, outputTokens?: number): number | undefined {
-  if (model !== "gpt-4o-mini" || inputTokens === undefined || outputTokens === undefined) {
-    return undefined;
+export function assertKnownPricedModel(model: string): void {
+  if (!(model in modelPricingUsdPerMillion)) {
+    throw new Error(
+      `Model-backed eval budget guard does not have pricing for ${model}. Use a supported priced model or update run-model-eval pricing before running live evals.`
+    );
+  }
+}
+
+export function estimateCostUsd(model: string, inputTokens?: number, outputTokens?: number): number {
+  assertKnownPricedModel(model);
+
+  if (inputTokens === undefined || outputTokens === undefined) {
+    throw new Error("Model-backed eval budget guard requires input and output token usage.");
   }
 
-  return (
-    (inputTokens / 1_000_000) * gpt4oMiniPricing.inputPerMillion +
-    (outputTokens / 1_000_000) * gpt4oMiniPricing.outputPerMillion
-  );
+  const pricing = modelPricingUsdPerMillion[model as keyof typeof modelPricingUsdPerMillion];
+  return (inputTokens / 1_000_000) * pricing.input + (outputTokens / 1_000_000) * pricing.output;
 }
 
 function formatUsd(value: number): string {

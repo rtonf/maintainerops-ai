@@ -1,0 +1,14 @@
+# MaintainerOps AI is currently maintained by a solo maintainer.
+# CODEOWNERS documents the review boundary for release, CI, and security-sensitive paths.
+
+* @rtonf
+
+.github/ @rtonf
+action.yml @rtonf
+package.json @rtonf
+package-lock.json @rtonf
+SECURITY.md @rtonf
+EVALS.md @rtonf
+src/ @rtonf
+examples/evals/ @rtonf
+docs/codex-security/ @rtonf

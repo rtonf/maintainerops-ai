@@ -156,6 +156,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Action hardening Codex Security diff scan](docs/codex-security/action-hardening-diff-scan-2026-06-12.md)
 - [Release alignment Codex Security diff review](docs/codex-security/release-alignment-diff-scan-2026-06-18.md)
 - [v0.1.14 consistency diff review](docs/codex-security/v0.1.14-consistency-diff-review-2026-07-07.md)
+- [Maintenance quality gates diff review](docs/codex-security/maintenance-quality-gates-diff-review-2026-07-07.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)

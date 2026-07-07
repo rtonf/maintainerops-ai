@@ -12,3 +12,9 @@ node dist/cli.js analyze --fixture examples/fixtures/pull_request.json --format 
 ```
 
 Model availability can change over time. Maintainers should choose a model available to their OpenAI organization and update this project only after verifying `npm run verify` and a representative model-backed packet.
+
+## Model-backed eval pricing guard
+
+`npm run eval:model` is budget-gated and intentionally fails closed when the selected model does not have pricing recorded in `src/eval/run-model-eval.ts`.
+
+This prevents a live eval from treating an unknown model as `$0` spend. To use another model for model-backed evals, update the pricing table, run the targeted eval with an explicit `--budget-usd`, and record the result in the eval evidence docs.

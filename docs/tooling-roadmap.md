@@ -12,11 +12,15 @@ This document tracks useful skills, APIs, and support tooling for MaintainerOps 
 
 - Dependabot version updates: `.github/dependabot.yml`
 - CodeQL code scanning workflow: `.github/workflows/codeql.yml`
+- Full verification workflow: `.github/workflows/ci.yml`
+- CODEOWNERS review boundary: `.github/CODEOWNERS`
 - Public npm registry pin: `.npmrc`
 - OpenSSF Scorecard scheduled/manual workflow: `.github/workflows/scorecard.yml`
 - npm Trusted Publishing evidence: `docs/npm-trusted-publishing.md`
 
-These are intentionally low-risk additions. Dependabot opens reviewable PRs, CodeQL reports code-scanning findings without changing runtime behavior, `.npmrc` keeps npm/Dependabot pointed at the public npm registry without storing credentials, and Scorecard runs on a weekly/manual cadence instead of blocking every pull request.
+These are intentionally low-risk additions. Dependabot opens reviewable PRs, CodeQL reports code-scanning findings without changing runtime behavior, `.npmrc` keeps npm/Dependabot pointed at the public npm registry without storing credentials, Scorecard runs on a weekly/manual cadence, and the CI workflow runs the same `npm run verify` gate before ordinary pull request merges.
+
+Dependabot vulnerability alerts and security updates are enabled in GitHub repository settings as of 2026-07-07.
 
 ## Workflow Pinning
 
@@ -24,13 +28,13 @@ GitHub Actions in repository workflows are pinned to full commit SHAs with a sho
 
 ## Highest-Value Next Additions
 
-| Priority | Tooling                       | Why it helps                                                                  | Recommended timing                                       |
-| -------- | ----------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------- |
-| 1        | External maintainer feedback  | Converts the strongest remaining adoption gap into concrete product evidence. | Immediate; use Issue #6 and GitHub Discussion #17.       |
-| 2        | Expanded model-backed evals   | Tests real OpenAI output quality, not only deterministic offline heuristics.  | In progress via Issue #60; keep manual and budget-gated. |
-| 3        | Semgrep scheduled scan        | Adds another static-analysis perspective.                                     | Manual/scheduled only at first to avoid noisy PR gates.  |
-| 4        | GitHub App auth               | Better for organizations and private repositories.                            | After the public CLI/Action workflow proves demand.      |
-| 5        | Marketplace release freshness | Keeps the Action install path aligned with npm and GitHub Releases.           | Refresh after each Action release.                       |
+| Priority | Tooling                       | Why it helps                                                                  | Recommended timing                                  |
+| -------- | ----------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------- |
+| 1        | External maintainer feedback  | Converts the strongest remaining adoption gap into concrete product evidence. | Immediate; use Issue #6 and GitHub Discussion #17.  |
+| 2        | Scorecard alert cleanup       | Separates stale SARIF alerts from true residual supply-chain work.            | Immediate after the CI gate lands.                  |
+| 3        | SBOM/OSV scanner evaluation   | Determines whether another scanner adds value beyond current controls.        | Track in Issue #87; do not block PRs initially.     |
+| 4        | GitHub App auth               | Better for organizations and private repositories.                            | After the public CLI/Action workflow proves demand. |
+| 5        | Marketplace release freshness | Keeps the Action install path aligned with npm and GitHub Releases.           | Refresh after each Action release.                  |
 
 ## Do Not Add Yet
 

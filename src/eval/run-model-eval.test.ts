@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { evaluateCaseResult, parseArgs, selectCases } from "./run-model-eval.js";
+import {
+  assertKnownPricedModel,
+  estimateCostUsd,
+  evaluateCaseResult,
+  parseArgs,
+  selectCases
+} from "./run-model-eval.js";
 import type { MaintainerAssessment } from "../types.js";
 
 const assessment: MaintainerAssessment = {
@@ -142,6 +148,20 @@ describe("evaluateCaseResult", () => {
     );
 
     assert.equal(failures.length, 6);
+  });
+});
+
+describe("budget guard", () => {
+  it("estimates supported model costs", () => {
+    assert.equal(estimateCostUsd("gpt-4o-mini", 1_000_000, 1_000_000), 0.75);
+  });
+
+  it("fails closed when model pricing is unknown", () => {
+    assert.throws(() => assertKnownPricedModel("unpriced-model"), /does not have pricing for unpriced-model/);
+  });
+
+  it("requires token usage for cost estimation", () => {
+    assert.throws(() => estimateCostUsd("gpt-4o-mini", undefined, 100), /requires input and output token usage/);
   });
 });
 

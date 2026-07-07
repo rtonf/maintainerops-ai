@@ -23,6 +23,18 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 - Confirmed the public GitHub Marketplace listing displays `v0.1.14` as `Latest`.
 - Opened Issue #87 to evaluate external SBOM/OSV dependency scanning feedback separately from the `v0.1.14` metadata release.
 - Refreshed Issue #6 with the current `v0.1.14` npm, GitHub Release, Marketplace, and no-key demo test path.
+- Updated Issue #6 body and Discussion #17 to use the `v0.1.14` no-key demo as the single primary external feedback CTA.
+- Enabled GitHub Dependabot vulnerability alerts and Dependabot security updates in repository settings.
+- Added a pull-request CI workflow that runs the full `npm run verify` gate.
+- Added CODEOWNERS for repository-wide, workflow, release, source, eval, and security evidence paths.
+- Fixed four public review packet Markdown files that contained NUL bytes and Unicode replacement characters.
+- Hardened model-backed eval budget accounting so unknown model pricing fails closed instead of being treated as `$0`.
+- Added an API-free security diff review for the quality-gates and evidence-cleanup batch.
+- Commented on Issue #87 after enabling Dependabot security updates, narrowing the SBOM/OSV evaluation to value beyond the current baseline.
+- Opened Issue #89 for Japanese outreach doc cleanup.
+- Opened Issue #90 for bounded live GitHub comments, reviews, and checks ingestion.
+- Opened Issue #91 for safer human-reviewed recommended action names.
+- Opened Issue #92 for Code Scanning and OpenSSF Scorecard alert triage.
 
 ## Verification
 
@@ -36,13 +48,14 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 - GitHub Release `v0.1.14`: `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.14`
 - npm Trusted Publishing run: `https://github.com/rtonf/maintainerops-ai/actions/runs/28830553903`
 - GitHub Marketplace public listing: `https://github.com/marketplace/actions/maintainerops-ai`
+- Security diff review: `docs/codex-security/maintenance-quality-gates-diff-review-2026-07-07.md`
 
 `npm run verify` passed with:
 
 - TypeScript check
 - ESLint
 - Prettier check
-- 49 source tests
+- 52 source tests
 - 1 Playwright UI smoke test
 - 7 offline eval cases
 - package dry run
@@ -53,10 +66,14 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 
 - The `publint` repository URL suggestion is addressed in the prepared `v0.1.14` consistency release.
 - The remaining open public issues are Issue #6 for external maintainer feedback and Issue #87 for SBOM/OSV scanner evaluation.
+- GitHub Dependabot vulnerability alerts and security updates are now enabled.
 
 ## Next
 
 - Keep Issue #6 current and continue seeking external maintainer feedback.
 - Keep the v0.1.14 evidence docs aligned after the Marketplace cache refresh.
 - Evaluate Issue #87 without adding a new dependency scanner until the maintenance value and supply-chain risk are clear.
+- Fix or archive mojibake Japanese outreach docs tracked in Issue #89.
+- Triage Code Scanning / Scorecard alerts tracked in Issue #92.
+- After the new CI workflow has a successful GitHub run, add its `npm run verify` check to branch protection.
 - Run a Codex Security diff scan before the next code-bearing release.
