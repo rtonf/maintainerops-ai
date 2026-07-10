@@ -1,7 +1,9 @@
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { analyzeWithOpenAIResult } from "../openaiAssessment.js";
+import { OPENAI_ASSESSMENT_SYSTEM_PROMPT } from "../openaiAssessment.js";
 import { DEFAULT_OPENAI_MODEL } from "../defaults.js";
+import { buildAssessmentPrompt } from "../prompt.js";
 import type { MaintainerAssessment, MaintainerWorkItem, RiskLevel } from "../types.js";
 
 export interface ModelEvalCase {
@@ -29,10 +31,14 @@ const defaultCasesFile = "examples/evals/model-backed.json";
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
   const raw = await readFile(args.casesFile, "utf8");
-  const cases = JSON.parse(raw) as ModelEvalCase[];
+  const cases = JSON.parse(raw) as unknown;
+  if (!Array.isArray(cases) || cases.length === 0) {
+    throw new Error("Model-backed eval case file must contain at least one case.");
+  }
 
   if (args.list) {
-    for (const evalCase of selectCases(cases, { ...args, maxCases: Number.MAX_SAFE_INTEGER })) {
+    const selected = requireSelectedCases(selectCases(cases, { ...args, maxCases: Number.MAX_SAFE_INTEGER }));
+    for (const evalCase of selected) {
       process.stdout.write(`${evalCase.name}\n`);
     }
     return;
@@ -42,7 +48,7 @@ async function main(): Promise<void> {
     throw new Error("OPENAI_API_KEY is required for model-backed evals.");
   }
 
-  const selected = selectCases(cases, args);
+  const selected = requireSelectedCases(selectCases(cases, args));
   const model = process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL;
   assertKnownPricedModel(model);
   const failures: string[] = [];
@@ -50,6 +56,14 @@ async function main(): Promise<void> {
   const results: ModelEvalCaseResult[] = [];
 
   for (const evalCase of selected) {
+    const maximumCaseCostUsd = estimateMaximumRequestCostUsd(model, evalCase.item, args.maxOutputTokens);
+    if (estimatedCostUsd + maximumCaseCostUsd > args.budgetUsd) {
+      failures.push(
+        `${evalCase.name}: conservative preflight cost ${formatUsd(maximumCaseCostUsd)} would exceed remaining budget ${formatUsd(args.budgetUsd - estimatedCostUsd)}`
+      );
+      break;
+    }
+
     const { assessment: result, usage } = await analyzeWithOpenAIResult(evalCase.item, model, {
       maxOutputTokens: args.maxOutputTokens
     });
@@ -211,6 +225,13 @@ export function selectCases(cases: ModelEvalCase[], args: ModelEvalArgs): ModelE
   return selected.slice(0, args.maxCases);
 }
 
+export function requireSelectedCases(cases: ModelEvalCase[]): ModelEvalCase[] {
+  if (cases.length === 0) {
+    throw new Error("Model-backed eval selection must contain at least one case.");
+  }
+  return cases;
+}
+
 export function evaluateCaseResult(evalCase: ModelEvalCase, result: MaintainerAssessment): string[] {
   const failures: string[] = [];
 
@@ -308,6 +329,16 @@ export function estimateCostUsd(model: string, inputTokens?: number, outputToken
 
   const pricing = modelPricingUsdPerMillion[model as keyof typeof modelPricingUsdPerMillion];
   return (inputTokens / 1_000_000) * pricing.input + (outputTokens / 1_000_000) * pricing.output;
+}
+
+export function estimateMaximumRequestCostUsd(
+  model: string,
+  item: MaintainerWorkItem,
+  maxOutputTokens: number
+): number {
+  const prompt = `${OPENAI_ASSESSMENT_SYSTEM_PROMPT}\n${buildAssessmentPrompt(item)}`;
+  const conservativeInputTokenCeiling = Buffer.byteLength(prompt, "utf8") + 512;
+  return estimateCostUsd(model, conservativeInputTokenCeiling, maxOutputTokens);
 }
 
 function formatUsd(value: number): string {

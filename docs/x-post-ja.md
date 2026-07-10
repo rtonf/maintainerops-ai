@@ -9,8 +9,7 @@ PR や Issue から、要約、リスクレベル、推奨ラベル、レビュ�
 自動で merge / close / label / release はしません。API キーなしでも offline mode で試せます。
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 https://github.com/rtonf/maintainerops-ai
@@ -32,8 +31,7 @@ MaintainerOps AI の初期 feedback を募集しています。
 OSS メンテナー向けに、PR / Issue を read-only で分析してレビュー・トリアージ packet を作るツールです。
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 感想はこちらにお願いします:

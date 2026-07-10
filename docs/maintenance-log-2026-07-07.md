@@ -65,15 +65,15 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 ## Notes
 
 - The `publint` repository URL suggestion is addressed in the prepared `v0.1.14` consistency release.
-- The remaining open public issues are Issue #6 for external maintainer feedback and Issue #87 for SBOM/OSV scanner evaluation.
+- Open follow-up issues are Issue #6, Issue #87, and Issues #89-#92 for documentation, ingestion, action-contract, and Scorecard work.
 - GitHub Dependabot vulnerability alerts and security updates are now enabled.
+- The new `npm run verify` workflow passed on PR #93 and after merge, and is now required by `main` branch protection.
 
 ## Next
 
 - Keep Issue #6 current and continue seeking external maintainer feedback.
 - Keep the v0.1.14 evidence docs aligned after the Marketplace cache refresh.
 - Evaluate Issue #87 without adding a new dependency scanner until the maintenance value and supply-chain risk are clear.
-- Fix or archive mojibake Japanese outreach docs tracked in Issue #89.
+- Keep the clean UTF-8 Japanese outreach docs on the current no-key demo CTA tracked in Issue #89.
 - Triage Code Scanning / Scorecard alerts tracked in Issue #92.
-- After the new CI workflow has a successful GitHub run, add its `npm run verify` check to branch protection.
 - Run a Codex Security diff scan before the next code-bearing release.

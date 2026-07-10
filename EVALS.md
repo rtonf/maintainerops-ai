@@ -18,6 +18,9 @@ The current golden set checks that:
 - Prompt-injection and secret-handling issues are routed to security review.
 - Release-readiness issues receive release-note handling without inflating risk.
 - External feedback issues that mention security evidence remain low risk and do not receive security or release labels unless they describe an actionable vulnerability or release task.
+- Test-file detection uses path conventions instead of broad `test`/`spec` substring matches.
+- Empty eval sets fail instead of reporting a misleading zero-case pass.
+- Expected recommended actions, minimum risk, and minimum evidence can be enforced per case.
 
 ## Current golden cases
 
@@ -47,7 +50,7 @@ npm run eval:model:list
 ```
 
 `npm run eval:model` requires `OPENAI_API_KEY` and is intentionally separate from CI so it cannot spend API credits during routine checks.
-Use `--suite`, `--case`, `--budget-usd`, `--max-cases`, and `--max-output-tokens` to keep manual runs scoped and bounded.
+Use `--suite`, `--case`, `--budget-usd`, `--max-cases`, and `--max-output-tokens` to keep manual runs scoped and bounded. Before each API request, the runner uses a conservative input/output ceiling and refuses the call if it cannot fit within the remaining budget; actual token usage is checked again afterward.
 
 Model-backed eval goals:
 
@@ -67,10 +70,11 @@ Current status:
 - The first run passed schema validation but exposed label vocabulary drift.
 - Label normalization is implemented for model-backed output.
 - A follow-up 2-case live eval passed after label normalization with an estimated successful-run cost of `$0.000320`.
-- The `v0.1.10` release candidate expands the selected manual model-backed case set from 2 to 5 cases: security-sensitive PR, ordinary issue, prompt-injection issue, release readiness issue, and external feedback issue.
+- The first expanded run increased the selected manual model-backed set from 2 to 5 cases.
 - Model-backed evals remain manual-only and separate from deterministic `npm run eval`.
 - The v0.1.12 source tree adds `examples/evals/model-backed.json` with 10 model-backed eval candidates, grouped into `smoke` and `expanded` suites.
 - `npm run eval:model:list` lists all model-backed eval cases without requiring an API key.
 - The first 10-case live v0.1.12 run passed on 2026-07-05 with estimated successful-run cost `$0.001724`.
 - Live execution remains manual and budget-gated.
 - The model-backed eval runner fails closed when the selected model does not have explicit pricing in `src/eval/run-model-eval.ts`, so unknown models are not treated as `$0` spend.
+- Empty model case files or selections fail closed, and live calls now require a conservative preflight estimate to fit inside the remaining declared budget.

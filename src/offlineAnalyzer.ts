@@ -1,4 +1,5 @@
 import type { MaintainerAssessment, MaintainerWorkItem, RiskLevel } from "./types.js";
+import { isTestLikePath } from "./fileSignals.js";
 
 const securityTerms = [
   "auth",
@@ -38,7 +39,8 @@ const actionableSecurityPatterns = [
   /\bsql injection\b/,
   /\bprompt[- ]injection\b/,
   /\bunauthorized\b/,
-  /\b(?:missing|absent|without)\b.{0,40}\b(?:auth(?:entication|orization)?|permission|validation|check)\b/,
+  /\b(?:missing|absent)\b.{0,40}\b(?:auth(?:entication|orization)?|permission|validation|check)\b/,
+  /\bwithout\b.{0,40}\b(?:auth(?:entication|orization)?|permission|validation)\s+(?:check|enforcement|guard)\b/,
   /\b(?:auth(?:entication|orization)?|permission|validation|check)\b.{0,40}\b(?:missing|absent|not enforced)\b/
 ];
 const feedbackRequestPatterns = [
@@ -48,7 +50,6 @@ const feedbackRequestPatterns = [
   /\bfound (?:this|it) (?:through|on) (?:github )?marketplace\b/
 ];
 const releaseTerms = ["breaking", "migration", "deprecated", "remove", "major", "release", "bump", "upgrade"];
-const testTerms = ["test", "spec", "__tests__", ".test.", ".spec."];
 const MAX_SEARCHABLE_CHARS = 1_000_000;
 
 export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
@@ -61,8 +62,8 @@ export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
   const hasActionableSecuritySignal = actionableSecurityPatterns.some((pattern) => pattern.test(searchable));
   const hasSecuritySignal = hasRawSecuritySignal && (!isFeedbackRequest || hasActionableSecuritySignal);
   const hasReleaseSignal = !isFeedbackRequest && releaseTerms.some((term) => searchable.includes(term));
-  const hasTests = touchedFiles.some((file) => testTerms.some((term) => file.path.toLowerCase().includes(term)));
-  const sourceFiles = touchedFiles.filter((file) => !testTerms.some((term) => file.path.toLowerCase().includes(term)));
+  const hasTests = touchedFiles.some((file) => isTestLikePath(file.path));
+  const sourceFiles = touchedFiles.filter((file) => !isTestLikePath(file.path));
   const largeChange =
     touchedFiles.length > 12 ||
     sourceFiles.reduce((sum, file) => sum + (file.additions ?? 0) + (file.deletions ?? 0), 0) > 500;

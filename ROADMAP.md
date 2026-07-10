@@ -1,32 +1,37 @@
 # Roadmap
 
-## MVP
+## Shipped
 
-- CLI fixture analysis
-- GitHub issue and pull request fetching
-- OpenAI structured output
-- Offline heuristic fallback
-- Markdown and JSON report output
-- Basic eval harness
+- npm CLI and prebuilt GitHub Marketplace Action
+- Fixture, GitHub issue, and pull request analysis
+- OpenAI structured output with deterministic offline fallback
+- Markdown and JSON review packets
+- Seven-case deterministic eval suite and ten-case manual model-backed suite
+- No-key demo command
+- Required CI, CodeQL, Dependabot, OpenSSF Scorecard, CODEOWNERS, and branch protection
+- npm Trusted Publishing with provenance
+- Community health files and public security review evidence
+
+## Now
+
+- Collect 5-10 external maintainer reports on Issue #6.
+- Deliver review packets through the GitHub Actions Step Summary and a redacted Action output.
+- Keep offline and model-backed evals fail-closed for empty case sets, malformed inputs, and unaffordable live calls.
+- Triage stale OpenSSF Scorecard code-scanning alerts and keep SARIF results current.
+- Use real maintainer feedback to add false-positive and false-negative regression cases.
 
 ## Next
 
-- Refresh GitHub Marketplace to the latest Action release.
-- Collect external maintainer feedback on Issue #6.
-- Expand model-backed evals from the current 5 selected live cases to 8-10 maintainer-labeled cases.
-- Add one or two new real review packets from authorized public repositories.
-- Add Code of Conduct and keep community profile health high.
-- Add Semgrep or another scheduled/manual scanner after false-positive expectations are documented.
-- GitHub App authentication for organizations and private repositories.
-- Project-specific policy files such as `.maintainerops.yml`.
+- Ingest bounded issue comments, pull request reviews, and check summaries without adding write permissions.
+- Adopt safer human-review action names in a versioned JSON contract.
+- Add project-specific policy files such as `.maintainerops.yml`.
+- Add deterministic OpenAI and GitHub integration tests plus coverage reporting.
+- Evaluate GitHub App authentication after external demand is demonstrated.
 
 ## Later
 
-- Maintainer dashboard UI connected to real packet data.
-- Review comment posting with explicit confirmation.
-- CodeQL, Dependabot, Semgrep, and package-audit ingestion.
-- Release-note generation from milestone and merged PR history.
-- Multi-repository maintainer queues
-- Evaluation dashboard
-- Organization-wide policy templates
-- Codex Security handoff reports for authorized repositories
+- Connect the dashboard prototype to real packet data after multi-repository demand is validated.
+- Add review comment posting only with explicit maintainer confirmation.
+- Generate release notes from milestones and merged pull requests.
+- Add multi-repository queues, organization policy templates, and evaluation dashboards.
+- Add Codex Security handoff reports for authorized repositories.

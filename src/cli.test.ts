@@ -31,4 +31,15 @@ describe("parseArgs", () => {
     const args = parseArgs(["analyze", "--repo", "owner/repo", "--pull", "1", "--authorized"]);
     assert.equal(args.authorized, true);
   });
+
+  it("rejects partially numeric and unsafe issue numbers", () => {
+    assert.throws(
+      () => parseArgs(["analyze", "--repo", "owner/repo", "--pull", "12oops", "--authorized"]),
+      /positive integer/
+    );
+    assert.throws(
+      () => parseArgs(["analyze", "--repo", "owner/repo", "--issue", "9007199254740992", "--authorized"]),
+      /safe positive integer/
+    );
+  });
 });

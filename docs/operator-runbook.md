@@ -17,32 +17,38 @@ This runbook records the checks needed before publishing evidence for the Codex 
    git diff --exit-code -- dist-action
    ```
 
-3. Confirm npm Trusted Publishing configuration before publishing:
+3. Confirm the intended tag exactly matches the stable package version:
+
+   ```bash
+   node scripts/verify-release-tag.mjs vX.Y.Z
+   ```
+
+4. Confirm npm Trusted Publishing configuration before publishing:
 
    ```bash
    gh workflow view npm-publish.yml --repo rtonf/maintainerops-ai
    ```
 
-4. Publish a GitHub Release to trigger npm Trusted Publishing:
+5. Publish a GitHub Release to trigger npm Trusted Publishing:
 
    ```bash
    gh release create vX.Y.Z --repo rtonf/maintainerops-ai --target main --title "vX.Y.Z" --notes-file docs/releases/vX.Y.Z.md
    ```
 
-5. Verify npm latest and CLI execution:
+6. Verify npm latest and CLI execution:
 
    ```bash
    npm view maintainerops-ai version dist-tags time --json
-   npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+   npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
    ```
 
-6. Verify the GitHub Release:
+7. Verify the GitHub Release:
 
    ```bash
    gh release view vX.Y.Z --repo rtonf/maintainerops-ai --json url,tagName,name,publishedAt,isDraft,isPrerelease,targetCommitish
    ```
 
-7. Verify the GitHub Marketplace listing:
+8. Verify the GitHub Marketplace listing:
 
    ```text
    https://github.com/marketplace/actions/maintainerops-ai
@@ -54,12 +60,12 @@ This runbook records the checks needed before publishing evidence for the Codex 
    - Status: `Latest`
    - Publisher: `rtonf`
 
-8. Update public evidence:
+9. Update public evidence:
    - `README.md`
    - `docs/npm-install-evidence.md`
    - `docs/usage-log.md`
    - the release tracking issue
-   - Issue #6 for external feedback
+   - Issue #6 only when the tester contract or primary command changes
 
 ## Common Failure Recovery
 
