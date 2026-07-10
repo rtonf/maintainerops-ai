@@ -28,7 +28,7 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
     "format:check": "prettier --check .",
-    "test": "node --test dist/**/*.test.js scripts/**/*.test.mjs",
+    "test": "node scripts/run-tests.mjs",
     "test:src": "npm run build && npm test",
     "test:ui": "playwright test",
     "demo:gif": "node scripts/generate-demo-gif.mjs",

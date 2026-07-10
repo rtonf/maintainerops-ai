@@ -14,6 +14,7 @@ Today's maintenance focused on turning the repository review into product-qualit
 - Added GitHub Actions Step Summary and redacted multiline `report` output support.
 - Changed Action fixture paths to resolve from the caller workspace.
 - Added npm release tag/package version equality and stable-release guards.
+- Added cross-platform test discovery so Node.js 20 and 24 run the same compiled test set without shell glob differences.
 - Prepared Scorecard SARIF upload to refresh stale code-scanning alerts.
 - Moved CodeQL `security-events: write` from workflow scope to the analysis job.
 - Updated contributor guidance, roadmap status, eval documentation, and Japanese no-key demo CTAs.
