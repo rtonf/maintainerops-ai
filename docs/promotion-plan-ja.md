@@ -38,8 +38,7 @@ PR や Issue から、人間が確認して使うレビュー・トリアージ 
 自動で merge、close、label、release はしません。OpenAI API キーなしでも offline mode で試せます。
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 GitHub: https://github.com/rtonf/maintainerops-ai  
@@ -55,8 +54,7 @@ It generates structured, human-reviewed packets with a summary, risk level, sugg
 It is read-only by design, works offline for safe CI validation, and only uses the OpenAI API when explicitly configured.
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 GitHub: https://github.com/rtonf/maintainerops-ai  
@@ -72,8 +70,7 @@ OSS メンテナー向けに、PR や Issue から read-only のレビュー・�
 もしよければ、以下だけ試して Issue #6 に短い感想をもらえると助かります。
 
 ```bash
-npm install -g maintainerops-ai@latest
-maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 Feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
@@ -90,6 +87,6 @@ Feedback issue: https://github.com/rtonf/maintainerops-ai/issues/6
 - [ ] npm の最新バージョンと README の説明が一致している。
 - [ ] GitHub Action の最新 release が Marketplace に反映されている。
 - [ ] Issue #6 が開いていて README から辿れる。
-- [ ] `npm install -g maintainerops-ai@latest`後に`maintainerops --help`が動く。
+- [ ] `npm exec --yes --package maintainerops-ai@latest -- maintainerops demo`でpacketが表示される。
 - [ ] demo GIF または screenshot が GitHub 上で表示される。
 - [ ] 外部投稿に使う URL がすべて公開ページになっている。

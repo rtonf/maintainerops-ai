@@ -28,7 +28,7 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
     "format:check": "prettier --check .",
-    "test": "node --test dist/**/*.test.js",
+    "test": "node scripts/run-tests.mjs",
     "test:src": "npm run build && npm test",
     "test:ui": "playwright test",
     "demo:gif": "node scripts/generate-demo-gif.mjs",
@@ -38,6 +38,7 @@
     "eval": "npm run build:cli && node dist/eval/run-eval.js",
     "eval:model": "npm run build:cli && node dist/eval/run-model-eval.js",
     "eval:model:list": "npm run build:cli && node dist/eval/run-model-eval.js --list --suite all",
+    "release:check": "node scripts/verify-release-tag.mjs",
     "prepack": "npm run build:cli && npm run build:action",
     "pack:check": "npm run build && npm pack --dry-run && publint",
     "verify": "npm run check && npm run lint && npm run format:check && npm run test:src && npm run test:ui && npm run eval && npm run pack:check && npm audit --audit-level=moderate"

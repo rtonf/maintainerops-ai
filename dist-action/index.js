@@ -43,10 +43,29 @@ function buildActionArgs(env) {
     throw new Error("mode must be pull_request, issue, or fixture");
 }
 
-;// CONCATENATED MODULE: external "node:url"
-const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
 ;// CONCATENATED MODULE: external "node:fs/promises"
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
+;// CONCATENATED MODULE: external "node:crypto"
+const external_node_crypto_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:crypto");
+;// CONCATENATED MODULE: ./src/actionOutput.ts
+
+
+async function writeActionReport(report, format, env) {
+    if (env.GITHUB_STEP_SUMMARY) {
+        const summary = format === "json" ? `# MaintainerOps AI report\n\n\`\`\`json\n${report}\n\`\`\`\n` : `${report}\n`;
+        await (0,promises_namespaceObject.appendFile)(env.GITHUB_STEP_SUMMARY, summary, "utf8");
+    }
+    if (env.GITHUB_OUTPUT) {
+        let delimiter = `maintainerops_${(0,external_node_crypto_namespaceObject.randomUUID)()}`;
+        while (report.includes(delimiter)) {
+            delimiter = `maintainerops_${(0,external_node_crypto_namespaceObject.randomUUID)()}`;
+        }
+        await (0,promises_namespaceObject.appendFile)(env.GITHUB_OUTPUT, `report<<${delimiter}\n${report}\n${delimiter}\n`, "utf8");
+    }
+}
+
+;// CONCATENATED MODULE: external "node:url"
+const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
 ;// CONCATENATED MODULE: ./src/fixture.ts
 
 const DEMO_WORK_ITEM = {
@@ -97,15 +116,77 @@ function loadDemoFixture() {
     };
 }
 function validateWorkItem(item) {
-    if (!item.kind || !["pull_request", "issue", "release"].includes(item.kind)) {
+    if (!isRecord(item)) {
+        throw new Error("Fixture must be a JSON object.");
+    }
+    if (typeof item.kind !== "string" || !["pull_request", "issue", "release"].includes(item.kind)) {
         throw new Error("Fixture must include kind: pull_request, issue, or release.");
     }
-    if (!item.repository || typeof item.repository !== "string") {
+    if (typeof item.repository !== "string" || item.repository.trim().length === 0) {
         throw new Error("Fixture must include repository.");
     }
-    if (!item.title || typeof item.title !== "string") {
+    if (typeof item.title !== "string" || item.title.trim().length === 0) {
         throw new Error("Fixture must include title.");
     }
+    if (item.number !== undefined && (!Number.isSafeInteger(item.number) || item.number <= 0)) {
+        throw new Error("Fixture number must be a safe positive integer.");
+    }
+    for (const field of ["author", "body", "url", "diff"]) {
+        assertOptionalString(item, field);
+    }
+    assertOptionalStringArray(item, "labels");
+    assertOptionalStringArray(item, "comments");
+    if (item.files !== undefined) {
+        if (!Array.isArray(item.files)) {
+            throw new Error("Fixture files must be an array.");
+        }
+        item.files.forEach(validateChangedFile);
+    }
+    if (item.checks !== undefined) {
+        if (!Array.isArray(item.checks)) {
+            throw new Error("Fixture checks must be an array.");
+        }
+        item.checks.forEach(validateCheckRun);
+    }
+    if (item.metadata !== undefined && !isRecord(item.metadata)) {
+        throw new Error("Fixture metadata must be an object.");
+    }
+}
+function validateChangedFile(value, index) {
+    if (!isRecord(value) || typeof value.path !== "string" || value.path.trim().length === 0) {
+        throw new Error(`Fixture files[${index}] must include a path.`);
+    }
+    if (!new Set(["added", "modified", "removed", "renamed", "unknown"]).has(String(value.status))) {
+        throw new Error(`Fixture files[${index}] has an invalid status.`);
+    }
+    for (const field of ["additions", "deletions"]) {
+        if (value[field] !== undefined && (!Number.isSafeInteger(value[field]) || value[field] < 0)) {
+            throw new Error(`Fixture files[${index}].${field} must be a non-negative integer.`);
+        }
+    }
+    assertOptionalString(value, "patch", `Fixture files[${index}].patch must be a string.`);
+}
+function validateCheckRun(value, index) {
+    if (!isRecord(value) || typeof value.name !== "string" || value.name.trim().length === 0) {
+        throw new Error(`Fixture checks[${index}] must include a name.`);
+    }
+    for (const field of ["conclusion", "status", "url"]) {
+        assertOptionalString(value, field, `Fixture checks[${index}].${field} must be a string.`);
+    }
+}
+function assertOptionalString(record, field, message) {
+    if (record[field] !== undefined && typeof record[field] !== "string") {
+        throw new Error(message ?? `Fixture ${field} must be a string.`);
+    }
+}
+function assertOptionalStringArray(record, field) {
+    const value = record[field];
+    if (value !== undefined && (!Array.isArray(value) || value.some((entry) => typeof entry !== "string"))) {
+        throw new Error(`Fixture ${field} must be an array of strings.`);
+    }
+}
+function isRecord(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 ;// CONCATENATED MODULE: ./src/github.ts
@@ -186,7 +267,26 @@ function toChangedFile(file) {
     };
 }
 
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+;// CONCATENATED MODULE: ./src/fileSignals.ts
+
+const testDirectories = new Set(["test", "tests", "__tests__", "spec", "specs"]);
+function isTestLikePath(filePath) {
+    const normalized = filePath.replace(/\\/g, "/").toLowerCase();
+    const segments = normalized.split("/").filter(Boolean);
+    if (segments.slice(0, -1).some((segment) => testDirectories.has(segment))) {
+        return true;
+    }
+    const fileName = (0,external_node_path_namespaceObject.basename)(normalized);
+    return (/(?:^|[._-])tests?(?:[._-]|$)/.test(fileName) ||
+        /(?:^|[._-])specs?(?:[._-]|$)/.test(fileName) ||
+        /^test_[^.]+/.test(fileName) ||
+        /_(?:test|spec)\.[^.]+$/.test(fileName));
+}
+
 ;// CONCATENATED MODULE: ./src/offlineAnalyzer.ts
+
 const securityTerms = [
     "auth",
     "authorization",
@@ -224,7 +324,8 @@ const actionableSecurityPatterns = [
     /\bsql injection\b/,
     /\bprompt[- ]injection\b/,
     /\bunauthorized\b/,
-    /\b(?:missing|absent|without)\b.{0,40}\b(?:auth(?:entication|orization)?|permission|validation|check)\b/,
+    /\b(?:missing|absent)\b.{0,40}\b(?:auth(?:entication|orization)?|permission|validation|check)\b/,
+    /\bwithout\b.{0,40}\b(?:auth(?:entication|orization)?|permission|validation)\s+(?:check|enforcement|guard)\b/,
     /\b(?:auth(?:entication|orization)?|permission|validation|check)\b.{0,40}\b(?:missing|absent|not enforced)\b/
 ];
 const feedbackRequestPatterns = [
@@ -234,7 +335,6 @@ const feedbackRequestPatterns = [
     /\bfound (?:this|it) (?:through|on) (?:github )?marketplace\b/
 ];
 const releaseTerms = ["breaking", "migration", "deprecated", "remove", "major", "release", "bump", "upgrade"];
-const testTerms = ["test", "spec", "__tests__", ".test.", ".spec."];
 const MAX_SEARCHABLE_CHARS = 1_000_000;
 function analyzeOffline(item) {
     const searchable = buildSearchableText(item);
@@ -244,8 +344,8 @@ function analyzeOffline(item) {
     const hasActionableSecuritySignal = actionableSecurityPatterns.some((pattern) => pattern.test(searchable));
     const hasSecuritySignal = hasRawSecuritySignal && (!isFeedbackRequest || hasActionableSecuritySignal);
     const hasReleaseSignal = !isFeedbackRequest && releaseTerms.some((term) => searchable.includes(term));
-    const hasTests = touchedFiles.some((file) => testTerms.some((term) => file.path.toLowerCase().includes(term)));
-    const sourceFiles = touchedFiles.filter((file) => !testTerms.some((term) => file.path.toLowerCase().includes(term)));
+    const hasTests = touchedFiles.some((file) => isTestLikePath(file.path));
+    const sourceFiles = touchedFiles.filter((file) => !isTestLikePath(file.path));
     const largeChange = touchedFiles.length > 12 ||
         sourceFiles.reduce((sum, file) => sum + (file.additions ?? 0) + (file.deletions ?? 0), 0) > 500;
     const riskLevel = hasSecuritySignal ? (largeChange ? "critical" : "high") : largeChange ? "medium" : "low";
@@ -12489,6 +12589,7 @@ function buildAssessmentPrompt(item) {
 }
 
 ;// CONCATENATED MODULE: ./src/labels.ts
+
 const canonicalLabels = new Set([
     "needs-triage",
     "maintainer-review",
@@ -12581,10 +12682,7 @@ function normalizeLabel(label) {
     return [normalized.replace(/\s+/g, "-").replace(/_+/g, "-")];
 }
 function hasTestLikeFile(item) {
-    return (item.files ?? []).some((file) => {
-        const path = file.path.toLowerCase();
-        return path.includes("test") || path.includes("spec") || path.includes("__tests__");
-    });
+    return (item.files ?? []).some((file) => isTestLikePath(file.path));
 }
 function isFeedbackRequest(item) {
     const text = `${item.title}\n${item.body ?? ""}`.toLowerCase();
@@ -12652,6 +12750,7 @@ function hasDirectSecurityReviewSignal(item) {
 
 
 
+const OPENAI_ASSESSMENT_SYSTEM_PROMPT = "You are MaintainerOps AI, a human-in-the-loop assistant for public open-source maintainers. You produce conservative, evidence-based triage and review packets.";
 async function analyzeWithOpenAI(item, model, options = {}) {
     const result = await analyzeWithOpenAIResult(item, model, options);
     return result.assessment;
@@ -12664,7 +12763,7 @@ async function analyzeWithOpenAIResult(item, model, options = {}) {
         input: [
             {
                 role: "system",
-                content: "You are MaintainerOps AI, a human-in-the-loop assistant for public open-source maintainers. You produce conservative, evidence-based triage and review packets."
+                content: OPENAI_ASSESSMENT_SYSTEM_PROMPT
             },
             {
                 role: "user",
@@ -12829,10 +12928,13 @@ function safeInline(value) {
 
 
 async function runCli(argv) {
+    const output = await executeCli(argv);
+    process.stdout.write(`${output}\n`);
+}
+async function executeCli(argv) {
     const args = parseArgs(argv);
     if (args.command === "help") {
-        printHelp();
-        return;
+        return buildHelpText();
     }
     const item = args.command === "demo"
         ? loadDemoFixture()
@@ -12847,7 +12949,7 @@ async function runCli(argv) {
         offline: args.command === "demo" ? true : args.offline,
         model: args.model ?? process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL
     });
-    process.stdout.write(`${formatAssessment(item, assessment, args.format)}\n`);
+    return formatAssessment(item, assessment, args.format);
 }
 function parseArgs(argv) {
     if (argv.length === 0 || argv.includes("--help") || argv.includes("-h")) {
@@ -12935,9 +13037,13 @@ function requireValue(flag, value) {
     return value;
 }
 function parsePositiveInt(flag, value) {
-    const parsed = Number.parseInt(requireValue(flag, value), 10);
-    if (!Number.isInteger(parsed) || parsed <= 0) {
+    const raw = requireValue(flag, value);
+    if (!/^[1-9]\d*$/.test(raw)) {
         throw new Error(`${flag} requires a positive integer.`);
+    }
+    const parsed = Number(raw);
+    if (!Number.isSafeInteger(parsed)) {
+        throw new Error(`${flag} requires a safe positive integer.`);
     }
     return parsed;
 }
@@ -12947,8 +13053,8 @@ function parseFormat(value) {
     }
     return value;
 }
-function printHelp() {
-    process.stdout.write(`MaintainerOps AI
+function buildHelpText() {
+    return `MaintainerOps AI
 
 Usage:
   maintainerops demo [--format markdown|json]
@@ -12961,9 +13067,11 @@ Options:
   --offline        Force deterministic offline analysis.
   --authorized     Confirm you own, maintain, or have permission to review the target repo.
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.
-`);
+`;
 }
-if (process.argv[1] && import.meta.url === (0,external_node_url_namespaceObject.pathToFileURL)(process.argv[1]).href) {
+if (process.env.MAINTAINEROPS_ACTION_RUNTIME !== "true" &&
+    process.argv[1] &&
+    import.meta.url === (0,external_node_url_namespaceObject.pathToFileURL)(process.argv[1]).href) {
     runCli(process.argv.slice(2)).catch((error) => {
         const message = error instanceof Error ? error.message : String(error);
         process.stderr.write(`maintainerops: ${message}\n`);
@@ -12974,7 +13082,14 @@ if (process.argv[1] && import.meta.url === (0,external_node_url_namespaceObject.
 ;// CONCATENATED MODULE: ./src/action.ts
 
 
-runCli(buildActionArgs(process.env)).catch((error) => {
+
+async function main() {
+    const args = buildActionArgs(process.env);
+    const report = await executeCli(args);
+    process.stdout.write(`${report}\n`);
+    await writeActionReport(report, process.env.INPUT_FORMAT === "json" ? "json" : "markdown", process.env);
+}
+main().catch((error) => {
     const message = error instanceof Error ? error.message : String(error);
     process.stderr.write(`maintainerops action failed: ${message}\n`);
     process.exitCode = 1;

@@ -5,7 +5,7 @@ This document tracks useful skills, APIs, and support tooling for MaintainerOps 
 ## Added for Codex Operations
 
 - Local Codex skill: `maintainerops-maintenance`
-- Location: `C:\Users\mario\.codex\skills\maintainerops-maintenance`
+- Location: `$CODEX_HOME/skills/maintainerops-maintenance`
 - Purpose: standardize release checks, Marketplace checks, Issue #6 feedback handling, usage-log updates, Codex Security cadence, and npm publication guardrails.
 
 ## Added to the Repository
@@ -31,7 +31,7 @@ GitHub Actions in repository workflows are pinned to full commit SHAs with a sho
 | Priority | Tooling                       | Why it helps                                                                  | Recommended timing                                  |
 | -------- | ----------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------- |
 | 1        | External maintainer feedback  | Converts the strongest remaining adoption gap into concrete product evidence. | Immediate; use Issue #6 and GitHub Discussion #17.  |
-| 2        | Scorecard alert cleanup       | Separates stale SARIF alerts from true residual supply-chain work.            | Immediate after the CI gate lands.                  |
+| 2        | Scorecard alert cleanup       | Separates stale SARIF alerts from true residual supply-chain work.            | Immediate after the SARIF refresh lands.            |
 | 3        | SBOM/OSV scanner evaluation   | Determines whether another scanner adds value beyond current controls.        | Track in Issue #87; do not block PRs initially.     |
 | 4        | GitHub App auth               | Better for organizations and private repositories.                            | After the public CLI/Action workflow proves demand. |
 | 5        | Marketplace release freshness | Keeps the Action install path aligned with npm and GitHub Releases.           | Refresh after each Action release.                  |

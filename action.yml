@@ -26,14 +26,19 @@ inputs:
   authorized:
     description: "Set to true only when you own, maintain, or have permission to review the target repository"
     default: "false"
+outputs:
+  report:
+    description: "Redacted maintainer review packet in the selected format"
+    value: ${{ steps.report.outputs.report }}
 runs:
   using: composite
   steps:
-    - name: Generate maintainer review packet
+    - id: report
+      name: Generate maintainer review packet
       shell: bash
-      working-directory: ${{ github.action_path }}
-      run: node dist-action/index.js
+      run: node "${{ github.action_path }}/dist-action/index.js"
       env:
+        MAINTAINEROPS_ACTION_RUNTIME: "true"
         GITHUB_TOKEN: ${{ github.token }}
         INPUT_MODE: ${{ inputs.mode }}
         INPUT_REPO: ${{ inputs.repo }}

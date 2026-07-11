@@ -57,7 +57,7 @@ AI に権限を渡すのではなく、メンテナーが判断する前に必�
 最新版は npm `0.1.11` です。まずは API key なしで CLI の起動確認ができます。
 
 ```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 ソースから試す場合:
@@ -126,7 +126,7 @@ MaintainerOps AI では、AI 補助を OSS メンテナンスに入れる上で�
 まずは次のコマンドだけでも十分です。
 
 ```bash
-npm exec --yes --package maintainerops-ai@latest -- maintainerops --help
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
 ```
 
 可能であれば、Issue #6 に短く感想を残してもらえると助かります。

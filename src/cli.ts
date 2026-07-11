@@ -7,11 +7,15 @@ import { formatAssessment } from "./format.js";
 import type { CliArgs } from "./types.js";
 
 export async function runCli(argv: string[]): Promise<void> {
+  const output = await executeCli(argv);
+  process.stdout.write(`${output}\n`);
+}
+
+export async function executeCli(argv: string[]): Promise<string> {
   const args = parseArgs(argv);
 
   if (args.command === "help") {
-    printHelp();
-    return;
+    return buildHelpText();
   }
 
   const item =
@@ -30,7 +34,7 @@ export async function runCli(argv: string[]): Promise<void> {
     model: args.model ?? process.env.OPENAI_MODEL ?? DEFAULT_OPENAI_MODEL
   });
 
-  process.stdout.write(`${formatAssessment(item, assessment, args.format)}\n`);
+  return formatAssessment(item, assessment, args.format);
 }
 
 export function parseArgs(argv: string[]): CliArgs {
@@ -132,10 +136,16 @@ function requireValue(flag: string, value?: string): string {
 }
 
 function parsePositiveInt(flag: string, value?: string): number {
-  const parsed = Number.parseInt(requireValue(flag, value), 10);
-  if (!Number.isInteger(parsed) || parsed <= 0) {
+  const raw = requireValue(flag, value);
+  if (!/^[1-9]\d*$/.test(raw)) {
     throw new Error(`${flag} requires a positive integer.`);
   }
+
+  const parsed = Number(raw);
+  if (!Number.isSafeInteger(parsed)) {
+    throw new Error(`${flag} requires a safe positive integer.`);
+  }
+
   return parsed;
 }
 
@@ -146,8 +156,8 @@ function parseFormat(value: string): "json" | "markdown" {
   return value;
 }
 
-function printHelp(): void {
-  process.stdout.write(`MaintainerOps AI
+function buildHelpText(): string {
+  return `MaintainerOps AI
 
 Usage:
   maintainerops demo [--format markdown|json]
@@ -160,10 +170,14 @@ Options:
   --offline        Force deterministic offline analysis.
   --authorized     Confirm you own, maintain, or have permission to review the target repo.
   --model <id>    OpenAI model to use when OPENAI_API_KEY is set.
-`);
+`;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (
+  process.env.MAINTAINEROPS_ACTION_RUNTIME !== "true" &&
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   runCli(process.argv.slice(2)).catch((error: unknown) => {
     const message = error instanceof Error ? error.message : String(error);
     process.stderr.write(`maintainerops: ${message}\n`);

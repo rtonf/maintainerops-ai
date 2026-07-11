@@ -129,12 +129,17 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 | 2026-07-07 | Published `v0.1.14`, verified npm Trusted Publishing, public no-key CLI execution, and GitHub Marketplace `v0.1.14`; split external SBOM/OSV feedback into a follow-up issue.                   | PR #86, Issue #85, Issue #87, `https://github.com/rtonf/maintainerops-ai/releases/tag/v0.1.14`, `https://github.com/rtonf/maintainerops-ai/actions/runs/28830553903`, `https://github.com/marketplace/actions/maintainerops-ai`, `docs/npm-install-evidence.md`                                                |
 | 2026-07-07 | Prepared maintenance quality gates: full verify CI, CODEOWNERS, model-eval budget fail-closed behavior, clean review packet evidence, Dependabot security updates, and refreshed feedback CTAs. | `.github/workflows/ci.yml`, `.github/CODEOWNERS`, `src/eval/run-model-eval.ts`, `docs/review-packets/`, Issue #6, Discussion #17, `docs/codex-security/maintenance-quality-gates-diff-review-2026-07-07.md`                                                                                                    |
 | 2026-07-07 | Split medium-term roadmap work into focused issues for Japanese docs cleanup, richer GitHub ingestion, safer action names, and Scorecard alert triage.                                          | Issue #89, Issue #90, Issue #91, Issue #92                                                                                                                                                                                                                                                                     |
+| 2026-07-10 | Reproduced and fixed offline false positives for `latest.ts` and the public Issue #6 authorization-policy wording.                                                                              | Shared path classifier, public-feedback regression fixture, focused unit tests                                                                                                                                                                                                                                 |
+| 2026-07-10 | Hardened CLI, fixture, and eval boundaries and added a pre-call model-eval budget ceiling.                                                                                                      | Strict positive integers, nested fixture validation, non-empty eval gates, recommended-action/evidence checks, conservative cost preflight                                                                                                                                                                     |
+| 2026-07-10 | Added GitHub Actions Step Summary and redacted `report` output support, plus npm release tag/version and prerelease guards.                                                                     | `action.yml`, `src/actionOutput.ts`, `scripts/verify-release-tag.mjs`, publish workflow                                                                                                                                                                                                                        |
+| 2026-07-10 | Prepared current Scorecard SARIF upload and least-privilege workflow permission placement.                                                                                                      | Scorecard artifact plus code-scanning upload; CodeQL `security-events: write` moved to job scope                                                                                                                                                                                                               |
+| 2026-07-11 | Completed an API-free security diff review for the quality-hardening branch with no reportable findings.                                                                                        | `docs/codex-security/v0.1.15-quality-hardening-diff-review-2026-07-11.md`, full local verification, Action bundle output check                                                                                                                                                                                 |
 
 ## Current metrics
 
 - Public triage fixtures: 1
 - Offline eval cases: 7
-- Unit tests: 52
+- Unit tests: 67
 - UI smoke tests: 1
 - Codex Security reportable findings fixed: 10
 - Public GitHub issues triaged and closed with MaintainerOps AI comments: 4
@@ -145,8 +150,8 @@ This log records early maintainer workflow evidence for the Codex for Open Sourc
 - Source version: `v0.1.14` is aligned across source, npm, GitHub Releases, and GitHub Marketplace
 - Application status: submitted on 2026-06-13; post-application maintenance is ongoing
 - Dependency maintenance status: Dependabot npm-development and GitHub Actions update batches were reviewed, verified, and merged on 2026-07-07
-- OpenSSF Scorecard status: latest successful manual run completed on 2026-07-02; last recorded score is `7.1`
-- Branch protection status: `main` requires `Analyze JavaScript and TypeScript` and `analyze`; the new `npm run verify` CI check is prepared and should be added after its first successful GitHub run
+- OpenSSF Scorecard status: latest successful scheduled run completed on 2026-07-08; last recorded score is `7.1`
+- Branch protection status: `main` requires `Analyze JavaScript and TypeScript`, `analyze`, and `npm run verify`; pull-request and post-merge verify runs have succeeded
 - Workflow dependency status: GitHub Actions in repository workflows are pinned to commit SHAs with version comments
 - Dependabot security status: vulnerability alerts and Dependabot security updates are enabled
 - npm Trusted Publishing status: succeeded for `maintainerops-ai@0.1.14` on 2026-07-07
@@ -172,6 +177,6 @@ These entries are intentionally tracked as planned or completed so the public re
 - Maintainer time saved per review packet.
 - First external maintainer feedback beyond owner-authored Issue #6 comments.
 - First issue-triggered and pull-request-triggered workflow runs after new public work items are opened.
-- First successful required `npm run verify` PR check after `.github/workflows/ci.yml` lands.
-- Cleanup of mojibake Japanese outreach docs.
-- Triage of stale and residual OpenSSF Scorecard code scanning alerts.
+- First external workflow run that shows a packet in the GitHub Actions Step Summary.
+- External feedback converted into a regression case or onboarding improvement.
+- Current Scorecard SARIF refresh that closes stale alerts and leaves only accepted residual governance signals.

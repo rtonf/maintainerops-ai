@@ -1,4 +1,5 @@
 import type { MaintainerAssessment, MaintainerWorkItem } from "./types.js";
+import { isTestLikePath } from "./fileSignals.js";
 
 const canonicalLabels = new Set([
   "needs-triage",
@@ -111,10 +112,7 @@ export function normalizeLabel(label: string): string[] {
 }
 
 function hasTestLikeFile(item: MaintainerWorkItem): boolean {
-  return (item.files ?? []).some((file) => {
-    const path = file.path.toLowerCase();
-    return path.includes("test") || path.includes("spec") || path.includes("__tests__");
-  });
+  return (item.files ?? []).some((file) => isTestLikePath(file.path));
 }
 
 function isFeedbackRequest(item: MaintainerWorkItem): boolean {

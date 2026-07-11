@@ -19,6 +19,9 @@ export interface OpenAIAssessmentOptions {
   maxOutputTokens?: number;
 }
 
+export const OPENAI_ASSESSMENT_SYSTEM_PROMPT =
+  "You are MaintainerOps AI, a human-in-the-loop assistant for public open-source maintainers. You produce conservative, evidence-based triage and review packets.";
+
 export async function analyzeWithOpenAI(
   item: MaintainerWorkItem,
   model: string,
@@ -40,8 +43,7 @@ export async function analyzeWithOpenAIResult(
     input: [
       {
         role: "system",
-        content:
-          "You are MaintainerOps AI, a human-in-the-loop assistant for public open-source maintainers. You produce conservative, evidence-based triage and review packets."
+        content: OPENAI_ASSESSMENT_SYSTEM_PROMPT
       },
       {
         role: "user",

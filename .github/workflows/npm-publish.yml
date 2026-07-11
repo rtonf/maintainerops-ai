@@ -19,7 +19,9 @@ jobs:
     name: Publish with npm Trusted Publishing
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: startsWith(github.event.release.tag_name || inputs.tag, 'v')
+    if: startsWith(github.event.release.tag_name || inputs.tag, 'v') && (github.event_name != 'release' || !github.event.release.prerelease)
+    env:
+      RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
     steps:
       - name: Checkout release ref
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
@@ -35,6 +37,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Verify release tag matches package version
+        run: node scripts/verify-release-tag.mjs "$RELEASE_TAG"
 
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium

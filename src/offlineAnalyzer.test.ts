@@ -78,6 +78,32 @@ describe("analyzeOffline", () => {
     assert.match(assessment.commentDraft, /install or Action setup worked/);
   });
 
+  it("keeps the public feedback request low risk when it states the authorization policy", () => {
+    const result = analyzeOffline({
+      kind: "issue",
+      repository: "rtonf/maintainerops-ai",
+      number: 6,
+      title: "External maintainer feedback wanted",
+      body: "Please try the npm CLI or Marketplace Action and share feedback. The project does not scan repositories without maintainer authorization."
+    });
+
+    assert.equal(result.riskLevel, "low");
+    assert.equal(result.recommendedAction, "needs_more_info");
+    assert.equal(result.labels.includes("security-review"), false);
+  });
+
+  it("does not mistake latest.ts for a test file", () => {
+    const result = analyzeOffline({
+      kind: "pull_request",
+      repository: "owner/repo",
+      title: "Update latest release metadata",
+      files: [{ path: "src/latest.ts", status: "modified", additions: 2, deletions: 1 }]
+    });
+
+    assert.equal(result.labels.includes("tests-needed"), true);
+    assert.equal(result.recommendedAction, "needs_human_review");
+  });
+
   it("keeps missing-permission reports in security review despite feedback wording", () => {
     const result = analyzeOffline({
       kind: "issue",

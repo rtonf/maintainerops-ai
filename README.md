@@ -157,6 +157,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [Release alignment Codex Security diff review](docs/codex-security/release-alignment-diff-scan-2026-06-18.md)
 - [v0.1.14 consistency diff review](docs/codex-security/v0.1.14-consistency-diff-review-2026-07-07.md)
 - [Maintenance quality gates diff review](docs/codex-security/maintenance-quality-gates-diff-review-2026-07-07.md)
+- [v0.1.15 quality hardening diff review](docs/codex-security/v0.1.15-quality-hardening-diff-review-2026-07-11.md)
 - [Usage log](docs/usage-log.md)
 - [Improvement history](docs/improvement-history.md)
 - [npm install evidence](docs/npm-install-evidence.md)
@@ -215,10 +216,8 @@ jobs:
   review-packet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-        with:
-          persist-credentials: false
-      - uses: rtonf/maintainerops-ai@v0.1.14
+      - id: maintainerops
+        uses: rtonf/maintainerops-ai@v0.1.14
         with:
           mode: ${{ github.event_name == 'pull_request' && 'pull_request' || 'issue' }}
           repo: ${{ github.repository }}
@@ -227,6 +226,8 @@ jobs:
           offline: true
           authorized: true
 ```
+
+The current `v0.1.14` Action prints the packet in the job log. The source implementation for the next Action release also writes it to the workflow Step Summary and exposes a redacted `steps.maintainerops.outputs.report` value for reviewed downstream processing; do not execute packet text as shell code.
 
 Trying this from GitHub Marketplace? Please leave early maintainer feedback on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6) after running either the Action or the npm CLI.
 

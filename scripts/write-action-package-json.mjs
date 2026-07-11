@@ -1,4 +1,4 @@
-import { readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const actionDist = "dist-action";
@@ -25,4 +25,6 @@ function removeDeclarations(directory) {
 }
 
 removeDeclarations(actionDist);
+const actionBundlePath = `${actionDist}/index.js`;
+writeFileSync(actionBundlePath, readFileSync(actionBundlePath, "utf8").replace(/\r\n/g, "\n"));
 writeFileSync(`${actionDist}/package.json`, `${JSON.stringify({ type: "module" }, null, 2)}\n`);

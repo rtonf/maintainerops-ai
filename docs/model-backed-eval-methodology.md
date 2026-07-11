@@ -54,11 +54,15 @@ npm run eval:model -- --case "missing authorization check issue" --budget-usd 0.
 - Expected recommended actions must match when specified.
 - Forbidden recommended actions must be absent.
 - Risk must stay within configured min/max bounds.
-- The run must stay within the declared estimated budget.
+- A conservative request ceiling must fit within the remaining budget before an API call starts.
+- Actual token usage must stay within the declared estimated budget after each response.
+- Empty case files and empty selected suites fail closed.
 
 ## Cost Guardrails
 
 Live model-backed evals are manual-only. They are not part of CI or `npm run verify`.
+
+The preflight estimate treats the UTF-8 byte length of the complete prompt plus protocol overhead as a conservative input-token ceiling and combines it with `--max-output-tokens`. This is intentionally stricter than post-call accounting so a request is rejected before spend when the remaining budget is too small.
 
 Every live run must specify:
 

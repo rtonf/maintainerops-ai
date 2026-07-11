@@ -3,8 +3,10 @@ import { describe, it } from "node:test";
 import {
   assertKnownPricedModel,
   estimateCostUsd,
+  estimateMaximumRequestCostUsd,
   evaluateCaseResult,
   parseArgs,
+  requireSelectedCases,
   selectCases
 } from "./run-model-eval.js";
 import type { MaintainerAssessment } from "../types.js";
@@ -95,6 +97,10 @@ describe("selectCases", () => {
       ["a", "b", "c"]
     );
   });
+
+  it("rejects an empty selected case set", () => {
+    assert.throws(() => requireSelectedCases([]), /must contain at least one case/);
+  });
 });
 
 describe("evaluateCaseResult", () => {
@@ -162,6 +168,12 @@ describe("budget guard", () => {
 
   it("requires token usage for cost estimation", () => {
     assert.throws(() => estimateCostUsd("gpt-4o-mini", undefined, 100), /requires input and output token usage/);
+  });
+
+  it("estimates a conservative request ceiling before a live call", () => {
+    const estimate = estimateMaximumRequestCostUsd("gpt-4o-mini", minimalIssue("budget"), 1200);
+    assert.equal(estimate > 0, true);
+    assert.equal(estimate >= estimateCostUsd("gpt-4o-mini", 0, 1200), true);
   });
 });
 
