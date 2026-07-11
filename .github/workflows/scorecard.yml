@@ -39,6 +39,6 @@ jobs:
           if-no-files-found: error
 
       - name: Upload Scorecard results to code scanning
-        uses: github/codeql-action/upload-sarif@411bbbe57033eedfc1a82d68c01345aa96c737d7 # v4
+        uses: github/codeql-action/upload-sarif@1ad29ea4a422cce9a242a9fae469541dcd08addc # v4
         with:
           sarif_file: scorecard-results.sarif
