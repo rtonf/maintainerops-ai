@@ -60,8 +60,10 @@ describe("formatAssessment", () => {
       output.split("\n").some((line) => line.startsWith("::")),
       false
     );
-    assert.match(output, /\\::warning/);
-    assert.match(output, /\\::add-mask/);
+    assert.match(output, /\\:\\:warning/);
+    assert.match(output, /\\:\\:add-mask/);
+    assert.equal(output.includes("##["), false);
+    assert.equal(output.includes("::"), false);
     assert.equal(output.includes("plain-secret-value"), false);
   });
 });

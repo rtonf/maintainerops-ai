@@ -1,0 +1,6 @@
+flowchart LR
+  A[Published release tag] --> B[refs/tags validation]
+  B --> C[Protected publication environment]
+  C --> D[Build package]
+  D --> E[OIDC npm publish]
+  X[Branch ref] -.-> Y[Rejected]

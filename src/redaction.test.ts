@@ -37,4 +37,14 @@ describe("redactSecrets", () => {
     assert.equal(output.includes("token-value-1234567890"), false);
     assert.match(output, /REDACTED/);
   });
+
+  it("redacts bearer credentials regardless of scheme casing", () => {
+    const input = ["bearer abcdefghijklmnopqrstuvwxyz1234567890", "bEaReR ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"].join(
+      "\n"
+    );
+    const output = redactSecrets(input);
+    assert.equal(output.includes("abcdefghijklmnopqrstuvwxyz1234567890"), false);
+    assert.equal(output.includes("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"), false);
+    assert.equal((output.match(/REDACTED/g) ?? []).length, 2);
+  });
 });

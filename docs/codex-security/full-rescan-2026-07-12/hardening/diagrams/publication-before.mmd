@@ -1,0 +1,5 @@
+flowchart LR
+  A[Manual release ref] --> B[checkout ref]
+  B --> C[Build package]
+  C --> D[OIDC npm publish]
+  X[Same-named branch] -.-> B

@@ -104,7 +104,7 @@ function sanitizeAssessment(assessment: MaintainerAssessment): MaintainerAssessm
 }
 
 function sanitizeForStdout(value: string): string {
-  return redactSecrets(value).replace(/^::/gm, "\\::");
+  return redactSecrets(value).replace(/##\[/g, "# #[").replace(/::/g, "\\:\\:");
 }
 
 function safeInline(value: string): string {

@@ -1,0 +1,408 @@
+{
+  "documentType": "codex-security.findings",
+  "findings": [
+    {
+      "attackPath": {
+        "dataflow": "manual release input -> checkout ref -> package build -> OIDC npm publish",
+        "evidenceRefs": [
+          "workflow-ref",
+          "workflow-publish"
+        ],
+        "reachability": "A write-capable actor who can start the manual publication workflow can supply a name shared by a branch and tag."
+      },
+      "codeEvidence": [
+        {
+          "code": "ref: ${{ inputs.tag }}",
+          "endLine": 28,
+          "explanation": "The workflow input is passed to checkout as a generic ref, so a branch and tag can share the same short name.",
+          "id": "workflow-ref",
+          "label": "Workflow checkout ref",
+          "language": "yaml",
+          "path": ".github/workflows/npm-publish.yml",
+          "role": "source selection",
+          "startLine": 24
+        },
+        {
+          "code": "permissions: id-token: write; run: npm publish",
+          "endLine": 51,
+          "explanation": "The selected tree is built and published after the job receives the identity token required by Trusted Publishing.",
+          "id": "workflow-publish",
+          "label": "OIDC publication job",
+          "language": "yaml",
+          "path": ".github/workflows/npm-publish.yml",
+          "role": "privileged sink",
+          "startLine": 38
+        },
+        {
+          "code": "verify release tag",
+          "endLine": 14,
+          "explanation": "The guard checks release metadata but does not prove that checkout selected refs/tags rather than a branch.",
+          "id": "tag-guard",
+          "label": "Release tag guard",
+          "language": "javascript",
+          "path": "scripts/verify-release-tag.mjs",
+          "role": "expected control",
+          "startLine": 4
+        }
+      ],
+      "confidence": {
+        "level": "high",
+        "rationale": "The source selection and OIDC publication path are directly visible, and a bounded disposable Git ref probe reproduced the branch/tag ambiguity without live publication."
+      },
+      "extensions": {
+        "candidateId": "MOAI-007",
+        "ledgerRowId": "MOAI-007",
+        "reportId": "MOAI-007"
+      },
+      "findingId": "csf_3f857a814a270e690135e535",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:2559039caa86ca569f4019f8a54b4589e3c81e7098e94ee34999a301e11bf13d"
+      },
+      "identity": {
+        "anchor": "mutable-npm-publish-ref",
+        "instance": "workflow"
+      },
+      "locations": [
+        {
+          "endLine": 28,
+          "path": ".github/workflows/npm-publish.yml",
+          "role": "unconstrained source selection",
+          "startLine": 24
+        },
+        {
+          "endLine": 51,
+          "path": ".github/workflows/npm-publish.yml",
+          "role": "OIDC publication sink",
+          "startLine": 38
+        },
+        {
+          "endLine": 14,
+          "path": "scripts/verify-release-tag.mjs",
+          "role": "incomplete release guard",
+          "startLine": 4
+        }
+      ],
+      "occurrenceId": "occ_7b80ff35bdadaed387626cc6",
+      "preventiveControls": [
+        "Pin action dependencies.",
+        "Protect release tags and the npm publication environment.",
+        "Limit publication to release events or an allowlisted tag pattern."
+      ],
+      "provenance": {
+        "source": "repository-wide validation and attack-path analysis"
+      },
+      "remediation": "Remove arbitrary manual refs or force checkout to an approved refs/tags/${tag} value, then protect release tags and the npm publication environment.",
+      "remediationTests": [
+        "Reject branch refs and non-tag event inputs.",
+        "Run a disposable fixture with a same-named branch and tag.",
+        "Compare the published tarball contents with the intended tagged commit."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "workflow-ref",
+          "tag-guard"
+        ],
+        "summary": "A release identity is represented as an unconstrained Git ref at the boundary where source selection becomes a trusted publication input."
+      },
+      "ruleId": "supply-chain/mutable-release-ref",
+      "severity": {
+        "changeConditions": "Lower severity if manual dispatch is removed and repository policy proves that release tags and the publication environment are protected; raise it if untrusted contributors can start the workflow.",
+        "level": "high",
+        "rationale": "A write-capable release actor can steer an OIDC-enabled publication job to a same-named branch, changing the package contents published under the trusted package identity.",
+        "score": 8.2,
+        "scoringSystem": "Codex Security calibrated severity"
+      },
+      "summary": "The manual npm publication workflow checks out a user-supplied release ref without requiring a tag namespace. A branch with the same name can provide the package contents to the Trusted Publishing job.",
+      "taxonomy": {
+        "category": "Supply-chain release source confusion",
+        "cwe": [
+          "CWE-345"
+        ]
+      },
+      "title": "Manual npm publication accepts a mutable branch ref for Trusted Publishing",
+      "validation": {
+        "evidenceRefs": [
+          "workflow-ref",
+          "workflow-publish",
+          "tag-guard"
+        ],
+        "method": "Source-backed control-flow review plus a bounded disposable Git ref-namespace probe.",
+        "uncertainty": "No live workflow, OIDC token, or npm publication was used."
+      },
+      "writeup": {
+        "reportPath": "findings/mutable-npm-publish-ref/mutable-npm-publish-ref.md"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": "issue or PR text -> work item -> redaction -> prompt -> client.responses.create",
+        "evidenceRefs": [
+          "bearer-rule",
+          "model-sink"
+        ],
+        "reachability": "An issue or pull-request author can supply a lowercase or mixed-case bearer string when model-backed analysis is enabled."
+      },
+      "codeEvidence": [
+        {
+          "code": "Bearer\\s+[A-Za-z0-9._~-]+",
+          "endLine": 21,
+          "explanation": "The rule recognizes only the exact scheme spelling and therefore misses equivalent lowercase or mixed-case forms.",
+          "id": "bearer-rule",
+          "label": "Bearer redaction rule",
+          "language": "typescript",
+          "path": "src/redaction.ts",
+          "role": "root cause",
+          "startLine": 21
+        },
+        {
+          "code": "redactSensitiveText(workItem)",
+          "endLine": 6,
+          "explanation": "The work item is transformed for prompt construction after the incomplete redaction rule runs.",
+          "id": "prompt-input",
+          "label": "Prompt input",
+          "language": "typescript",
+          "path": "src/prompt.ts",
+          "role": "data flow",
+          "startLine": 6
+        },
+        {
+          "code": "client.responses.create",
+          "endLine": 50,
+          "explanation": "The resulting prompt is passed to the configured model provider.",
+          "id": "model-sink",
+          "label": "Model request",
+          "language": "typescript",
+          "path": "src/openaiAssessment.ts",
+          "role": "sink",
+          "startLine": 40
+        }
+      ],
+      "confidence": {
+        "level": "high",
+        "rationale": "Direct source tracing and a pinned-source local harness reproduced the bypass with a synthetic token; no live request or real secret was used."
+      },
+      "extensions": {
+        "candidateId": "MOAI-001",
+        "ledgerRowId": "MOAI-001",
+        "reportId": "MOAI-001"
+      },
+      "findingId": "csf_aee036c3aea026096b0d9a8d",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:247152ffd80336588170b6de8d28f2533ac25f0dfab74c870bb0f61396525452"
+      },
+      "identity": {
+        "anchor": "bearer-redaction-bypass",
+        "instance": "prompt"
+      },
+      "locations": [
+        {
+          "endLine": 21,
+          "path": "src/redaction.ts",
+          "role": "case-sensitive redaction rule",
+          "startLine": 21
+        },
+        {
+          "endLine": 6,
+          "path": "src/prompt.ts",
+          "role": "prompt assembly",
+          "startLine": 6
+        },
+        {
+          "endLine": 50,
+          "path": "src/openaiAssessment.ts",
+          "role": "model request sink",
+          "startLine": 40
+        }
+      ],
+      "occurrenceId": "occ_8aa76624c967eb1122fbb6e1",
+      "preventiveControls": [
+        "Keep redaction tests adjacent to the regex.",
+        "Review all model-input call sites for raw work-item fields."
+      ],
+      "provenance": {
+        "source": "repository-wide validation and attack-path analysis"
+      },
+      "remediation": "Make Bearer matching case-insensitive and add regression coverage for lowercase and mixed-case schemes.",
+      "remediationTests": [
+        "Verify all case variants are redacted.",
+        "Verify token boundaries and punctuation remain safe.",
+        "Assert synthetic bearer material never appears in model input."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "bearer-rule",
+          "prompt-input",
+          "model-sink"
+        ],
+        "summary": "Credential scheme normalization is omitted from a boundary that assumes one canonical spelling."
+      },
+      "ruleId": "data-exposure/bearer-redaction",
+      "severity": {
+        "changeConditions": "Raise severity if a real credential-bearing source is shown reachable from an untrusted repository; lower it if model-backed analysis is disabled or the provider boundary is proven non-retentive.",
+        "level": "medium",
+        "rationale": "Contributor-controlled work-item text can disclose a bearer credential to the configured model provider, but the scan did not demonstrate account access or compromise.",
+        "score": 5.8,
+        "scoringSystem": "Codex Security calibrated severity"
+      },
+      "summary": "The redaction rule matches only the exact spelling Bearer even though HTTP authentication schemes are case-insensitive. Lowercase or mixed-case bearer credentials can remain in prompt material.",
+      "taxonomy": {
+        "category": "Sensitive data exposure",
+        "cwe": [
+          "CWE-178",
+          "CWE-200"
+        ]
+      },
+      "title": "Case-sensitive Bearer redaction leaks valid bearer credentials before the model call",
+      "validation": {
+        "evidenceRefs": [
+          "bearer-rule",
+          "prompt-input",
+          "model-sink"
+        ],
+        "method": "Pinned-source local harness with synthetic credentials; no live request or real secret used.",
+        "uncertainty": "The scan demonstrates disclosure to the model boundary, not downstream credential use."
+      },
+      "writeup": {
+        "reportPath": "findings/bearer-redaction-bypass/bearer-redaction-bypass.md"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": "issue or PR text -> review packet formatter -> console.log -> GitHub Actions runner parser",
+        "evidenceRefs": [
+          "output-sanitizer",
+          "action-stdout"
+        ],
+        "reachability": "An issue or pull-request author can supply a title/body containing a legacy marker that is included in a workflow packet."
+      },
+      "codeEvidence": [
+        {
+          "code": "sanitize report output",
+          "endLine": 107,
+          "explanation": "The sanitizer does not neutralize legacy ##[ workflow-command prefixes.",
+          "id": "output-sanitizer",
+          "label": "Output sanitizer",
+          "language": "typescript",
+          "path": "src/format.ts",
+          "role": "root cause",
+          "startLine": 107
+        },
+        {
+          "code": "console.log(packet)",
+          "endLine": 9,
+          "explanation": "Formatted text is emitted through the Action's stdout path.",
+          "id": "action-stdout",
+          "label": "Action stdout",
+          "language": "typescript",
+          "path": "src/action.ts",
+          "role": "sink",
+          "startLine": 9
+        },
+        {
+          "code": "node dist-action/index.js",
+          "endLine": 39,
+          "explanation": "The runtime executes in the hosted runner where stdout command parsing applies.",
+          "id": "action-wrapper",
+          "label": "Composite Action wrapper",
+          "language": "yaml",
+          "path": "action.yml",
+          "role": "execution boundary",
+          "startLine": 39
+        }
+      ],
+      "confidence": {
+        "level": "high",
+        "rationale": "The sanitizer reproduction succeeded locally and the official runner parser source confirms the legacy prefix is recognized."
+      },
+      "extensions": {
+        "candidateId": "MOAI-003",
+        "ledgerRowId": "MOAI-003",
+        "reportId": "MOAI-003"
+      },
+      "findingId": "csf_c5a6db5cbfdf8399c96e3f46",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:cf4199b3b6b8b095040e45b9578f0626d15a3b04c2dfa1574391de26d611834b"
+      },
+      "identity": {
+        "anchor": "legacy-runner-command-marker",
+        "instance": "action"
+      },
+      "locations": [
+        {
+          "endLine": 107,
+          "path": "src/format.ts",
+          "role": "incomplete stdout sanitizer",
+          "startLine": 107
+        },
+        {
+          "endLine": 9,
+          "path": "src/action.ts",
+          "role": "stdout sink",
+          "startLine": 9
+        },
+        {
+          "endLine": 39,
+          "path": "action.yml",
+          "role": "Action execution boundary",
+          "startLine": 39
+        }
+      ],
+      "occurrenceId": "occ_ff062867fbbc71fbc6125176",
+      "preventiveControls": [
+        "Use a named stdout-safety helper at every Action logging sink.",
+        "Keep runner command canaries in CI."
+      ],
+      "provenance": {
+        "source": "repository-wide validation and attack-path analysis"
+      },
+      "remediation": "Neutralize legacy and modern workflow-command prefixes before untrusted text reaches stdout, and test both forms.",
+      "remediationTests": [
+        "Assert sanitized output contains neither ##[ nor a line-leading :: sequence.",
+        "Cover titles, bodies, file paths, and generated summaries.",
+        "Run a disposable Action canary with marker strings and inspect logs."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "output-sanitizer",
+          "action-stdout",
+          "action-wrapper"
+        ],
+        "summary": "Output neutralization is scoped to newer command syntax and does not model all parser prefixes supported by the runner."
+      },
+      "ruleId": "workflow/output-command-marker",
+      "severity": {
+        "changeConditions": "Raise severity if a hosted canary confirms a state-changing command; lower it if the Action emits only an artifact and no untrusted text reaches stdout.",
+        "level": "medium",
+        "rationale": "A contributor-controlled title or body can reach Action stdout and the runner command parser, but the scan did not execute a hosted workflow with an exploit payload.",
+        "score": 5.5,
+        "scoringSystem": "Codex Security calibrated severity"
+      },
+      "summary": "The output sanitizer handles modern line-leading commands but leaves legacy ##[ markers in attacker-controlled report text. GitHub Actions runner parsing can interpret those markers when the text is printed by the Action.",
+      "taxonomy": {
+        "category": "Workflow output injection",
+        "cwe": [
+          "CWE-116",
+          "CWE-74"
+        ]
+      },
+      "title": "Legacy GitHub Actions workflow command marker reaches Action stdout",
+      "validation": {
+        "evidenceRefs": [
+          "output-sanitizer",
+          "action-stdout",
+          "action-wrapper"
+        ],
+        "method": "Local sanitizer reproduction plus inspection of the official actions/runner parser source.",
+        "uncertainty": "No hosted workflow was triggered with an exploit payload."
+      },
+      "writeup": {
+        "reportPath": "findings/legacy-runner-command-marker/legacy-runner-command-marker.md"
+      }
+    }
+  ],
+  "scanId": "e229f1ef-d5b0-4da2-ab98-d94f429747cc",
+  "schemaVersion": "1.0"
+}
