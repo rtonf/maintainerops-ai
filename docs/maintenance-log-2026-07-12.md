@@ -11,6 +11,14 @@
   - neutralization of legacy and modern GitHub Actions command markers.
 - Rebuilt the Action bundle and passed `npm run verify`.
 
+## Current public state verified
+
+- PR #98 remains open as a draft with merge state `CLEAN`.
+- CodeQL, `npm run verify`, Node 20 compatibility, and Action analysis checks all passed.
+- npm `latest` and the latest GitHub Release are both `v0.1.14`.
+- Issue #6 remains open; its current comments are owner-authored and external maintainer feedback has not arrived yet.
+- The post-fix Codex Security diff scan is still pending because the workspace service did not retain the valid ASCII-path setup. No post-fix scan claim is made.
+
 ## Evidence
 
 - [Full rescan report](codex-security/full-rescan-2026-07-12.md)
