@@ -76,6 +76,18 @@ Demo output started with:
 **Recommended action:** needs_security_review
 ```
 
+## Verification Refresh: 2026-07-12
+
+The public `latest` package was checked again after the repository-wide security maintenance work:
+
+```text
+npm latest: 0.1.14
+maintainerops --help: succeeded
+maintainerops demo: succeeded without an API key, GitHub token, fixture file, or repository access
+```
+
+The demo produced the expected read-only review packet for `example/critical-oss-package` and pull request `#1287`. The security fixes in PR #98 are not represented in npm `latest` until that PR is merged and a new release is published.
+
 ## Publication Guard
 
 Version `0.1.9` added a `prepack` script that rebuilds the CLI and Action runtime during both `npm pack` and `npm publish`. Version `0.1.14` preserves that guard and was published through the Trusted Publishing workflow.
