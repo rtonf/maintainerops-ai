@@ -13,7 +13,7 @@ export function formatAssessment(
   const safeItem = redactWorkItem(item);
   const safeAssessment = sanitizeAssessment(assessment);
 
-  return [
+  const lines = [
     `# MaintainerOps AI report`,
     ``,
     `**Repository:** ${safeInline(safeItem.repository)}`,
@@ -55,7 +55,13 @@ export function formatAssessment(
           .map((entry) => `- **${entry.source}:** ${safeInline(entry.reference)} - ${safeInline(entry.note)}`)
           .join("\n")
       : "- none"
-  ].join("\n");
+  ];
+
+  if (safeAssessment.evidenceAudit) {
+    lines.push("", ...formatEvidenceAudit(safeAssessment.evidenceAudit));
+  }
+
+  return lines.join("\n");
 }
 
 function listOrNone(items: string[]): string {
@@ -87,6 +93,22 @@ function redactWorkItem(item: MaintainerWorkItem): MaintainerWorkItem {
 }
 
 function sanitizeAssessment(assessment: MaintainerAssessment): MaintainerAssessment {
+  const evidenceAudit = assessment.evidenceAudit
+    ? {
+        validReferences: assessment.evidenceAudit.validReferences,
+        invalidReferences: assessment.evidenceAudit.invalidReferences.map((entry) => ({
+          source: entry.source,
+          reference: sanitizeForStdout(redactSecrets(entry.reference)),
+          reason: sanitizeForStdout(redactSecrets(entry.reason))
+        })),
+        untrustedInputWarnings: assessment.evidenceAudit.untrustedInputWarnings.map((warning) => ({
+          source: warning.source,
+          reference: sanitizeForStdout(redactSecrets(warning.reference)),
+          pattern: sanitizeForStdout(redactSecrets(warning.pattern))
+        }))
+      }
+    : undefined;
+
   return {
     ...assessment,
     summary: sanitizeForStdout(redactSecrets(assessment.summary)),
@@ -99,8 +121,34 @@ function sanitizeAssessment(assessment: MaintainerAssessment): MaintainerAssessm
       source: entry.source,
       reference: sanitizeForStdout(redactSecrets(entry.reference)),
       note: sanitizeForStdout(redactSecrets(entry.note))
-    }))
+    })),
+    ...(evidenceAudit ? { evidenceAudit } : {})
   };
+}
+
+function formatEvidenceAudit(audit: NonNullable<MaintainerAssessment["evidenceAudit"]>): string[] {
+  const invalidReferences =
+    audit.invalidReferences.length > 0
+      ? audit.invalidReferences.map(
+          (entry) => `  - **${entry.source}:** ${safeInline(entry.reference)} - ${safeInline(entry.reason)}`
+        )
+      : ["  - none"];
+  const warnings =
+    audit.untrustedInputWarnings.length > 0
+      ? audit.untrustedInputWarnings.map(
+          (warning) => `  - **${warning.source} ${safeInline(warning.reference)}:** ${safeInline(warning.pattern)}`
+        )
+      : ["  - none"];
+
+  return [
+    "## Evidence audit",
+    "",
+    `- **Valid references:** ${audit.validReferences}`,
+    `- **Invalid references:** ${audit.invalidReferences.length}`,
+    ...invalidReferences,
+    `- **Untrusted input warnings:** ${audit.untrustedInputWarnings.length}`,
+    ...warnings
+  ];
 }
 
 function sanitizeForStdout(value: string): string {

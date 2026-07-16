@@ -17,9 +17,27 @@ export interface ModelEvalCase {
   forbiddenRecommendedActions?: MaintainerAssessment["recommendedAction"][];
   minRisk?: RiskLevel;
   maxRisk?: RiskLevel;
+  minUntrustedInputWarnings?: number;
+  maxInvalidEvidenceReferences?: number;
 }
 
 const modelPricingUsdPerMillion = {
+  "gpt-5.6": {
+    input: 5,
+    output: 30
+  },
+  "gpt-5.6-sol": {
+    input: 5,
+    output: 30
+  },
+  "gpt-5.6-terra": {
+    input: 2.5,
+    output: 15
+  },
+  "gpt-5.6-luna": {
+    input: 1,
+    output: 6
+  },
   "gpt-4o-mini": {
     input: 0.15,
     output: 0.6
@@ -77,6 +95,7 @@ async function main(): Promise<void> {
       riskLevel: result.riskLevel,
       recommendedAction: result.recommendedAction,
       labels: result.labels,
+      evidenceAudit: result.evidenceAudit,
       usage,
       estimatedCostUsd: caseCostUsd
     });
@@ -88,6 +107,7 @@ async function main(): Promise<void> {
         riskLevel: result.riskLevel,
         recommendedAction: result.recommendedAction,
         labels: result.labels,
+        evidenceAudit: result.evidenceAudit,
         usage,
         estimatedCostUsd: caseCostUsd
       }) + "\n"
@@ -138,6 +158,7 @@ interface ModelEvalCaseResult {
   riskLevel: RiskLevel;
   recommendedAction: MaintainerAssessment["recommendedAction"];
   labels: string[];
+  evidenceAudit?: MaintainerAssessment["evidenceAudit"];
   usage: {
     inputTokens?: number;
     outputTokens?: number;
@@ -269,6 +290,27 @@ export function evaluateCaseResult(evalCase: ModelEvalCase, result: MaintainerAs
 
   if (evalCase.maxRisk && riskOrder.indexOf(result.riskLevel) > riskOrder.indexOf(evalCase.maxRisk)) {
     failures.push(`${evalCase.name}: expected risk <= ${evalCase.maxRisk}, got ${result.riskLevel}`);
+  }
+
+  const evidenceAudit = result.evidenceAudit;
+  const untrustedInputWarningCount = evidenceAudit?.untrustedInputWarnings.length ?? 0;
+  if (
+    evalCase.minUntrustedInputWarnings !== undefined &&
+    untrustedInputWarningCount < evalCase.minUntrustedInputWarnings
+  ) {
+    failures.push(
+      `${evalCase.name}: expected at least ${evalCase.minUntrustedInputWarnings} untrusted input warning(s), got ${untrustedInputWarningCount}`
+    );
+  }
+
+  const invalidEvidenceReferenceCount = evidenceAudit?.invalidReferences.length ?? 0;
+  if (
+    evalCase.maxInvalidEvidenceReferences !== undefined &&
+    invalidEvidenceReferenceCount > evalCase.maxInvalidEvidenceReferences
+  ) {
+    failures.push(
+      `${evalCase.name}: expected at most ${evalCase.maxInvalidEvidenceReferences} invalid evidence reference(s), got ${invalidEvidenceReferenceCount}`
+    );
   }
 
   return failures;

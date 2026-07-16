@@ -66,4 +66,31 @@ describe("formatAssessment", () => {
     assert.equal(output.includes("::"), false);
     assert.equal(output.includes("plain-secret-value"), false);
   });
+
+  it("renders evidence audit counts and warnings in JSON and markdown", () => {
+    const audited: MaintainerAssessment = {
+      ...assessment,
+      evidenceAudit: {
+        validReferences: 2,
+        invalidReferences: [
+          { source: "body", reference: "::error::bad-reference", reason: "Not present in the input." }
+        ],
+        untrustedInputWarnings: [{ source: "comment", reference: "comment:1", pattern: "execute/run commands" }]
+      }
+    };
+
+    const json = JSON.parse(formatAssessment(item, audited, "json")) as {
+      assessment: MaintainerAssessment;
+    };
+    const markdown = formatAssessment(item, audited, "markdown");
+
+    assert.equal(json.assessment.evidenceAudit?.validReferences, 2);
+    assert.equal(json.assessment.evidenceAudit?.invalidReferences.length, 1);
+    assert.equal(json.assessment.evidenceAudit?.untrustedInputWarnings.length, 1);
+    assert.match(markdown, /## Evidence audit/);
+    assert.match(markdown, /\*\*Valid references:\*\* 2/);
+    assert.match(markdown, /\*\*Invalid references:\*\* 1/);
+    assert.match(markdown, /\*\*Untrusted input warnings:\*\* 1/);
+    assert.equal(markdown.includes("::error"), false);
+  });
 });

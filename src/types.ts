@@ -52,6 +52,19 @@ export interface MaintainerAssessment {
   releaseNotes: string[];
   commentDraft: string;
   evidence: EvidenceItem[];
+  evidenceAudit?: {
+    validReferences: number;
+    invalidReferences: Array<{
+      source: EvidenceItem["source"];
+      reference: string;
+      reason: string;
+    }>;
+    untrustedInputWarnings: Array<{
+      source: "body" | "diff" | "comment";
+      reference: string;
+      pattern: string;
+    }>;
+  };
 }
 
 export interface EvidenceItem {
