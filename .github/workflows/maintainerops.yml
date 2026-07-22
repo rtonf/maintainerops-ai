@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Analyze pull request
         if: github.event_name == 'pull_request_target'
-        uses: rtonf/maintainerops-ai@eccc588772af76b2bdc7eeaf238005ab0983368e
+        uses: rtonf/maintainerops-ai@98b7354ace0c5936d207845936fc863ede937eaf
         with:
           mode: pull_request
           repo: ${{ github.repository }}
@@ -28,7 +28,7 @@ jobs:
           authorized: true
       - name: Analyze issue
         if: github.event_name == 'issues'
-        uses: rtonf/maintainerops-ai@eccc588772af76b2bdc7eeaf238005ab0983368e
+        uses: rtonf/maintainerops-ai@98b7354ace0c5936d207845936fc863ede937eaf
         with:
           mode: issue
           repo: ${{ github.repository }}
