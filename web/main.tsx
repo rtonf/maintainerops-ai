@@ -149,6 +149,7 @@ function App() {
   const [assessmentTab, setAssessmentTab] = useState("AI Assessment");
   const [threshold, setThreshold] = useState(65);
   const [dryRun, setDryRun] = useState(true);
+  const [modelMode, setModelMode] = useState("gpt-5.6");
   const [decision, setDecision] = useState<Decision>("approve_conditions");
   const [expanded, setExpanded] = useState("");
   const [query, setQuery] = useState("");
@@ -237,10 +238,12 @@ function App() {
           <div className="topbar-controls">
             <label className="select-label">
               <span>Model mode</span>
-              <select defaultValue="gpt-4o-mini">
+              <select value={modelMode} onChange={(event) => setModelMode(event.target.value)}>
+                <option value="gpt-5.6">GPT-5.6</option>
                 <option value="gpt-4o-mini">GPT-4o mini</option>
                 <option value="offline">Offline heuristic</option>
               </select>
+              {modelMode === "gpt-5.6" && <span className="status-pill passed">Evidence recorded</span>}
             </label>
             <label className="switch-label">
               <span>Dry-run</span>
@@ -376,6 +379,19 @@ function App() {
                   <p>
                     Path query controls disk writes. A token is read from env config, and traversal tests are missing.
                   </p>
+                </section>
+
+                <section className="assessment-section firewall-card">
+                  <h2>
+                    Evidence Firewall <span className="status-pill passed">Recorded</span>
+                  </h2>
+                  <p>Recorded GPT-5.6 output checks are shown before the maintainer decision.</p>
+                  <div className="firewall-stats">
+                    <span>2 valid refs</span>
+                    <span>0 invalid refs</span>
+                    <span>2 warnings</span>
+                  </div>
+                  <small>Override instructions and secret-exfiltration language flagged.</small>
                 </section>
 
                 <section className="assessment-section">
