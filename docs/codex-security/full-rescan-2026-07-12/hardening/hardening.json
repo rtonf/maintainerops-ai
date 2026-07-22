@@ -1,0 +1,25 @@
+{
+  "schema_version": "codex-security.hardening/v1",
+  "analysis_id": "hardening_final",
+  "scan_id": "e229f1ef-d5b0-4da2-ab98-d94f429747cc",
+  "target_revision": "40ab2aaf0875d0b9074642ba4f51223f1bd4200a",
+  "assessment": "local_remediation_plus_structural_hardening",
+  "evidence": [
+    {"id": "MOAI-007", "title": "Manual npm publication accepts a mutable branch ref", "path": "../findings/mutable-npm-publish-ref/mutable-npm-publish-ref.md"},
+    {"id": "MOAI-001", "title": "Case-sensitive Bearer redaction", "path": "../findings/bearer-redaction-bypass/bearer-redaction-bypass.md"},
+    {"id": "MOAI-003", "title": "Legacy runner command marker reaches stdout", "path": "../findings/legacy-runner-command-marker/legacy-runner-command-marker.md"}
+  ],
+  "opportunities": [
+    {"id": "untrusted-output-boundary", "title": "Unify redaction and workflow-output sanitization", "addresses": ["MOAI-001", "MOAI-003"], "recommended_option": "shared-boundary-apis", "proposal": "proposals/untrusted-output-boundary.md"},
+    {"id": "immutable-publication", "title": "Bind Trusted Publishing to an immutable release source", "addresses": ["MOAI-007"], "recommended_option": "tag-scoped-release-publication", "proposal": "proposals/immutable-publication.md"}
+  ],
+  "options": [
+    {"id": "local-patches", "title": "Narrow local patches", "status": "baseline"},
+    {"id": "shared-boundary-apis", "title": "Shared output boundary APIs", "status": "recommended-for-output"},
+    {"id": "release-only-publication", "title": "Release-only publication", "status": "lowest-privilege-publication"},
+    {"id": "tag-scoped-release-publication", "title": "Tag-scoped release publication with protected environment", "status": "recommended-when-manual-recovery-is-required"}
+  ],
+  "implementation_status": "proposal_only",
+  "validation_plan": ["npm run verify", "sanitizer regression tests for case variants and runner markers", "disposable same-named branch/tag publication fixture", "protected release tag and npm environment review"],
+  "portfolio": "hardening.md"
+}

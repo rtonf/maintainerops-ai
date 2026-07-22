@@ -1,0 +1,230 @@
+{
+  "completeness": "complete",
+  "deferred": [],
+  "documentType": "codex-security.coverage",
+  "excludePaths": [],
+  "explicitExclusions": [],
+  "includePaths": [
+    "."
+  ],
+  "inventoryStrategy": "repository",
+  "mode": "repository",
+  "openQuestions": [
+    {
+      "followUpPrompt": "Review .github/workflows/npm-publish.yml and repository tag/environment rules before the next release.",
+      "question": "Should manual npm publication be removed in favor of release-only publication with protected tags and environment approval?"
+    },
+    {
+      "followUpPrompt": "Add offline fixtures for feedback phrase suppression, incomplete diffs, and empty tests, then compare expected labels.",
+      "question": "Should MOAI-002, MOAI-005, and MOAI-006 become explicit analyzer-quality eval cases?"
+    },
+    {
+      "followUpPrompt": "Rerun Scorecard after the security fixes and update issue #97 with alert-by-alert evidence.",
+      "question": "Should residual OpenSSF Scorecard alerts tracked in issue #97 be resolved or documented as accepted residuals?"
+    }
+  ],
+  "scanId": "e229f1ef-d5b0-4da2-ab98-d94f429747cc",
+  "schemaVersion": "1.0",
+  "surfaces": [
+    {
+      "disposition": "no_issue_found",
+      "id": "R1",
+      "label": "Repository instructions and security policy",
+      "notes": "Threat model and SECURITY guidance resolved.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "governance"
+    },
+    {
+      "disposition": "reported",
+      "id": "R2",
+      "label": "GitHub Actions workflows",
+      "notes": "MOAI-003 and MOAI-007; MOAI-004 retained as hardening follow-up.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "workflow supply chain"
+    },
+    {
+      "disposition": "reported",
+      "id": "R3",
+      "label": "Action runtime and stdout boundary",
+      "notes": "MOAI-003.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "workflow output"
+    },
+    {
+      "disposition": "reported",
+      "id": "R4",
+      "label": "Secret redaction and prompt construction",
+      "notes": "MOAI-001.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "sensitive data"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R5",
+      "label": "OpenAI model request path",
+      "notes": "Model input sink traced; no additional reportable finding.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "external API"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R6",
+      "label": "GitHub API ingestion",
+      "notes": "Issue, pull-request, files, pagination, and response handling reviewed.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "remote input"
+    },
+    {
+      "disposition": "rejected",
+      "id": "R7",
+      "label": "Offline analyzer and labels",
+      "notes": "MOAI-002, MOAI-005, and MOAI-006 are advisory quality defects without a direct privileged sink.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "decision quality"
+    },
+    {
+      "disposition": "reported",
+      "id": "R8",
+      "label": "Release verification scripts",
+      "notes": "Contributes to MOAI-007.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "release integrity"
+    },
+    {
+      "disposition": "reported",
+      "id": "R9",
+      "label": "Package manifest and npm publication",
+      "notes": "Trusted Publishing path covered by MOAI-007.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "package supply chain"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R10",
+      "label": "Dependency and lock files",
+      "notes": "No additional reportable finding.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "dependency integrity"
+    },
+    {
+      "disposition": "rejected",
+      "id": "R11",
+      "label": "Tests and evaluation fixtures",
+      "notes": "Analyzer quality gaps are documented as follow-up work.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "verification"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R12",
+      "label": "Web UI and model selector",
+      "notes": "No additional reportable finding.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "user interface"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R13",
+      "label": "Documentation and examples",
+      "notes": "No additional reportable finding.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "configuration"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R14",
+      "label": "Build and bundle scripts",
+      "notes": "Action bundle and package build paths reviewed.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "build integrity"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R15",
+      "label": "Configuration and environment handling",
+      "notes": "No additional reportable finding.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "secret handling"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R16",
+      "label": "Filesystem and fixture loading",
+      "notes": "No additional reportable finding.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "local input"
+    },
+    {
+      "disposition": "reported",
+      "id": "R17",
+      "label": "Error handling and logging",
+      "notes": "Output boundary is covered by MOAI-003.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "logging boundary"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R18",
+      "label": "Git history and release metadata",
+      "notes": "Revision identity recorded in the scan manifest.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "provenance"
+    },
+    {
+      "disposition": "rejected",
+      "id": "R19",
+      "label": "Supply-chain action pins",
+      "notes": "MOAI-004 is a hardening note; current action execution and full-length pin reduce exploitability.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "dependency supply chain"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "R20",
+      "label": "Repository-wide integration boundaries",
+      "notes": "No open or deferred coverage row remains.",
+      "receiptRefs": [
+        "artifacts/03_coverage/repository_coverage_ledger.md"
+      ],
+      "riskArea": "integration"
+    }
+  ]
+}

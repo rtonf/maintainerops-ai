@@ -23,6 +23,7 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - GitHub releases: 14 public releases from `v0.1.0` through `v0.1.14`, excluding intentionally withheld `v0.1.8`.
 - Source, npm, GitHub Releases, and GitHub Marketplace are aligned on `v0.1.14`.
 - Security evidence: initial reports plus the 2026-06-23 repository-wide Codex Security rescan, remediation report, and passing post-fix verification.
+- Latest security evidence: the complete 2026-07-12 repository-wide scan covers 59/59 worklist rows and reports 1 High plus 2 Medium findings; the generated report, SARIF, detailed write-ups, and hardening portfolio are published under [`docs/codex-security/full-rescan-2026-07-12.md`](docs/codex-security/full-rescan-2026-07-12.md). The report is a pre-fix baseline and does not claim remediation.
 - Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.14` publication and 2026-07-07 dependency maintenance evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
 - Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
@@ -151,6 +152,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 - [2026-06-23 full Codex Security rescan report](docs/codex-security/full-rescan-2026-06-23.md)
 - [2026-06-23 full Codex Security rescan HTML](docs/codex-security/full-rescan-2026-06-23.html)
 - [2026-06-23 full rescan fix report](docs/codex-security/full-rescan-fix-report-2026-06-23.md)
+- [2026-07-12 complete repository-wide rescan report](docs/codex-security/full-rescan-2026-07-12.md)
 - [Publication exposure scan](docs/codex-security/publication-exposure-scan-2026-06-11.md)
 - [v0.1.3 Codex Security diff scan](docs/codex-security/v0.1.3-diff-scan-2026-06-11.md)
 - [Action hardening Codex Security diff scan](docs/codex-security/action-hardening-diff-scan-2026-06-12.md)

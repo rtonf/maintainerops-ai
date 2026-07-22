@@ -1,0 +1,262 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/schemas/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "automationDetails": {
+        "id": "e229f1ef-d5b0-4da2-ab98-d94f429747cc"
+      },
+      "properties": {
+        "codexSecuritySchemaVersion": "1.0",
+        "codexSecurityTargetKind": "git_revision"
+      },
+      "results": [
+        {
+          "level": "error",
+          "locations": [
+            {
+              "message": {
+                "text": "unconstrained source selection"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/npm-publish.yml"
+                },
+                "region": {
+                  "endLine": 28,
+                  "startLine": 24
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The manual npm publication workflow checks out a user-supplied release ref without requiring a tag namespace. A branch with the same name can provide the package contents to the Trusted Publishing job."
+          },
+          "partialFingerprints": {
+            "codexSecurity/v1": "codex-security/v1:sha256:2559039caa86ca569f4019f8a54b4589e3c81e7098e94ee34999a301e11bf13d"
+          },
+          "properties": {
+            "candidateId": "MOAI-007",
+            "category": "Supply-chain release source confusion",
+            "confidence": "high",
+            "findingId": "csf_3f857a814a270e690135e535",
+            "occurrenceId": "occ_7b80ff35bdadaed387626cc6",
+            "severity": "high"
+          },
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "OIDC publication sink"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/npm-publish.yml"
+                },
+                "region": {
+                  "endLine": 51,
+                  "startLine": 38
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "incomplete release guard"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/verify-release-tag.mjs"
+                },
+                "region": {
+                  "endLine": 14,
+                  "startLine": 4
+                }
+              }
+            }
+          ],
+          "ruleId": "supply-chain/mutable-release-ref",
+          "ruleIndex": 1
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "message": {
+                "text": "case-sensitive redaction rule"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/redaction.ts"
+                },
+                "region": {
+                  "endLine": 21,
+                  "startLine": 21
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The redaction rule matches only the exact spelling Bearer even though HTTP authentication schemes are case-insensitive. Lowercase or mixed-case bearer credentials can remain in prompt material."
+          },
+          "partialFingerprints": {
+            "codexSecurity/v1": "codex-security/v1:sha256:247152ffd80336588170b6de8d28f2533ac25f0dfab74c870bb0f61396525452"
+          },
+          "properties": {
+            "candidateId": "MOAI-001",
+            "category": "Sensitive data exposure",
+            "confidence": "high",
+            "findingId": "csf_aee036c3aea026096b0d9a8d",
+            "occurrenceId": "occ_8aa76624c967eb1122fbb6e1",
+            "severity": "medium"
+          },
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "prompt assembly"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/prompt.ts"
+                },
+                "region": {
+                  "endLine": 6,
+                  "startLine": 6
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "model request sink"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/openaiAssessment.ts"
+                },
+                "region": {
+                  "endLine": 50,
+                  "startLine": 40
+                }
+              }
+            }
+          ],
+          "ruleId": "data-exposure/bearer-redaction",
+          "ruleIndex": 0
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "message": {
+                "text": "incomplete stdout sanitizer"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/format.ts"
+                },
+                "region": {
+                  "endLine": 107,
+                  "startLine": 107
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The output sanitizer handles modern line-leading commands but leaves legacy ##[ markers in attacker-controlled report text. GitHub Actions runner parsing can interpret those markers when the text is printed by the Action."
+          },
+          "partialFingerprints": {
+            "codexSecurity/v1": "codex-security/v1:sha256:cf4199b3b6b8b095040e45b9578f0626d15a3b04c2dfa1574391de26d611834b"
+          },
+          "properties": {
+            "candidateId": "MOAI-003",
+            "category": "Workflow output injection",
+            "confidence": "high",
+            "findingId": "csf_c5a6db5cbfdf8399c96e3f46",
+            "occurrenceId": "occ_ff062867fbbc71fbc6125176",
+            "severity": "medium"
+          },
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "stdout sink"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/action.ts"
+                },
+                "region": {
+                  "endLine": 9,
+                  "startLine": 9
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "Action execution boundary"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "action.yml"
+                },
+                "region": {
+                  "endLine": 39,
+                  "startLine": 39
+                }
+              }
+            }
+          ],
+          "ruleId": "workflow/output-command-marker",
+          "ruleIndex": 2
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "Codex Security",
+          "rules": [
+            {
+              "id": "data-exposure/bearer-redaction",
+              "name": "data-exposure/bearer-redaction",
+              "properties": {
+                "tags": [
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "data-exposure/bearer-redaction"
+              }
+            },
+            {
+              "id": "supply-chain/mutable-release-ref",
+              "name": "supply-chain/mutable-release-ref",
+              "properties": {
+                "tags": [
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "supply-chain/mutable-release-ref"
+              }
+            },
+            {
+              "id": "workflow/output-command-marker",
+              "name": "workflow/output-command-marker",
+              "properties": {
+                "tags": [
+                  "security"
+                ]
+              },
+              "shortDescription": {
+                "text": "workflow/output-command-marker"
+              }
+            }
+          ],
+          "version": "0.1.11"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}

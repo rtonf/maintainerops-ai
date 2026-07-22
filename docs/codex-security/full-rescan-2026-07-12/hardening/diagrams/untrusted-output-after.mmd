@@ -1,0 +1,7 @@
+flowchart LR
+  A[Issue or PR text] --> B[Work item]
+  B --> C[Model redaction boundary]
+  C --> D[Model prompt]
+  B --> E[Runner output boundary]
+  E --> F[Safe packet stdout]
+  F --> G[GitHub Actions runner parser]

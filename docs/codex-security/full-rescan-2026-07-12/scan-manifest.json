@@ -1,0 +1,125 @@
+{
+  "artifacts": {
+    "coverage_ledger": "artifacts/03_coverage/repository_coverage_ledger.md",
+    "finding_reports": [
+      "findings/mutable-npm-publish-ref/mutable-npm-publish-ref.md",
+      "findings/bearer-redaction-bypass/bearer-redaction-bypass.md",
+      "findings/legacy-runner-command-marker/legacy-runner-command-marker.md"
+    ],
+    "validation_summary": "artifacts/05_findings/validation_summary.md",
+    "work_ledger": "artifacts/02_discovery/work_ledger.jsonl"
+  },
+  "documentType": "codex-security.scan-manifest",
+  "scan": {
+    "artifacts": [
+      {
+        "mediaType": "application/json",
+        "path": "findings.json",
+        "sha256": "fa4ef94a0b14b29090677e3d4084849f82c082186779fcf5b75b65a36fbde647"
+      },
+      {
+        "mediaType": "application/json",
+        "path": "coverage.json",
+        "sha256": "9467e882e666489f19cfcd5ca03b4e626e009fe965d23916de448f89659265a5"
+      },
+      {
+        "mediaType": "application/octet-stream",
+        "path": "artifacts/03_coverage/repository_coverage_ledger.md",
+        "sha256": "db88912fddebced13157c94988685349203a5269a8fd24805fe4422ceb2863af"
+      }
+    ],
+    "completedAt": "2026-07-12T04:44:49.7988145Z",
+    "coverage": "coverage.json",
+    "coverageRef": "coverage.json",
+    "discovery": "artifacts/02_discovery/finding_discovery_report.md",
+    "findings": "findings.json",
+    "findingsRef": "findings.json",
+    "hardening": {
+      "portfolioPath": "hardening/hardening.md"
+    },
+    "id": "e229f1ef-d5b0-4da2-ab98-d94f429747cc",
+    "limitations": [
+      "No live GitHub Actions or npm publication was performed during validation.",
+      "MOAI-002, MOAI-005, and MOAI-006 remain hardening candidates but are not reportable security vulnerabilities under the final policy.",
+      "MOAI-004 was retained as a suppressed supply-chain hardening note because the action executes successfully and the repository uses a full-length pin."
+    ],
+    "mode": "standard",
+    "producer": {
+      "name": "Codex Security",
+      "version": "0.1.11"
+    },
+    "reportRef": "report.md",
+    "requested_path": ".",
+    "scope": {
+      "artifactsReviewed": [
+        "threat model",
+        "security guidance",
+        "discovery worklist",
+        "coverage ledger",
+        "validation artifacts",
+        "attack-path reports"
+      ],
+      "context": "Attacker-controlled issue and pull-request text, model-boundary data, Action stdout, and OIDC publication workflow were treated as trust boundaries.",
+      "excludePaths": [],
+      "includePaths": [
+        "."
+      ],
+      "limitations": [
+        "No live GitHub Actions or npm publication was performed during validation.",
+        "No real credential was used."
+      ],
+      "requestedPath": ".",
+      "requiredExcludePaths": [],
+      "requiredIncludePaths": [
+        "."
+      ],
+      "runtimeStatus": "Static source review with bounded local validation; no live publication or hosted exploit run.",
+      "summary": "Repository-wide security review of the Git revision after PR #96 and before the next release.",
+      "validationMode": "source-backed review, deterministic local harnesses, and official runner-source confirmation"
+    },
+    "sealedAt": "2026-07-12T04:44:49.7988145Z",
+    "security_guidance": "artifacts/01_context/security_guidance.md",
+    "startedAt": "2026-07-11T03:35:52.320214Z",
+    "status": "completed",
+    "target": {
+      "displayName": "maintainerops-ai-security-scan",
+      "kind": "git_revision",
+      "repository": "rtonf/maintainerops-ai",
+      "revision": "40ab2aaf0875d0b9074642ba4f51223f1bd4200a",
+      "source_sha256": "55e142a16b8ba3c841e3997b600ef9ec9ae51403f6c0963c2c4abdc5fa05baed",
+      "targetId": "target_sha256_55e142a16b8ba3c841e3997b600ef9ec9ae51403f6c0963c2c4abdc5fa05baed"
+    },
+    "threatModel": {
+      "assets": [
+        "model-provider confidentiality",
+        "GitHub Actions workflow state",
+        "npm package integrity",
+        "release credentials"
+      ],
+      "assumptions": [
+        "GitHub and npm identities are otherwise correctly configured",
+        "validation did not execute live workflows"
+      ],
+      "attackerCapabilities": [
+        "submit or edit content in an analyzed repository",
+        "supply a manual release workflow input when authorized",
+        "craft strings that reach logs and prompts"
+      ],
+      "securityObjectives": [
+        "redact secrets before model calls",
+        "neutralize workflow commands before stdout",
+        "publish only the intended tagged source"
+      ],
+      "summary": "Public repository contributors can influence issue and pull-request text that is ingested, sent to a model provider, rendered into Action logs, or used by release automation.",
+      "trustBoundaries": [
+        "GitHub content to local analyzer",
+        "local analyzer to model provider",
+        "Action stdout to hosted runner parser",
+        "release input to OIDC publication"
+      ]
+    },
+    "threat_model": "artifacts/01_context/threat_model.md"
+  },
+  "schemaVersion": "1.0",
+  "schema_version": "codex-security.scan-manifest/v1"
+}

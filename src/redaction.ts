@@ -18,7 +18,7 @@ const secretPatterns: Array<[RegExp, string]> = [
     /\b(api[_-]?key|token|secret|password|aws_access_key_id|aws_secret_access_key|access_token|refresh_token)\s*:\s*[^"'\s,}]+/gi,
     "$1: [REDACTED]"
   ],
-  [/Bearer\s+[A-Za-z0-9._~+/-]{20,}/g, "Bearer [REDACTED]"]
+  [/Bearer\s+[A-Za-z0-9._~+/-]{20,}/gi, "Bearer [REDACTED]"]
 ];
 
 export function redactSecrets(input: string): string {

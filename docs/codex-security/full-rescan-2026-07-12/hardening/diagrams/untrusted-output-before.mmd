@@ -1,0 +1,6 @@
+flowchart LR
+  A[Issue or PR text] --> B[Work item]
+  B --> C[Redaction and formatter rules]
+  C --> D[Model prompt]
+  C --> E[Action stdout]
+  E --> F[GitHub Actions runner parser]

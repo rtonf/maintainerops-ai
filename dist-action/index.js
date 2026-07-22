@@ -12557,7 +12557,7 @@ const secretPatterns = [
         /\b(api[_-]?key|token|secret|password|aws_access_key_id|aws_secret_access_key|access_token|refresh_token)\s*:\s*[^"'\s,}]+/gi,
         "$1: [REDACTED]"
     ],
-    [/Bearer\s+[A-Za-z0-9._~+/-]{20,}/g, "Bearer [REDACTED]"]
+    [/Bearer\s+[A-Za-z0-9._~+/-]{20,}/gi, "Bearer [REDACTED]"]
 ];
 function redactSecrets(input) {
     return secretPatterns.reduce((text, [pattern, replacement]) => text.replace(pattern, replacement), input);
@@ -12915,7 +12915,7 @@ function sanitizeAssessment(assessment) {
     };
 }
 function sanitizeForStdout(value) {
-    return redactSecrets(value).replace(/^::/gm, "\\::");
+    return redactSecrets(value).replace(/##\[/g, "# #[").replace(/::/g, "\\:\\:");
 }
 function safeInline(value) {
     return sanitizeForStdout(value).replace(/\r?\n/g, " ");
