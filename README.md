@@ -15,6 +15,64 @@ OSS ecosystems rely on a small number of maintainers making high-quality decisio
 
 The project is intentionally human-in-the-loop. It does not merge pull requests, close issues, publish releases, or run security scans against repositories you do not own or administer.
 
+## OpenAI Build Week: Evidence Firewall
+
+The Build Week source adds an **Evidence Firewall** between model output and the maintainer. Every model-produced `evidence` citation is checked against the provenance of the actual issue, pull request, or fixture supplied as input. The resulting packet exposes:
+
+- `evidenceAudit.validReferences`: the count of citations that resolve to supplied input;
+- `evidenceAudit.invalidReferences[]`: citations that do not resolve, kept visible for human review; and
+- `evidenceAudit.untrustedInputWarnings[]`: instruction-shaped text found in untrusted body, diff, or comment content, including its source reference and matched pattern.
+
+Warnings are evidence for the maintainer, not autonomous decisions. MaintainerOps AI still does not merge, close, label, comment, or publish on the maintainer's behalf.
+
+The published npm `latest` demo is the quickest API-free product tour and may predate the Build Week source:
+
+```bash
+npm exec --yes --package maintainerops-ai@latest -- maintainerops demo
+```
+
+To inspect and test the Build Week implementation locally:
+
+```bash
+git clone https://github.com/rtonf/maintainerops-ai.git
+cd maintainerops-ai
+git switch codex/build-week-gpt56
+npm ci
+npm run build:cli
+node dist/cli.js demo --format markdown
+```
+
+Judge-focused deterministic path, with no API key or paid request:
+
+```bash
+npm run check
+npm run build:cli
+node --test dist/evidenceAudit.test.js
+node dist/cli.js analyze --fixture examples/fixtures/pull_request.json --offline --format json
+```
+
+The committed fixture currently reports `evidenceAudit.validReferences: 3`, with zero invalid references and zero untrusted-input warnings. The focused Evidence Firewall tests separately cover fabricated citations and instruction-shaped body, diff, and comment inputs.
+
+Supported runtime is Node.js 20.11 or newer. CI checks the Node 20.11 baseline and the full verification gate on Node 24. The CLI uses cross-platform Node.js APIs and is intended for Windows, macOS, and Linux; repository CI currently exercises Linux, so judges on Windows should run the commands in PowerShell and judges on macOS/Linux in their usual shell.
+
+Run the GPT-5.6 Responses API path with a local, gitignored `.env.local` file. Keep the real key out of shell history, screenshots, logs, and submitted artifacts:
+
+```text
+# .env.local (never commit this file)
+OPENAI_API_KEY=<your-openai-api-key>
+OPENAI_MODEL=gpt-5.6
+```
+
+```bash
+node --env-file=.env.local dist/cli.js analyze --fixture examples/fixtures/pull_request.json --model gpt-5.6 --format json
+```
+
+On this Build Week branch, GPT-5.6 is the default when neither `--model` nor `OPENAI_MODEL` is set. The live model eval remains manual-only and fail-closed behind a `$2` hard budget for the documented one-case run. On 2026-07-16, source tests passed 85/85, the post-repair warning-detector tests passed 10/10, targeted eval tests passed 15/15, API-free case selection succeeded, and the full `npm run verify` gate passed.
+
+The final authorized `prompt-injection-evidence-firewall` live eval passed with GPT-5.6: 775 input tokens, 420 output tokens, 1,195 total tokens, and an estimated cost of `$0.016475`. The result requested security review, validated two evidence references with zero invalid references, and surfaced the injected untrusted instructions. The earlier bug-finding request cost an estimated `$0.013865`, so total estimated live verification cost was `$0.030340`, well below the `$2` ceiling.
+
+Codex accelerated repository auditing, implementation across the evidence pipeline, regression-test and eval-case authoring, and this evidence ledger. The owner retained the consequential choices: selecting the Evidence Firewall problem, defining valid provenance and warning policy, keeping invalid citations visible, retaining human control, setting the spend ceiling, and deciding what is ready to submit. See [BUILD_WEEK.md](BUILD_WEEK.md) for the pre-existing baseline, Build Week file ledger, verification status, and Codex-session TODO.
+
 ## Current evidence snapshot
 
 - Public npm package: [`maintainerops-ai`](https://www.npmjs.com/package/maintainerops-ai), latest published `v0.1.14` through npm Trusted Publishing with provenance; npm downloads API reported 506 downloads for 2026-06-30 through 2026-07-06; broken `0.1.8` is deprecated.
@@ -26,12 +84,12 @@ The project is intentionally human-in-the-loop. It does not merge pull requests,
 - Latest security evidence: the complete 2026-07-12 repository-wide scan covers 59/59 worklist rows and reports 1 High plus 2 Medium findings; the generated report, SARIF, detailed write-ups, and hardening portfolio are published under [`docs/codex-security/full-rescan-2026-07-12.md`](docs/codex-security/full-rescan-2026-07-12.md). The report is a pre-fix baseline and does not claim remediation.
 - Workflow evidence: successful manual, pull-request-triggered, issue-triggered, Dependabot, CodeQL, OpenSSF Scorecard, and npm Trusted Publishing runs, including the `v0.1.14` publication and 2026-07-07 dependency maintenance evidence.
 - Supply-chain evidence: OpenSSF Scorecard workflow is active; latest successful manual run scored `7.1` after community-profile and workflow hardening improvements, documented in [`docs/openssf-scorecard-2026-07-02.md`](docs/openssf-scorecard-2026-07-02.md).
-- Model-backed eval evidence: budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724` and remains manual-only.
+- Historical model-backed eval evidence: before Build Week, budget-gated live evals passed 2-case, 5-case, and 10-case runs with `gpt-4o-mini`; the 2026-07-05 10-case run cost estimate was `$0.001724`. The final Build Week GPT-5.6 Evidence Firewall eval passed at an estimated `$0.016475`; total live debugging and final-verification cost was an estimated `$0.030340`.
 - Supply-chain release work: npm Trusted Publishing is active for `v0.1.14` and published without `NPM_TOKEN`.
 - Maintainer workflow evidence: issues #1-#4 triaged and closed, issue #6 open for Marketplace/external maintainer feedback, issue #11 tracks the `v0.1.4` hardening release, and real repository review packets published.
 - Release planning: [`docs/release-plan-v0.1.10.md`](docs/release-plan-v0.1.10.md), [`docs/releases/v0.1.10.md`](docs/releases/v0.1.10.md), [`docs/releases/v0.1.11.md`](docs/releases/v0.1.11.md), [`docs/releases/v0.1.12.md`](docs/releases/v0.1.12.md), [`docs/releases/v0.1.13.md`](docs/releases/v0.1.13.md), and [`docs/releases/v0.1.14.md`](docs/releases/v0.1.14.md) track model-backed eval hardening, Trusted Publishing, provenance metadata repair, 10-case live eval publication, the no-key demo path, and package metadata consistency.
 - External feedback: [Discussion #17](https://github.com/rtonf/maintainerops-ai/discussions/17) provides a low-friction public test request in English and Japanese; results can also be recorded on [Issue #6](https://github.com/rtonf/maintainerops-ai/issues/6).
-- Verification gate: `npm run verify` includes typecheck, lint, format, unit tests, UI smoke test, evals, package dry run, publint, and npm audit.
+- Verification gate: the final 2026-07-16 `npm run verify` run passed typecheck, lint, format, 85 source tests, one UI smoke test, seven deterministic eval cases, package dry run, publint, and npm audit with zero vulnerabilities.
 
 ## Why this exists
 
@@ -70,13 +128,12 @@ npm run verify
 With the OpenAI API enabled:
 
 ```bash
-set OPENAI_API_KEY=<your-openai-api-key>
-set OPENAI_MODEL=<supported-openai-model>
+# After creating the gitignored .env.local file shown above:
 npm run build
-node dist/cli.js analyze --fixture examples/fixtures/pull_request.json --format markdown
+node --env-file=.env.local dist/cli.js analyze --fixture examples/fixtures/pull_request.json --model gpt-5.6 --format markdown
 ```
 
-If `OPENAI_MODEL` is omitted, the CLI uses its built-in default model. Set the variable explicitly when your organization has standardized on a specific supported OpenAI model.
+If `OPENAI_MODEL` and `--model` are omitted, the Build Week source uses its built-in `gpt-5.6` default. The currently published npm package may predate that source change.
 
 Against GitHub:
 
@@ -91,9 +148,8 @@ If `OPENAI_API_KEY` is not set, the CLI falls back to deterministic offline heur
 Manual model-backed evals:
 
 ```bash
-set OPENAI_API_KEY=<your-openai-api-key>
-set OPENAI_MODEL=<supported-openai-model>
-npm run eval:model
+npm run build:cli
+node --env-file=.env.local dist/eval/run-model-eval.js --suite smoke --case "prompt-injection-evidence-firewall" --budget-usd 2 --max-cases 1 --max-output-tokens 1200 --summary-json
 ```
 
 `npm run eval:model` is intentionally not part of CI because it performs live API calls and may incur usage charges.
@@ -116,12 +172,16 @@ The model is asked to return a strict structured object:
 - `securityNotes`: security-sensitive observations
 - `releaseNotes`: release-note draft fragments
 - `commentDraft`: optional GitHub comment draft
+- `evidence`: model citations, each with a source, reference, and note
+- `evidenceAudit`: provenance validation and untrusted-input warnings for human review
 
 ## Safety posture
 
 - Dry-run by default.
 - Minimal GitHub permissions.
 - Secret redaction before model calls and report serialization.
+- Model evidence citations are checked against supplied input provenance; invalid references remain visible.
+- Instruction-shaped text in untrusted bodies, diffs, and comments is surfaced as a warning.
 - Live GitHub analysis requires explicit authorization.
 - Pull request CI runs in offline/no-secret mode by default.
 - GitHub Actions stdout neutralizes workflow-command syntax from untrusted model text.
@@ -187,6 +247,7 @@ Static preview: [security-review-workbench.png](docs/images/security-review-work
 
 ## Application materials
 
+- [OpenAI Build Week implementation and evidence ledger](BUILD_WEEK.md)
 - [OpenAI alignment](docs/openai-alignment.md)
 - [Evals](EVALS.md)
 - [Promotion kit](docs/promotion-kit.md)

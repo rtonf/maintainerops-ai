@@ -1,5 +1,6 @@
 import type { MaintainerAssessment, MaintainerWorkItem, RiskLevel } from "./types.js";
 import { isTestLikePath } from "./fileSignals.js";
+import { addEvidenceAudit } from "./evidenceAudit.js";
 
 const securityTerms = [
   "auth",
@@ -114,7 +115,7 @@ export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
       ? ["No release-note trigger detected. Confirm whether the change affects users."]
       : [];
 
-  return {
+  const assessment: MaintainerAssessment = {
     summary: buildSummary(item, hasSecuritySignal, hasTests, largeChange),
     riskLevel,
     confidence: 0.55,
@@ -126,6 +127,8 @@ export function analyzeOffline(item: MaintainerWorkItem): MaintainerAssessment {
     commentDraft: buildCommentDraft(item, hasSecuritySignal, hasTests, isFeedbackRequest),
     evidence: buildEvidence(item, hasSecuritySignal, hasTests, largeChange)
   };
+
+  return addEvidenceAudit(item, assessment);
 }
 
 function buildSearchableText(item: MaintainerWorkItem): string {
@@ -210,28 +213,83 @@ function buildEvidence(
   ];
 
   if (hasSecuritySignal) {
-    evidence.push({
-      source: "metadata",
-      reference: "security term scan",
-      note: "Security-sensitive terms were present in title, body, diff, comments, or file paths."
-    });
+    const securityEvidence = findSecurityEvidence(item);
+    if (securityEvidence) evidence.push(securityEvidence);
   }
 
-  if (item.kind === "pull_request") {
+  if (item.kind === "pull_request" && item.files?.[0]) {
     evidence.push({
       source: "file",
-      reference: `${item.files?.length ?? 0} changed files`,
-      note: hasTests ? "At least one test-like path was detected." : "No test-like path was detected."
+      reference: item.files[0].path,
+      note: hasTests
+        ? `At least one test-like path was detected across ${item.files.length} changed files.`
+        : `No test-like path was detected across ${item.files.length} changed files.`
     });
   }
 
   if (largeChange) {
     evidence.push({
-      source: "metadata",
-      reference: "change size",
+      source: item.files?.[0] ? "file" : "title",
+      reference: item.files?.[0]?.path ?? item.title,
       note: "The offline analyzer classified this as a large change."
     });
   }
 
   return evidence;
+}
+
+function findSecurityEvidence(item: MaintainerWorkItem): MaintainerAssessment["evidence"][number] | undefined {
+  if (containsSecurityTerm(item.title)) {
+    return {
+      source: "title",
+      reference: item.title,
+      note: "Security-sensitive language was detected in the title."
+    };
+  }
+
+  if (typeof item.body === "string" && containsSecurityTerm(item.body)) {
+    return {
+      source: "body",
+      reference: "body",
+      note: "Security-sensitive language was detected in the body."
+    };
+  }
+
+  for (const [index, comment] of (item.comments ?? []).entries()) {
+    if (containsSecurityTerm(comment)) {
+      return {
+        source: "comment",
+        reference: `comment:${index + 1}`,
+        note: "Security-sensitive language was detected in a comment."
+      };
+    }
+  }
+
+  for (const file of item.files ?? []) {
+    if (containsSecurityTerm(file.path) || (typeof file.patch === "string" && containsSecurityTerm(file.patch))) {
+      return {
+        source: "file",
+        reference: file.path,
+        note: "Security-sensitive language was detected in a changed file path or patch."
+      };
+    }
+  }
+
+  if (typeof item.diff === "string" && containsSecurityTerm(item.diff)) {
+    return {
+      source: "diff",
+      reference: "diff",
+      note: "Security-sensitive language was detected in the diff."
+    };
+  }
+
+  return undefined;
+}
+
+function containsSecurityTerm(value: string): boolean {
+  const normalized = value.toLowerCase();
+  return (
+    securityTerms.some((term) => normalized.includes(term)) ||
+    actionableSecurityPatterns.some((pattern) => pattern.test(normalized))
+  );
 }

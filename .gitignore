@@ -6,6 +6,7 @@ dist-web/
 coverage/
 test-results/
 playwright-report/
+output/
 *.log
 security-scans/
 artifacts/
