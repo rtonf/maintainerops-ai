@@ -21,7 +21,7 @@ Today's maintenance focused on closing the `v0.1.13` Marketplace loop and proces
 - Verified npm Trusted Publishing succeeded for `maintainerops-ai@0.1.14`.
 - Verified `npm exec --yes --package maintainerops-ai@latest -- maintainerops demo --format markdown` prints the no-key review packet from the public registry package.
 - Confirmed the public GitHub Marketplace listing displays `v0.1.14` as `Latest`.
-- Opened Issue #87 to evaluate external SBOM/OSV dependency scanning feedback separately from the `v0.1.14` metadata release.
+- Opened Issue #87 to evaluate a maintainer-proposed SBOM/OSV dependency-scanning follow-up separately from the `v0.1.14` metadata release; the accessible Issue #85 record does not confirm an external origin for the suggestion.
 - Refreshed Issue #6 with the current `v0.1.14` npm, GitHub Release, Marketplace, and no-key demo test path.
 - Updated Issue #6 body and Discussion #17 to use the `v0.1.14` no-key demo as the single primary external feedback CTA.
 - Enabled GitHub Dependabot vulnerability alerts and Dependabot security updates in repository settings.
