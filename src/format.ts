@@ -1,4 +1,4 @@
-import type { MaintainerAssessment, MaintainerWorkItem } from "./types.js";
+import type { ChangedFile, MaintainerAssessment, MaintainerWorkItem } from "./types.js";
 import { redactSecrets } from "./redaction.js";
 
 export function formatAssessment(
@@ -63,25 +63,25 @@ function listOrNone(items: string[]): string {
 }
 
 function redactWorkItem(item: MaintainerWorkItem): MaintainerWorkItem {
-  const redacted = JSON.parse(redactSecrets(JSON.stringify(item))) as MaintainerWorkItem;
+  const redacted = item;
   return {
     kind: redacted.kind,
-    repository: redacted.repository,
+    repository: sanitizeForStdout(redacted.repository),
     number: redacted.number,
-    title: redacted.title,
-    author: redacted.author,
-    url: redacted.url,
-    labels: redacted.labels,
+    title: sanitizeForStdout(redacted.title),
+    author: redacted.author === undefined ? undefined : sanitizeForStdout(redacted.author),
+    url: redacted.url === undefined ? undefined : sanitizeForStdout(redacted.url),
+    labels: redacted.labels?.map((label) => sanitizeForStdout(label)),
     files: redacted.files?.map((file) => ({
-      path: file.path,
-      status: file.status,
+      path: sanitizeForStdout(file.path),
+      status: sanitizeForStdout(file.status) as ChangedFile["status"],
       additions: file.additions,
       deletions: file.deletions
     })),
     checks: redacted.checks?.map((check) => ({
-      name: check.name,
-      conclusion: check.conclusion,
-      status: check.status
+      name: sanitizeForStdout(check.name),
+      conclusion: check.conclusion === undefined ? undefined : sanitizeForStdout(check.conclusion),
+      status: check.status === undefined ? undefined : sanitizeForStdout(check.status)
     }))
   };
 }

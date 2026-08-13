@@ -806,7 +806,7 @@ const safeJSON = (text) => {
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 //# sourceMappingURL=sleep.mjs.map
 ;// CONCATENATED MODULE: ./node_modules/openai/version.mjs
-const VERSION = '6.45.0'; // x-release-please-version
+const VERSION = '6.46.0'; // x-release-please-version
 //# sourceMappingURL=version.mjs.map
 ;// CONCATENATED MODULE: ./node_modules/openai/internal/detect-platform.mjs
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
@@ -3229,7 +3229,20 @@ var _AbstractChatCompletionRunner_instances, _AbstractChatCompletionRunner_getFi
 
 
 
+
 const DEFAULT_MAX_CHAT_COMPLETIONS = 10;
+function normalizeToolCallIds(chatCompletion) {
+    for (const choice of chatCompletion.choices) {
+        for (const toolCall of choice.message.tool_calls ?? []) {
+            // Some OpenAI-compatible providers omit tool call IDs or return an empty string.
+            // Generate a unique ID before the completion is stored or emitted so the assistant
+            // tool call and its result message always reference the same value.
+            if (!toolCall.id) {
+                toolCall.id = `call_${uuid4()}`;
+            }
+        }
+    }
+}
 class AbstractChatCompletionRunner extends EventStream {
     constructor() {
         super(...arguments);
@@ -3238,6 +3251,7 @@ class AbstractChatCompletionRunner extends EventStream {
         this.messages = [];
     }
     _addChatCompletion(chatCompletion) {
+        normalizeToolCallIds(chatCompletion);
         this._chatCompletions.push(chatCompletion);
         this._emit('chatCompletion', chatCompletion);
         const message = chatCompletion.choices[0]?.message;
@@ -3812,6 +3826,7 @@ var _ChatCompletionStream_instances, _ChatCompletionStream_params, _ChatCompleti
 
 
 
+
 class ChatCompletionStream extends AbstractChatCompletionRunner {
     constructor(params) {
         super();
@@ -4240,9 +4255,6 @@ function finalizeChatCompletion(snapshot, params) {
                         tool_calls: tool_calls.map((tool_call, i) => {
                             const { function: fn, type, id, ...toolRest } = tool_call;
                             const { arguments: args, name, ...fnRest } = fn || {};
-                            if (id == null) {
-                                throw new error_OpenAIError(`missing choices[${index}].tool_calls[${i}].id\n${str(snapshot)}`);
-                            }
                             if (type == null) {
                                 throw new error_OpenAIError(`missing choices[${index}].tool_calls[${i}].type\n${str(snapshot)}`);
                             }
@@ -4252,7 +4264,12 @@ function finalizeChatCompletion(snapshot, params) {
                             if (args == null) {
                                 throw new error_OpenAIError(`missing choices[${index}].tool_calls[${i}].function.arguments\n${str(snapshot)}`);
                             }
-                            return { ...toolRest, id, type, function: { ...fnRest, name, arguments: args } };
+                            return {
+                                ...toolRest,
+                                id: id || `call_${uuid4()}`,
+                                type,
+                                function: { ...fnRest, name, arguments: args },
+                            };
                         }),
                     },
                 };
@@ -7381,6 +7398,188 @@ class ChatKit extends APIResource {
 ChatKit.Sessions = sessions_Sessions;
 ChatKit.Threads = Threads;
 //# sourceMappingURL=chatkit.mjs.map
+;// CONCATENATED MODULE: ./node_modules/openai/resources/beta/responses/input-items.mjs
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+
+
+
+class InputItems extends APIResource {
+    /**
+     * Returns a list of input items for a given response.
+     *
+     * @example
+     * ```ts
+     * // Automatically fetches more pages as needed.
+     * for await (const betaResponseItem of client.beta.responses.inputItems.list(
+     *   'response_id',
+     * )) {
+     *   // ...
+     * }
+     * ```
+     */
+    list(responseID, params = {}, options) {
+        const { betas, ...query } = params ?? {};
+        return this._client.getAPIList(path `/responses/${responseID}/input_items?beta=true`, (CursorPage), {
+            query,
+            ...options,
+            headers: buildHeaders([
+                { ...(betas?.toString() != null ? { 'openai-beta': betas?.toString() } : undefined) },
+                options?.headers,
+            ]),
+            __security: { bearerAuth: true },
+        });
+    }
+}
+//# sourceMappingURL=input-items.mjs.map
+;// CONCATENATED MODULE: ./node_modules/openai/resources/beta/responses/input-tokens.mjs
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+
+class InputTokens extends APIResource {
+    /**
+     * Returns input token counts of the request.
+     *
+     * Returns an object with `object` set to `response.input_tokens` and an
+     * `input_tokens` count.
+     *
+     * @example
+     * ```ts
+     * const response =
+     *   await client.beta.responses.inputTokens.count();
+     * ```
+     */
+    count(params = {}, options) {
+        const { betas, ...body } = params ?? {};
+        return this._client.post('/responses/input_tokens?beta=true', {
+            body,
+            ...options,
+            headers: buildHeaders([
+                { ...(betas?.toString() != null ? { 'openai-beta': betas?.toString() } : undefined) },
+                options?.headers,
+            ]),
+            __security: { bearerAuth: true },
+        });
+    }
+}
+//# sourceMappingURL=input-tokens.mjs.map
+;// CONCATENATED MODULE: ./node_modules/openai/resources/beta/responses/responses.mjs
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+
+
+
+
+
+
+class Responses extends APIResource {
+    constructor() {
+        super(...arguments);
+        this.inputItems = new InputItems(this._client);
+        this.inputTokens = new InputTokens(this._client);
+    }
+    create(params, options) {
+        const { betas, ...body } = params;
+        return this._client.post('/responses?beta=true', {
+            body,
+            ...options,
+            headers: buildHeaders([
+                { ...(betas?.toString() != null ? { 'openai-beta': betas?.toString() } : undefined) },
+                options?.headers,
+            ]),
+            stream: params.stream ?? false,
+            __security: { bearerAuth: true },
+        });
+    }
+    retrieve(responseID, params = {}, options) {
+        const { betas, ...query } = params ?? {};
+        return this._client.get(path `/responses/${responseID}?beta=true`, {
+            query,
+            ...options,
+            headers: buildHeaders([
+                { ...(betas?.toString() != null ? { 'openai-beta': betas?.toString() } : undefined) },
+                options?.headers,
+            ]),
+            stream: params?.stream ?? false,
+            __security: { bearerAuth: true },
+        });
+    }
+    /**
+     * Deletes a model response with the given ID.
+     *
+     * @example
+     * ```ts
+     * await client.beta.responses.delete(
+     *   'resp_677efb5139a88190b512bc3fef8e535d',
+     * );
+     * ```
+     */
+    delete(responseID, params = {}, options) {
+        const { betas } = params ?? {};
+        return this._client.delete(path `/responses/${responseID}?beta=true`, {
+            ...options,
+            headers: buildHeaders([
+                { Accept: '*/*', ...(betas?.toString() != null ? { 'openai-beta': betas?.toString() } : undefined) },
+                options?.headers,
+            ]),
+            __security: { bearerAuth: true },
+        });
+    }
+    /**
+     * Cancels a model response with the given ID. Only responses created with the
+     * `background` parameter set to `true` can be cancelled.
+     * [Learn more](https://platform.openai.com/docs/guides/background).
+     *
+     * @example
+     * ```ts
+     * const betaResponse = await client.beta.responses.cancel(
+     *   'resp_677efb5139a88190b512bc3fef8e535d',
+     * );
+     * ```
+     */
+    cancel(responseID, params = {}, options) {
+        const { betas } = params ?? {};
+        return this._client.post(path `/responses/${responseID}/cancel?beta=true`, {
+            ...options,
+            headers: buildHeaders([
+                { ...(betas?.toString() != null ? { 'openai-beta': betas?.toString() } : undefined) },
+                options?.headers,
+            ]),
+            __security: { bearerAuth: true },
+        });
+    }
+    /**
+     * Compact a conversation. Returns a compacted response object.
+     *
+     * Learn when and how to compact long-running conversations in the
+     * [conversation state guide](https://platform.openai.com/docs/guides/conversation-state#managing-the-context-window).
+     * For ZDR-compatible compaction details, see
+     * [Compaction (advanced)](https://platform.openai.com/docs/guides/conversation-state#compaction-advanced).
+     *
+     * @example
+     * ```ts
+     * const betaCompactedResponse =
+     *   await client.beta.responses.compact({
+     *     model: 'gpt-5.6-sol',
+     *   });
+     * ```
+     */
+    compact(params, options) {
+        const { betas, ...body } = params;
+        return this._client.post('/responses/compact?beta=true', {
+            body,
+            ...options,
+            headers: buildHeaders([
+                { ...(betas?.toString() != null ? { 'openai-beta': betas?.toString() } : undefined) },
+                options?.headers,
+            ]),
+            __security: { bearerAuth: true },
+        });
+    }
+}
+Responses.InputItems = InputItems;
+Responses.InputTokens = InputTokens;
+//# sourceMappingURL=responses.mjs.map
 ;// CONCATENATED MODULE: ./node_modules/openai/resources/beta/threads/messages.mjs
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
@@ -7826,7 +8025,7 @@ class AssistantStream extends EventStream {
                     }
                     const accEntry = accValue[index];
                     if (accEntry == null) {
-                        accValue.push(deltaEntry);
+                        accValue[index] = deltaEntry;
                     }
                     else {
                         accValue[index] = this.accumulateDelta(accEntry, deltaEntry);
@@ -8417,16 +8616,20 @@ threads_Threads.Messages = messages_Messages;
 
 
 
+
+
 class Beta extends APIResource {
     constructor() {
         super(...arguments);
         this.realtime = new Realtime(this._client);
+        this.responses = new Responses(this._client);
         this.chatkit = new ChatKit(this._client);
         this.assistants = new Assistants(this._client);
         this.threads = new threads_Threads(this._client);
     }
 }
 Beta.Realtime = Realtime;
+Beta.Responses = Responses;
 Beta.ChatKit = ChatKit;
 Beta.Assistants = Assistants;
 Beta.Threads = threads_Threads;
@@ -10117,6 +10320,7 @@ function accumulateResponse(event, snapshot) {
         case 'response.mcp_list_tools.in_progress':
         case 'response.mcp_list_tools.completed':
         case 'response.mcp_list_tools.failed':
+        case 'keepalive':
         case 'error': {
             // These events do not contain state represented by the Response object.
             break;
@@ -10334,7 +10538,7 @@ function finalizeResponse(snapshot, params) {
 
 
 
-class InputItems extends APIResource {
+class input_items_InputItems extends APIResource {
     /**
      * Returns a list of input items for a given response.
      *
@@ -10356,7 +10560,7 @@ class InputItems extends APIResource {
 ;// CONCATENATED MODULE: ./node_modules/openai/resources/responses/input-tokens.mjs
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-class InputTokens extends APIResource {
+class input_tokens_InputTokens extends APIResource {
     /**
      * Returns input token counts of the request.
      *
@@ -10388,11 +10592,11 @@ class InputTokens extends APIResource {
 
 
 
-class Responses extends APIResource {
+class responses_Responses extends APIResource {
     constructor() {
         super(...arguments);
-        this.inputItems = new InputItems(this._client);
-        this.inputTokens = new InputTokens(this._client);
+        this.inputItems = new input_items_InputItems(this._client);
+        this.inputTokens = new input_tokens_InputTokens(this._client);
     }
     create(body, options) {
         return this._client.post('/responses', {
@@ -10477,7 +10681,7 @@ class Responses extends APIResource {
      * @example
      * ```ts
      * const compactedResponse = await client.responses.compact({
-     *   model: 'gpt-5.4',
+     *   model: 'gpt-5.6-sol',
      * });
      * ```
      */
@@ -10485,8 +10689,8 @@ class Responses extends APIResource {
         return this._client.post('/responses/compact', { body, ...options, __security: { bearerAuth: true } });
     }
 }
-Responses.InputItems = InputItems;
-Responses.InputTokens = InputTokens;
+responses_Responses.InputItems = input_items_InputItems;
+responses_Responses.InputTokens = input_tokens_InputTokens;
 //# sourceMappingURL=responses.mjs.map
 ;// CONCATENATED MODULE: ./node_modules/openai/resources/skills/content.mjs
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
@@ -11504,7 +11708,7 @@ class OpenAI {
          */
         this.uploads = new Uploads(this);
         this.admin = new Admin(this);
-        this.responses = new Responses(this);
+        this.responses = new responses_Responses(this);
         this.realtime = new realtime_Realtime(this);
         /**
          * Manage conversations and conversation items.
@@ -12159,7 +12363,7 @@ OpenAI.Beta = Beta;
 OpenAI.Batches = Batches;
 OpenAI.Uploads = Uploads;
 OpenAI.Admin = Admin;
-OpenAI.Responses = Responses;
+OpenAI.Responses = responses_Responses;
 OpenAI.Realtime = realtime_Realtime;
 OpenAI.Conversations = Conversations;
 OpenAI.Evals = Evals;
@@ -12356,7 +12560,7 @@ class BedrockOpenAI extends OpenAI {
             ...opts,
         });
         this.bedrockTokenProvider = bedrockTokenProvider;
-        this.responses = restoreBedrockStreamOutputText(new Responses(this));
+        this.responses = restoreBedrockStreamOutputText(new responses_Responses(this));
     }
     async prepareOptions(options) {
         const security = options.__security ?? { bearerAuth: true };
@@ -12876,25 +13080,25 @@ function listOrNone(items) {
     return items.length > 0 ? items.map((item) => `- ${sanitizeForStdout(item)}`).join("\n") : "- none";
 }
 function redactWorkItem(item) {
-    const redacted = JSON.parse(redactSecrets(JSON.stringify(item)));
+    const redacted = item;
     return {
         kind: redacted.kind,
-        repository: redacted.repository,
+        repository: sanitizeForStdout(redacted.repository),
         number: redacted.number,
-        title: redacted.title,
-        author: redacted.author,
-        url: redacted.url,
-        labels: redacted.labels,
+        title: sanitizeForStdout(redacted.title),
+        author: redacted.author === undefined ? undefined : sanitizeForStdout(redacted.author),
+        url: redacted.url === undefined ? undefined : sanitizeForStdout(redacted.url),
+        labels: redacted.labels?.map((label) => sanitizeForStdout(label)),
         files: redacted.files?.map((file) => ({
-            path: file.path,
-            status: file.status,
+            path: sanitizeForStdout(file.path),
+            status: sanitizeForStdout(file.status),
             additions: file.additions,
             deletions: file.deletions
         })),
         checks: redacted.checks?.map((check) => ({
-            name: check.name,
-            conclusion: check.conclusion,
-            status: check.status
+            name: sanitizeForStdout(check.name),
+            conclusion: check.conclusion === undefined ? undefined : sanitizeForStdout(check.conclusion),
+            status: check.status === undefined ? undefined : sanitizeForStdout(check.status)
         }))
     };
 }
