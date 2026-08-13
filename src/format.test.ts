@@ -1,22 +1,32 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { formatAssessment } from "./format.js";
-import type { MaintainerAssessment, MaintainerWorkItem } from "./types.js";
+import type { ChangedFile, MaintainerAssessment, MaintainerWorkItem } from "./types.js";
 
 const item: MaintainerWorkItem = {
   kind: "pull_request",
-  repository: "owner/repo",
-  title: "Add maintainer automation",
+  repository: "owner/repo##[legacy",
+  title: "Add ::runner command",
+  author: "maintainer##[author",
+  url: "https://example.test/pull/1::url",
   body: 'contains "api_key": "json-colon-secret-1234567890"',
   diff: `aws_access_key_id: ${"AKIA"}${"ABCDEFGHIJKLMNOP"}`,
   comments: ["PRIVATE_CANARY_COMMENT_12345"],
   files: [
     {
-      path: "src/feature.ts",
-      status: "modified",
+      path: "src/##[feature::file.ts",
+      status: "modified##[status" as ChangedFile["status"],
       additions: 10,
       deletions: 2,
       patch: "PRIVATE_CANARY_PATCH_12345"
+    }
+  ],
+  labels: ["security##[label", "::runner-label"],
+  checks: [
+    {
+      name: "build##[check::name",
+      conclusion: "failure::conclusion",
+      status: "completed##[status"
     }
   ],
   metadata: {
@@ -50,7 +60,28 @@ describe("formatAssessment", () => {
     assert.equal("diff" in parsed.item, false);
     assert.equal("comments" in parsed.item, false);
     assert.equal("metadata" in parsed.item, false);
-    assert.equal(output.includes("src/feature.ts"), true);
+    assert.deepEqual(Object.keys(parsed.item).sort(), [
+      "author",
+      "checks",
+      "files",
+      "kind",
+      "labels",
+      "repository",
+      "title",
+      "url"
+    ]);
+    assert.equal(output.includes("##["), false);
+    assert.equal(output.includes("::"), false);
+    assert.equal(parsed.item.repository, "owner/repo# #[legacy");
+    assert.equal(parsed.item.title, "Add \\:\\:runner command");
+    assert.equal(parsed.item.author, "maintainer# #[author");
+    assert.equal(parsed.item.url, "https://example.test/pull/1\\:\\:url");
+    assert.deepEqual(parsed.item.labels, ["security# #[label", "\\:\\:runner-label"]);
+    assert.equal(parsed.item.files?.[0]?.path, "src/# #[feature\\:\\:file.ts");
+    assert.equal(parsed.item.files?.[0]?.status, "modified# #[status");
+    assert.equal(parsed.item.checks?.[0]?.name, "build# #[check\\:\\:name");
+    assert.equal(parsed.item.checks?.[0]?.conclusion, "failure\\:\\:conclusion");
+    assert.equal(parsed.item.checks?.[0]?.status, "completed# #[status");
     assert.match(output, /REDACTED/);
   });
 
