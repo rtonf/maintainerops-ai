@@ -3,13 +3,23 @@ import assert from "node:assert/strict";
 import { formatAssessment } from "./format.js";
 import type { ChangedFile, MaintainerAssessment, MaintainerWorkItem } from "./types.js";
 
+const escapedSecretKey = ["api", "_key"].join("");
+const escapedSecretValue = ["json-colon", "-secret-", "1234567890"].join("");
+const escapedSecretAssignment = [
+  String.raw`source: body: 'contains \"`,
+  escapedSecretKey,
+  String.raw`\": \"`,
+  escapedSecretValue,
+  String.raw`\"'`
+].join("");
+
 const item: MaintainerWorkItem = {
   kind: "pull_request",
   repository: "owner/repo##[legacy",
   title: "Add ::runner command",
   author: "maintainer##[author",
   url: "https://example.test/pull/1::url",
-  body: String.raw`source: body: 'contains \"api_key\": \"json-colon-secret-1234567890\"'`,
+  body: escapedSecretAssignment,
   diff: `aws_access_key_id: ${"AKIA"}${"ABCDEFGHIJKLMNOP"}`,
   comments: ["PRIVATE_CANARY_COMMENT_12345"],
   files: [
@@ -49,9 +59,20 @@ const assessment: MaintainerAssessment = {
 
 describe("formatAssessment", () => {
   it("redacts raw work item content in JSON output", () => {
+    assert.equal(
+      escapedSecretAssignment,
+      [
+        String.raw`source: body: 'contains \"`,
+        escapedSecretKey,
+        String.raw`\": \"`,
+        escapedSecretValue,
+        String.raw`\"'`
+      ].join("")
+    );
     const output = formatAssessment(item, assessment, "json");
     const parsed = JSON.parse(output) as { item: MaintainerWorkItem };
-    assert.equal(output.includes("json-colon-secret-1234567890"), false);
+    assert.equal(output.includes(escapedSecretKey), false);
+    assert.equal(output.includes(escapedSecretValue), false);
     assert.equal(output.includes(`${"AKIA"}${"ABCDEFGHIJKLMNOP"}`), false);
     assert.equal(output.includes("PRIVATE_CANARY_COMMENT_12345"), false);
     assert.equal(output.includes("PRIVATE_CANARY_PATCH_12345"), false);
