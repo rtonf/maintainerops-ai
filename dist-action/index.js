@@ -13080,7 +13080,7 @@ function listOrNone(items) {
     return items.length > 0 ? items.map((item) => `- ${sanitizeForStdout(item)}`).join("\n") : "- none";
 }
 function redactWorkItem(item) {
-    const redacted = JSON.parse(redactSecrets(JSON.stringify(item)));
+    const redacted = item;
     return {
         kind: redacted.kind,
         repository: sanitizeForStdout(redacted.repository),

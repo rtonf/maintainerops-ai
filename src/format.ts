@@ -63,7 +63,7 @@ function listOrNone(items: string[]): string {
 }
 
 function redactWorkItem(item: MaintainerWorkItem): MaintainerWorkItem {
-  const redacted = JSON.parse(redactSecrets(JSON.stringify(item))) as MaintainerWorkItem;
+  const redacted = item;
   return {
     kind: redacted.kind,
     repository: sanitizeForStdout(redacted.repository),

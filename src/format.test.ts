@@ -9,7 +9,7 @@ const item: MaintainerWorkItem = {
   title: "Add ::runner command",
   author: "maintainer##[author",
   url: "https://example.test/pull/1::url",
-  body: 'contains "api_key": "json-colon-secret-1234567890"',
+  body: String.raw`source: body: 'contains \"api_key\": \"json-colon-secret-1234567890\"'`,
   diff: `aws_access_key_id: ${"AKIA"}${"ABCDEFGHIJKLMNOP"}`,
   comments: ["PRIVATE_CANARY_COMMENT_12345"],
   files: [
