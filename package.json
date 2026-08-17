@@ -71,7 +71,7 @@
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@vercel/ncc": "^0.44.0",
+    "@vercel/ncc": "^0.45.0",
     "@vitejs/plugin-react": "^6.0.3",
     "eslint": "^10.6.0",
     "gifenc": "^1.0.3",
@@ -80,7 +80,7 @@
     "publint": "^0.3.21",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "typescript-eslint": "^8.62.0",
     "vite": "^8.1.0"
   }
